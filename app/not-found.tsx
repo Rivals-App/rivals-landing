@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <>
-      <div className="text-black w-full h-screen bg-white">
+      <div className="text-white w-full h-screen bg-black">
         <div className="w-[50%] mx-auto min-h-screen flex flex-col items-center text-center justify-center">
           <h2 className="text-4xl md:text-6xl font-thin mb-4">
             Oops. It seems this page doesn't exist yet...
@@ -12,7 +12,7 @@ export default function NotFound() {
 
           <Link
             href="/"
-            className="w-full uppercase text-md py-2 mt-8 text-white font-thin bg-black border border-black hover:bg-transparent hover:text-black transition-all duration-150"
+            className="w-full uppercase text-md py-2 mt-8 text-black font-thin bg-white border border-white hover:bg-transparent hover:text-white transition-all duration-150"
           >
             Home
           </Link>
