@@ -19,13 +19,13 @@ const Navbar = () => {
         {/* Navigation Links */}
         <div className="space-x-8">
           <Link
-            href="/how-it-works"
+            href="#"
             className="text-white/60 hover:text-white transition-colors"
           >
             How it works
           </Link>
           <Link
-            href="/join-waitlist"
+            href="#"
             className="text-white font-bold bg-gradient-to-r hover:bg-gradient-to-l from-[#02F199] to-[#56A6FF] px-10 py-3 rounded-lg transition-all duration-200"
           >
             Join Waitlist
