@@ -103,7 +103,7 @@ const HomePage = () => {
               <span className="text-[#02F199]">Compete</span>
             </h1>
             <div className="mt-10">
-              <h2 className="text-3xl font-thin mb-4">
+              <h2 className="text-xl md:text-3xl font-thin mb-4">
                 Join the Winners Circle
               </h2>
               <WaitlistForm />
