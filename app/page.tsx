@@ -1,6 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
+"use client";
 import React from "react";
 import WaitlistForm from "./components/WaitlistForm";
+import SponsorMarquee from "./components/Marquee";
+import { FaDiscord, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+// import ModalWaitlistForm from "./components/Modal";
 
 const HomePage = () => {
   const featureCards = [
@@ -91,41 +97,47 @@ const HomePage = () => {
     },
   ];
 
+  const sponsorLogos = [
+    {
+      id: 1,
+      name: "StripeLogo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png",
+    },
+    {
+      id: 2,
+      name: "AMEXLogo",
+      src: "https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png",
+    },
+    {
+      id: 3,
+      name: "GPayLogo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/1280px-Google_Pay_Logo.svg.png",
+    },
+    {
+      id: 4,
+      name: "ApplePayLogo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/2560px-Apple_Pay_logo.svg.png",
+    },
+  ];
+
   return (
     <div className="bg-black text-white">
-      <main className="max-w-7xl mx-auto px-14 md:px-8 pt-36 pb-8">
+      <main className="w-full mx-auto pt-36 pb-8">
         {/* Hero section remains the same */}
-        <section className="mb-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="w-full text-center md:text-left">
-            <h1 className="text-6xl md:text-7xl font-bold mb-6">
-              Where Gamers
-              <br />
-              <span className="text-[#02F199]">Compete</span>
-            </h1>
-            <div className="mt-10">
-              <h2 className="text-xl md:text-3xl font-thin mb-4">
-                Join the Winners Circle
-              </h2>
-              <WaitlistForm />
-            </div>
-          </div>
-
-          <div className="hidden md:block">
-            <div className="bg-gradient-to-tr from-gray-900 to-gray-700 h-[300px] rounded-lg shadow-xl p-4 text-gray-800"></div>
-          </div>
-        </section>
+        <div className="w-full text-center">
+          <h1 className="w-full text-6xl md:text-7xl font-bold mb-6">
+            Where Gamers
+            <span className="text-[#02F199]"> Compete</span>
+          </h1>
+        </div>
+        <div className="w-full my-10">
+          <div className="bg-gradient-to-tr from-gray-900 to-gray-700 h-[400px] shadow-xl p-4 text-gray-800"></div>
+        </div>
 
         {/* Features Section */}
-        <section className="mb-20">
-          <h2 className="text-3xl ld:text-4xl font-bold mb-4">
-            The monopolising, mass market solution to the <br />
-            competitive gaming industry
-          </h2>
-          <p className="text-gray-300 mb-8">
-            A platform that allows users to stake and wage money on themselves
-            while playing games
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <section className="w-full px-14 md:px-8 my-24">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <h2 className="text-3xl ld:text-4xl font-bold mb-8">Compete in</h2>
             {featureCards.map((card) => (
               <div
                 key={card.id}
@@ -136,6 +148,49 @@ const HomePage = () => {
                 <p className="text-sm text-gray-400">{card.description}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Sponsors Section */}
+        <SponsorMarquee sponsorLogos={sponsorLogos} />
+
+        {/* Sign up Section */}
+        <div className="w-[100vw] bg-vid-1 bg-cover bg-no-repeat bg-[bottom_center] mb-20 text-center">
+          <div className="w-full bg-black/60 mx-auto py-32">
+            <WaitlistForm />
+          </div>
+        </div>
+
+        {/* Connect with Us Section */}
+        <section className="w-full px-14 md:px-8 my-24">
+          <h2 className="text-center text-3xl ld:text-4xl font-bold mb-8">
+            Connect with Us
+          </h2>
+          <div className="flex justify-center items-center gap-8">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-[#02F199] transition-colors"
+            >
+              <FaDiscord size={74} />
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 hover:text-[#02F199] transition-colors"
+            >
+              <FaInstagram size={74} />
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 hover:text-[#02F199] transition-colors"
+            >
+              <FaXTwitter size={74} />
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 hover:text-[#02F199] transition-colors"
+            >
+              <FaYoutube size={74} />
+            </a>
           </div>
         </section>
       </main>
