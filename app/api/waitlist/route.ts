@@ -1,10 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import { config } from '../../lib/config'; // adjust path as needed
 
-const supabase = createClient(
-  process.env.SUPABASE_URL || "",
-  process.env.SUPABASE_ANON_KEY || ""
-);
+
+const supabase = createClient(config.supabaseUrl, config.supabaseAnonKey);
+
 
 function generateReferralCode(email: string): string {
   const baseCode = email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "");
@@ -21,6 +21,12 @@ function generateReferralCode(email: string): string {
 }
 
 export async function POST(req: Request) {
+  const response = NextResponse.next();
+  response.headers.set('Access-Control-Allow-Origin', 'https://rivals-ochre.vercel.app');
+  response.headers.set('Access-Control-Allow-Methods', 'POST');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+
   const { firstName, lastName, email, referredBy } = await req.json();
 
   if (!firstName || !lastName || !email) {
