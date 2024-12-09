@@ -3,7 +3,6 @@
 import { SponsorMarqueeProps } from "../interface/types";
 
 const SponsorMarquee = ({ sponsorLogos }: SponsorMarqueeProps) => {
-  // Duplicate the logos array four times to ensure smooth infinite scroll
   const duplicatedLogos = [
     ...sponsorLogos,
     ...sponsorLogos,
@@ -15,9 +14,7 @@ const SponsorMarquee = ({ sponsorLogos }: SponsorMarqueeProps) => {
     <section className="w-full text-white py-20 px-4 md:px-8 mb-20 text-center">
       <h2 className="text-3xl lg:text-4xl font-bold mb-8">Powered by</h2>
 
-      {/* Marquee container with hidden overflow */}
       <div className="relative w-full max-w-[1200px] mx-auto overflow-hidden">
-        {/* Inner container for smooth scrolling */}
         <div className="inline-flex animate-marquee">
           {duplicatedLogos.map((logo, index) => (
             <div key={`${logo.id}-${index}`} className="flex-shrink-0 px-8">

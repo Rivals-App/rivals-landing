@@ -101,22 +101,22 @@ const HomePage = () => {
     {
       id: 1,
       name: "StripeLogo",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png",
+      src: "./static/logos/stripe_logo.webp",
     },
     {
       id: 2,
       name: "AMEXLogo",
-      src: "https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png",
+      src: "./static/logos/American-Express-Color.png",
     },
     {
       id: 3,
       name: "GPayLogo",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/1280px-Google_Pay_Logo.svg.png",
+      src: "./static/logos/Google_Pay_Logo.svg.png",
     },
     {
       id: 4,
       name: "ApplePayLogo",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/2560px-Apple_Pay_logo.svg.png",
+      src: "./static/logos/Apple_Pay_logo.svg.png",
     },
   ];
 
