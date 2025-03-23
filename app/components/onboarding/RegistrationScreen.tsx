@@ -56,7 +56,8 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
   };
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center">
+    <div className="h-full w-full px-12 flex flex-col items-center justify-center">
+      {" "}
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
         {/* Logo */}
         <div className="flex justify-center mb-8">
