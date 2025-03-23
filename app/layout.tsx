@@ -1,9 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-// import Navbar from "./components/Navbar";
 import { Analytics } from "@vercel/analytics/react";
-import Footer from "./components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,7 +30,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Footer />
         <Analytics /> {/* Moved inside body */}
       </body>
     </html>
