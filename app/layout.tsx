@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import { Analytics } from "@vercel/analytics/react";
 import Footer from "./components/Footer";
 
@@ -17,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Rivals | Home",
+  title: "Rivals",
   description: "Where winners compete",
 };
 
@@ -31,11 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
         {children}
         <Footer />
+        <Analytics /> {/* Moved inside body */}
       </body>
-      <Analytics />
     </html>
   );
 }

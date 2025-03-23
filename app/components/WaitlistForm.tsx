@@ -153,7 +153,7 @@ const WaitlistForm = () => {
       <button
         type="submit"
         disabled={loading}
-        className="w-full text-xl bg-[#02F199] text-black hover:text-white font-semibold px-6 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full text-xl bg-[#02F199] text-black hover:text-white font-semibold px-6 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? "Submitting..." : "Join Waitlist"}
       </button>
