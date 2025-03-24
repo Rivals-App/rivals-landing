@@ -14,26 +14,43 @@ if (typeof window !== "undefined") {
 const featureCardsData = [
   {
     id: "1",
-    title: "Instant Matchmaking",
+    title: "Compete for Real Rewards",
     description:
-      "Find opponents at your skill level and start playing in seconds. No long waits, just pure gaming.",
-    image: "/static/images/matchmaking.jpg", // Update these paths to your actual image locations
+      "Challenge friends and rivals in skill-based matches with real stakes. Play your favorite competitive games and earn rewards for your victories.",
+    image: "/static/imgs/Card2.png", // Update these paths to your actual image locations
     isMain: false,
   },
   {
     id: "2",
-    title: "Instant Payouts",
+    title: "Team Based Tournaments",
     description:
-      "Win a match, get paid immediately. No waiting periods or complex withdrawal processes.",
-    image: "/static/images/payouts.jpg",
-    isMain: true,
+      "Join tournaments or create custom challenges with flexible rules. Whether you're playing solo or with a squad, RIVALS is built for competitive gamers",
+    image: "/static/imgs/Card5.png",
+    isMain: false,
   },
   {
     id: "3",
-    title: "Fair Play Guarantee",
+    title: "Instant Score Validation & Payouts",
     description:
-      "Advanced anti-cheat systems and skill-based matchmaking ensure every match is fair and competitive.",
-    image: "/static/images/fair-play.jpg",
+      "Our automated system tracks scores in real time. Win a match, get paid immediately. No waiting periods or complex withdrawal processes.",
+    image: "/static/imgs/Card1.png",
+    isMain: true,
+  },
+  
+  {
+    id: "4",
+    title: "Custom Challenges & Matches",
+    description:
+      "Create personalized challenges with unique rules and stake amounts. Compete on your own terms!",
+    image: "/static/imgs/Card4.png",
+    isMain: false,
+  },
+  {
+    id: "5",
+    title: "Secure & Transparent Gaming",
+    description:
+      "Powered by advanced anti-cheat systems and real-time verification, RIVALS ensures a fair gaming environment.",
+    image: "/static/imgs/Card3.png",
     isMain: false,
   },
 ];
@@ -136,28 +153,128 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
         <FaArrowLeft size={20} />
       </button>
 
-      <div className="flex-grow flex flex-col items-center justify-start px-4 py-8">
-        <h2 className="about-title text-4xl font-bold mb-3 text-center">
-          About <span className="text-[#02F199]">Rivals</span>
-        </h2>
-        <p className="about-subtitle text-gray-300 mb-16 text-center text-lg">
-          The next generation platform for competitive gaming
-        </p>
+      <div className="flex-grow flex flex-col items-center justify-start pt-12 md:pt-0">
+        {/* Call to Action Section */}
+        <div className="cta-section w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 relative overflow-hidden">
+          {/* Text Content */}
+          <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-12 md:mt-0">
+            <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
+              EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF GAMING
+            </h3>
+            <p className="text-lg text-gray-300 mb-8">
+              Take your gaming to the next level with RIVALS. Compete in skill-based matches, win real rewards, and become part of the ultimate competitive gaming community.
+            </p>
+            <button
+              onClick={onContinue}
+              className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200"
+            >
+              JOIN WAITLIST
+            </button>
+          </div>
 
-        {/* Feature Cards */}
-        <div className="feature-cards w-full mb-16">
-          <FeatureCards isMobileView={isMobileView} cards={featureCardsData} />
+          {/* Image Content */}
+          <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 flex justify-end relative hidden md:flex">
+            <img
+              src="/static/imgs/hero.png"
+              alt="Exciting esports action"
+              className="w-[100%] md:w-[70%] max-w-none object-contain"
+            />
+          </div>
         </div>
 
-        {/* Call to action - removed mt-auto and added fixed spacing */}
-        <div className="about-cta flex flex-col items-center my-8">
-          <p className="mb-4">Not a part of our waitlist yet?</p>
-          <button
-            onClick={onContinue}
-            className="px-8 py-2 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200"
-          >
-            Join the Waitlist
-          </button>
+        {/* Feature Cards Section */}
+        <div className="feature-cards-wrapper w-full px-4 py-12 sm:pt-24">
+          <h2 className="about-title text-3xl md:text-4xl font-bold mb-3 text-center">
+            JOIN THE <span className="text-[#02F199]">COMPETITIVE</span> REVOLUTION
+          </h2>
+          <p className="about-subtitle text-gray-300 mb-16 text-center text-base md:text-lg">
+            Compete in Matches and earn real rewards. RIVALS is the ultimate competitive gaming platform built for true gamers.
+          </p>
+
+          {/* Feature Cards */}
+          <div className="feature-cards w-full">
+            <FeatureCards isMobileView={isMobileView} cards={featureCardsData} />
+          </div>
+        </div>
+
+        {/* How It Works Section */}
+        <div className="how-it-works w-full py-8 px-6 md:px-[120px] sm:px-12 rounded-lg">
+          <h2 className="about-title text-3xl md:text-4xl font-bold mb-4 text-center">
+            HOW <span className="text-[#02F199]">RIVALS</span> WORKS
+          </h2>
+          <p className="about-subtitle text-gray-300 mb-8 md:mb-32 text-center text-base md:text-lg">
+            RIVALS makes competitive gaming seamless and rewarding.
+          </p>
+
+          <div className="flex flex-col gap-8 md:gap-12">
+            {/* Step 1 */}
+            <div className="flex flex-col md:flex-row items-center text-center md:text-right">
+              <img
+                src="/static/imgs/howitworks1.png"
+                alt="Choose Your Game & Mode"
+                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+              />
+              <div className="md:w-[60%] md:pl-8">
+                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                  Choose Your Game & Mode
+                </h4>
+                <p className="text-sm md:text-base text-gray-300">
+                  Select from a variety of custom RIVALS games and supported games like DOTA 2.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex flex-col md:flex-row-reverse items-center text-center md:text-left">
+              <img
+                src="/static/imgs/howitworks2.png"
+                alt="Challenge & Stake"
+                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+              />
+              <div className="md:w-[60%] md:pr-8">
+                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                  Challenge & Stake
+                </h4>
+                <p className="text-sm md:text-base text-gray-300">
+                  Enter a match with a set stake and challenge your friends or other RIVALS players.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex flex-col md:flex-row items-center text-center md:text-right">
+              <img
+                src="/static/imgs/howitworks3.png"
+                alt="Play & Win"
+                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+              />
+              <div className="md:w-[60%] md:pl-8">
+                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                  Play & Win
+                </h4>
+                <p className="text-sm md:text-base text-gray-300">
+                  Compete in real-time matches with automated score validation and our own ranking system.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="flex flex-col md:flex-row-reverse items-center text-center md:text-left">
+              <img
+                src="/static/imgs/howitworks4.png"
+                alt="Get Paid Instantly"
+                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+              />
+              <div className="md:w-[60%] md:pr-8">
+                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                  Get Paid Instantly
+                </h4>
+                <p className="text-sm md:text-base text-gray-300">
+                  Receive your winnings instantly with our secure payout system.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
