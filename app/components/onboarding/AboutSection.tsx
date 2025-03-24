@@ -158,6 +158,12 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
         <div className="cta-section w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 relative overflow-hidden">
           {/* Text Content */}
           <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-12 md:mt-0">
+            {/* Logo */}
+            <img
+              src="/static/imgs/asset 4@4x-8.png" 
+              alt="RIVALS Logo"
+              className="w-24 h-auto mx-auto md:mx-0 mb-6"
+            />
             <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
               EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF GAMING
             </h3>
@@ -275,6 +281,52 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
               </div>
             </div>
           </div>
+        </div>
+        {/* Compete in Tournaments Section */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 px-12 md:px-28 sm:px-12 my-12">
+          {/* Text Content */}
+          <div className="md:w-1/2 w-full text-center md:text-left">
+            <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
+               COMPETE IN <span className="text-[#02F199]">TOURNAMENTS</span>
+            </h3>
+            <p className="text-lg text-gray-300 mb-6">
+              Take your skills to the next level with organized competitions.
+              Join daily, weekly, and seasonal tournaments where you can compete against top players and squads. Earn bigger rewards, climb the leaderboards, and prove you're the best!
+            </p>
+            <ul className="text-gray-300 space-y-3 mb-6">
+              <li><strong>Solo & Team Tournaments</strong> – Play in 1v1, 3v3, or 5v5 formats</li>
+              <li><strong>Leaderboard Rankings</strong> – Track your progress and achievements</li>
+              <li><strong>Exclusive Rewards</strong> – Win cash prizes, in-game items, and special perks</li>
+            </ul>
+          </div>
+          {/* Image Content */}
+          <div className="md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
+            <img
+              src="/static/imgs/tournaments.png" 
+              alt="Compete in Rivals Tournaments"
+              className="w-[100%] md:w-[80%] max-w-none object-contain"
+            />
+          </div>
+        </div>
+        {/* Call to Action Section */}
+        <div className="cta-final w-full flex flex-col items-center justify-center py-12 px-6 rounded-lg mt-12">
+          {/* Logo */}
+          <img
+            src="/static/imgs/asset 4@4x-8.png" 
+            alt="RIVALS Logo"
+            className="w-24 h-auto mb-6"
+          />
+          {/* Heading */}
+          <h3 className="text-4xl font-bold text-white mb-6 text-center">
+            JOIN <span className="text-[#02F199]">RIVALS NOW</span>
+          </h3>
+          {/* Button */}
+          <button
+            onClick={onContinue}
+            className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200"
+          >
+            JOIN WAITLIST
+          </button>
         </div>
       </div>
     </div>
