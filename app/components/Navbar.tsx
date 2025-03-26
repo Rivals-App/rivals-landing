@@ -60,9 +60,9 @@ const Navbar: React.FC<NavbarProps> = ({ onContinue }) => {
                 setIsOpen(false);
                 onContinue();
               }}
-              className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200"
+              className="px-8 py-3 bg-[#02F199] text-[#FFFFFF] font-semibold rounded-full hover:scale-105 transition-all duration-200"
             >
-              Join Waitlist →
+              Join Waitlist
             </button>
           </div>
         )}

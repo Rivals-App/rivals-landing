@@ -160,19 +160,19 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
 
         <div className="flex-grow flex flex-col items-center justify-start pt-12 md:pt-0">
           {/* Call to Action Section */}
-          <div className="cta-section w-full flex flex-col lg:flex-row items-center justify-between rounded-lg py-8 relative overflow-hidden mb-12">
+          <div className="cta-section w-full flex flex-col lg:flex-row items-center justify-between rounded-lg py-4 relative overflow-hidden mb-8">
             {/* Text Content */}
-            <div className="text-content lg:w-1/2 w-full text-center lg:text-left px-6 sm:px-12 mt-8 lg:mt-0">
+            <div className="text-content lg:w-1/2 w-full text-center lg:text-left px-6 sm:px-12 mt-2 lg:mt-0">
               {/* Logo */}
               <img
                 src="/static/imgs/asset 4@4x-8.png"
                 alt="RIVALS Logo"
-                className="w-24 h-auto mx-auto lg:mx-0 mb-6"
+                className="w-24 h-auto mx-auto lg:mx-0 mb-4"
               />
-              <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
+              <h3 className="text-4xl font-bold text-white mb-4 leading-tight">
                 EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF GAMING
               </h3>
-              <p className="text-lg text-gray-300 mb-8">
+              <p className="text-lg text-gray-300 mb-6">
                 Take your gaming to the next level with RIVALS. Compete in skill-based matches, win real rewards, and become part of the ultimate competitive gaming community.
               </p>
               <button
@@ -184,7 +184,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
             </div>
 
             {/* Image Content */}
-            <div className="image-content lg:w-1/2 w-full mt-8 lg:mt-12 flex justify-end relative hidden lg:flex">
+            <div className="image-content lg:w-1/2 w-full mt-2 lg:mt-4 flex justify-end relative hidden lg:flex">
               <img
                 src="/static/imgs/hero.png"
                 alt="Exciting esports action"
@@ -192,9 +192,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
               />
             </div>
           </div>
-
+            
           {/* Feature Cards Section */}
-          <div id="why-rivals" className="feature-cards-wrapper w-full px-4 py-12 sm:pt-20 mt-12">
+          <div id="why-rivals" className="feature-cards-wrapper w-full px-4 py-12 sm:pt-20 mt-20 overflow-hidden">
             <h2 className="about-title text-3xl md:text-4xl font-bold mb-3 text-center">
               JOIN THE <span className="text-[#02F199]">COMPETITIVE</span> REVOLUTION
             </h2>
@@ -203,86 +203,88 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onContinue, onBack }) => {
             </p>
 
             {/* Feature Cards */}
-            <div className="feature-cards w-full">
+            <div className="feature-cards w-full grid grid-cols-1 gap-8">
               <FeatureCards isMobileView={isMobileView} cards={featureCardsData} />
             </div>
           </div>
 
+          <div id="how-it-works">
           {/* How It Works Section */}
-          <div id="how-it-works" className="how-it-works w-full py-8 px-6 md:px-[120px] sm:px-12 rounded-lg">
-            <h2 className="about-title text-3xl md:text-4xl font-bold mb-4 text-center">
-              HOW <span className="text-[#02F199]">RIVALS</span> WORKS
-            </h2>
-            <p className="about-subtitle text-gray-300 mb-8 md:mb-32 text-center text-base md:text-lg">
-              RIVALS makes competitive gaming seamless and rewarding.
-            </p>
+            <div className="w-full py-8 px-6 mt-20 md:px-[120px] sm:px-12 rounded-lg">
+              <h2 className="about-title text-3xl md:text-4xl font-bold mb-4 text-center">
+                HOW <span className="text-[#02F199]">RIVALS</span> WORKS
+              </h2>
+              <p className="about-subtitle text-gray-300 mb-8 md:mb-32 text-center text-base md:text-lg">
+                RIVALS makes competitive gaming seamless and rewarding.
+              </p>
 
-            <div className="flex flex-col gap-8 md:gap-12">
-              {/* Step 1 */}
-              <div className="flex flex-col md:flex-row items-center text-center md:text-right">
-                <img
-                  src="/static/imgs/howitworks1.png"
-                  alt="Choose Your Game & Mode"
-                  className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
-                />
-                <div className="md:w-[60%] md:pl-8">
-                  <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Choose Your Game & Mode
-                  </h4>
-                  <p className="text-sm md:text-base text-gray-300">
-                    Select from a variety of custom RIVALS games and supported games like DOTA 2.
-                  </p>
+              <div className="flex flex-col gap-8 md:gap-12">
+                {/* Step 1 */}
+                <div className="flex flex-col md:flex-row items-center text-center md:text-right">
+                  <img
+                    src="/static/imgs/howitworks1.png"
+                    alt="Choose Your Game & Mode"
+                    className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+                  />
+                  <div className="md:w-[60%] md:pl-8">
+                    <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                      Choose Your Game & Mode
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Select from a variety of custom RIVALS games and supported games like DOTA 2.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Step 2 */}
-              <div className="flex flex-col md:flex-row-reverse items-center text-center md:text-left">
-                <img
-                  src="/static/imgs/howitworks2.png"
-                  alt="Challenge & Stake"
-                  className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
-                />
-                <div className="md:w-[60%] md:pr-8">
-                  <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Challenge & Stake
-                  </h4>
-                  <p className="text-sm md:text-base text-gray-300">
-                    Enter a match with a set stake and challenge your friends or other RIVALS players.
-                  </p>
+                {/* Step 2 */}
+                <div className="flex flex-col md:flex-row-reverse items-center text-center md:text-left">
+                  <img
+                    src="/static/imgs/howitworks2.png"
+                    alt="Challenge & Stake"
+                    className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+                  />
+                  <div className="md:w-[60%] md:pr-8">
+                    <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                      Challenge & Stake
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Enter a match with a set stake and challenge your friends or other RIVALS players.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Step 3 */}
-              <div className="flex flex-col md:flex-row items-center text-center md:text-right">
-                <img
-                  src="/static/imgs/howitworks3.png"
-                  alt="Play & Win"
-                  className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
-                />
-                <div className="md:w-[60%] md:pl-8">
-                  <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Play & Win
-                  </h4>
-                  <p className="text-sm md:text-base text-gray-300">
-                    Compete in real-time matches with automated score validation and our own ranking system.
-                  </p>
+                {/* Step 3 */}
+                <div className="flex flex-col md:flex-row items-center text-center md:text-right">
+                  <img
+                    src="/static/imgs/howitworks3.png"
+                    alt="Play & Win"
+                    className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+                  />
+                  <div className="md:w-[60%] md:pl-8">
+                    <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                      Play & Win
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Compete in real-time matches with automated score validation and our own ranking system.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Step 4 */}
-              <div className="flex flex-col md:flex-row-reverse items-center text-center md:text-left">
-                <img
-                  src="/static/imgs/howitworks4.png"
-                  alt="Get Paid Instantly"
-                  className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
-                />
-                <div className="md:w-[60%] md:pr-8">
-                  <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Get Paid Instantly
-                  </h4>
-                  <p className="text-sm md:text-base text-gray-300">
-                    Receive your winnings instantly with our secure payout system.
-                  </p>
+                {/* Step 4 */}
+                <div className="flex flex-col md:flex-row-reverse items-center text-center md:text-left">
+                  <img
+                    src="/static/imgs/howitworks4.png"
+                    alt="Get Paid Instantly"
+                    className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+                  />
+                  <div className="md:w-[60%] md:pr-8">
+                    <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+                      Get Paid Instantly
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Receive your winnings instantly with our secure payout system.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
