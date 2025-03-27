@@ -298,11 +298,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
   return (
     <div className="w-full h-full flex flex-col" ref={containerRef}>
-      <Navbar
-        goToEmailStep={goToEmailStep}
-        goToBlogSection={goToBlogSection}
-        goToAboutSection={onBack}
-      />
+      <Navbar goToEmailStep={goToEmailStep} goToBlogSection={goToBlogSection} />
 
       <div className="flex-grow flex flex-col items-center justify-start pt-12 md:pt-14">
         {/* Hero Section */}
