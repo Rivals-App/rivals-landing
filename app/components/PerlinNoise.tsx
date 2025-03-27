@@ -81,7 +81,8 @@ const PerlinNoiseSketchComponent: React.FC = () => {
 
         const cos = Math.cos;
         const sin = Math.sin;
-        const random = p.random;
+        // Store p.random to use consistently
+        const pRandom = p.random.bind(p);
 
         const onScreen = (
           x: number,
@@ -92,8 +93,7 @@ const PerlinNoiseSketchComponent: React.FC = () => {
 
         const initializeParticles = (
           width: number,
-          height: number,
-          pRandom: (min?: number, max?: number) => number
+          height: number
         ): Particle[] => {
           const count = config.numberOfParticles;
           const particles: Particle[] = new Array(count);
@@ -130,8 +130,7 @@ const PerlinNoiseSketchComponent: React.FC = () => {
           canvas.style("backface-visibility", "hidden");
           canvas.style("perspective", "1000px");
 
-          const pRandom = p.random.bind(p);
-          particlesRef.current = initializeParticles(width, height, pRandom);
+          particlesRef.current = initializeParticles(width, height);
 
           p.stroke(
             config.strokeColor[0],
@@ -159,7 +158,6 @@ const PerlinNoiseSketchComponent: React.FC = () => {
           const width = canvasWidthRef.current;
           const height = canvasHeightRef.current;
 
-          const pRandom = p.random.bind(p);
           const cosFunc = Math.cos;
           const sinFunc = Math.sin;
 
@@ -202,8 +200,9 @@ const PerlinNoiseSketchComponent: React.FC = () => {
             for (let i = 0; i < particles.length; i++) {
               const particle = particles[i];
               if (!onScreen(particle.x, particle.y, width, height)) {
-                particle.x = random(width);
-                particle.y = random(height);
+                // FIX: Use pRandom instead of random
+                particle.x = pRandom(width);
+                particle.y = pRandom(height);
               }
             }
           }

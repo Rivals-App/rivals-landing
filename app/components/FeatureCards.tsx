@@ -72,24 +72,30 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
   // Mobile view
   if (isMobileView) {
     return (
-      <div className="w-full mb-10 mt-5 h-[280px]" ref={scrollContainerRef}>
+      <div className="w-full mb-10 mt-5 h-[336px]" ref={scrollContainerRef}>
         <div className="overflow-x-auto scrollbar-hide snap-x snap-mandatory">
-          <div className="flex px-[calc((100vw-250px)/2)]">
+          <div className="flex px-[calc((100vw-300px)/2)]">
             {cards.map((card) => (
               <div
                 key={card.id}
                 className={`relative flex-shrink-0 ${
-                  card.isMain ? "w-[250px] h-[280px]" : "w-[250px] h-[240px]"
-                } mx-2 rounded-xl overflow-hidden border border-white/10 shadow-lg snap-center`}
+                  card.isMain ? "w-[240px] h-[336px]" : "w-[240px] h-[336px]"
+                } mx-3 rounded-xl overflow-hidden border border-white/10 shadow-lg snap-center`}
               >
                 <img
                   src={card.image}
                   alt={card.title}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-end">
-                  {renderTitle(card)}
-                  <p className="text-sm text-gray-300">{card.description}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-between">
+                  {/* Heading at the top */}
+                  <div>
+                    {renderTitle(card)}
+                  </div>
+                  {/* Description at the bottom */}
+                  <div>
+                    <p className="text-sm text-gray-300">{card.description}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -106,17 +112,23 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
         <div
           key={card.id}
           className={`relative ${
-            card.isMain ? "w-[220px] h-[280px] -mt-10" : "w-[220px] h-[240px]"
-          } mx-2 rounded-xl overflow-hidden border border-white/10 shadow-lg`}
+            card.isMain ? "w-[240px] h-[400px] -mt-12" : "w-[240px] h-[400px]"
+          } mx-3 rounded-xl overflow-hidden border border-white/10 shadow-lg`}
         >
-          <img
-            src={card.image}
-            alt={card.title}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-end">
+        <img
+          src={card.image}
+          alt={card.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-between">
+          {/* Heading at the top */}
+          <div>
             {renderTitle(card)}
-            <p className="text-sm text-gray-300">{card.description}</p>
+          </div>
+          {/* Description at the bottom */}
+            <div>
+              <p className="text-sm text-gray-300">{card.description}</p>
+            </div>
           </div>
         </div>
       ))}
