@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <>
-      <div className="text-white w-full h-screen bg-black">
+      <div className="text-white w-full h-screen bg-[#101c2b]">
         <div className="w-[50%] mx-auto min-h-screen flex flex-col items-center text-center justify-center">
           <h2 className="text-4xl md:text-6xl font-thin mb-4">
             Oops. It seems this page doesn't exist yet...

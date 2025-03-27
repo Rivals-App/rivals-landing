@@ -6,9 +6,13 @@ import { FaArrowLeft } from "react-icons/fa";
 
 interface ConfirmationScreenProps {
   onBack: () => void;
+  onGoToAbout?: () => void; // New prop for navigating to About section
 }
 
-const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ onBack }) => {
+const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
+  onBack,
+  onGoToAbout,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,6 +95,13 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ onBack }) => {
             className="text-[#02F199] border-b border-[#02F199]"
           >
             demo
+          </a>{" "}
+          or go back to our{" "}
+          <a
+            onClick={onGoToAbout || onBack}
+            className="text-[#02F199] border-b border-[#02F199] bg-transparent cursor-pointer"
+          >
+            main page
           </a>
         </p>
 

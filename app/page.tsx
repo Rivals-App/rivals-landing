@@ -1,4 +1,3 @@
-// HomePage.tsx
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import PageLoader from "./components/PageLoader";

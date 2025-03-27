@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState, useEffect } from "react";
 import { gsap } from "gsap";
@@ -6,6 +7,7 @@ import AboutSection from "./onboarding/AboutSection";
 import RegistrationScreen from "./onboarding/RegistrationScreen";
 import BirthdayScreen from "./onboarding/BirthdayScreen";
 import ConfirmationScreen from "./onboarding/ConfirmationScreen";
+import BlogSection from "./onboarding/BlogSection"; // Fixed import path
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -13,6 +15,8 @@ const MultiStepForm = () => {
     email: "",
     birthday: "",
   });
+
+  console.log("Current step:", currentStep);
 
   // Transition to next step with direct GSAP animation
   const goToNextStep = () => {
@@ -88,6 +92,126 @@ const MultiStepForm = () => {
     });
   };
 
+  // Go directly to About section (step 1) with animation
+  const goToAboutSection = () => {
+    console.log("Going to About section");
+
+    if (currentStep === 1) return; // Already in About section
+
+    const currentStepEl = `.step-${currentStep}`;
+    const aboutStepEl = ".step-1";
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setCurrentStep(1); // Set to About section (step 1)
+      },
+    });
+
+    // Animate current step out
+    tl.to(currentStepEl, {
+      opacity: 0,
+      x: 30,
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: () => {
+        gsap.set(currentStepEl, { display: "none" });
+      },
+    });
+
+    // Set up About step and animate it in
+    tl.add(() => {
+      gsap.set(aboutStepEl, { display: "block", opacity: 0, x: -30 });
+    });
+
+    // Animate About step in
+    tl.to(aboutStepEl, {
+      opacity: 1,
+      x: 0,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  };
+
+  // Go directly to Blog section (step 5) with animation
+  const goToBlogSection = () => {
+    console.log("Going to Blog section");
+
+    if (currentStep === 5) return; // Already in Blog section
+
+    const currentStepEl = `.step-${currentStep}`;
+    const blogStepEl = ".step-5";
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setCurrentStep(5); // Set to Blog section (step 5)
+      },
+    });
+
+    // Animate current step out
+    tl.to(currentStepEl, {
+      opacity: 0,
+      x: 30,
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: () => {
+        gsap.set(currentStepEl, { display: "none" });
+      },
+    });
+
+    // Set up Blog step and animate it in
+    tl.add(() => {
+      gsap.set(blogStepEl, { display: "block", opacity: 0, x: -30 });
+    });
+
+    // Animate Blog step in
+    tl.to(blogStepEl, {
+      opacity: 1,
+      x: 0,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  };
+
+  // Go directly to Email step (step 2) with animation
+  const goToEmailStep = () => {
+    console.log("Going to Email step");
+
+    if (currentStep === 2) return; // Already in Email section
+
+    const currentStepEl = `.step-${currentStep}`;
+    const emailStepEl = ".step-2";
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setCurrentStep(2); // Set to Email section (step 2)
+      },
+    });
+
+    // Animate current step out
+    tl.to(currentStepEl, {
+      opacity: 0,
+      x: -30,
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: () => {
+        gsap.set(currentStepEl, { display: "none" });
+      },
+    });
+
+    // Set up Email step and animate it in
+    tl.add(() => {
+      gsap.set(emailStepEl, { display: "block", opacity: 0, x: 30 });
+    });
+
+    // Animate Email step in
+    tl.to(emailStepEl, {
+      opacity: 1,
+      x: 0,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  };
+
   // Handle email update
   const handleEmailChange = (email: string) => {
     setUserInfo((prev) => ({ ...prev, email }));
@@ -102,7 +226,7 @@ const MultiStepForm = () => {
   useEffect(() => {
     // Show only the first step initially, hide others
     gsap.set(".step-0", { opacity: 1, display: "block" });
-    gsap.set(".step-1, .step-2, .step-3, .step-4", {
+    gsap.set(".step-1, .step-2, .step-3, .step-4, .step-5", {
       opacity: 0,
       x: 30,
       display: "none",
@@ -115,10 +239,17 @@ const MultiStepForm = () => {
       <div className="step-0 w-full h-screen flex flex-col items-center justify-center">
         <WelcomeScreen onProceed={goToNextStep} />
       </div>
+
       {/* Step 1: About Rivals Section */}
       <div className="step-1 w-full h-screen flex flex-col">
-        <AboutSection onContinue={goToNextStep} onBack={goToPreviousStep} />
+        <AboutSection
+          onContinue={goToNextStep}
+          onBack={goToPreviousStep}
+          goToEmailStep={goToEmailStep}
+          goToBlogSection={goToBlogSection}
+        />
       </div>
+
       {/* Step 2: Email collection */}
       <div className="step-2 w-full h-screen">
         <RegistrationScreen
@@ -128,6 +259,7 @@ const MultiStepForm = () => {
           onBack={goToPreviousStep}
         />
       </div>
+
       {/* Step 3: Birthday collection */}
       <div className="step-3 w-full h-screen">
         <BirthdayScreen
@@ -137,9 +269,23 @@ const MultiStepForm = () => {
           onBack={goToPreviousStep}
         />
       </div>
+
       {/* Step 4: Confirmation */}
       <div className="step-4 w-full h-screen">
-        <ConfirmationScreen onBack={goToPreviousStep} />
+        <ConfirmationScreen
+          onBack={goToPreviousStep}
+          onGoToAbout={goToAboutSection}
+        />
+      </div>
+
+      {/* Step 5: Blog section */}
+      <div className="step-5 w-full min-h-screen flex flex-col">
+        <BlogSection
+          onBack={goToAboutSection}
+          goToAboutSection={goToAboutSection}
+          goToEmailStep={goToEmailStep}
+          goToBlogSection={goToBlogSection}
+        />
       </div>
     </div>
   );
