@@ -19,7 +19,7 @@ const blogPosts = [
       "How Casual Gamers Can Monetize Their Playtime and Compete for Real Rewards",
     date: "March 15, 2025",
     author: "Joshua Jones",
-    image: "/static/imgs/Card1.png", // Using existing images
+    image: "/static/media/Card1.png", // Using existing images
     content: `
       <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
         <h1 style="margin-bottom: 0.5em; font-size: 30px;">The Rise of Gaming as a Source of Income</h1>
@@ -79,7 +79,7 @@ const blogPosts = [
       "Expert tips for dominating in RIVALS and maximizing your rewards.",
     date: "February 28, 2025",
     author: "Joshua Jones",
-    image: "/static/imgs/Card2.png",
+    image: "/static/media/Card2.png",
     content: `
     <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
       <h1 style="margin-bottom: 0.5em; font-size: 30px;">
@@ -160,7 +160,7 @@ const blogPosts = [
     excerpt: "An inside look at how RIVALS is changing gaming.",
     date: "January 22, 2025",
     author: "Joshua Jones",
-    image: "/static/imgs/Card3.png",
+    image: "/static/media/Card3.png",
     content:
       `
     <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
@@ -398,7 +398,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({
                 >
                   <div className="h-48 overflow-hidden">
                     <img
-                      src={post.image || "/static/imgs/Card1.png"}
+                      src={post.image || "/static/media/Card1.png"}
                       alt={post.title}
                       className="w-full h-full object-cover"
                     />
@@ -467,7 +467,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({
               <div className="bg-[#1e1e1e] rounded-xl overflow-hidden shadow-xl">
                 <div className="h-64 md:h-80 overflow-hidden">
                   <img
-                    src={currentPost.image || "/static/imgs/Card1.png"}
+                    src={currentPost.image || "/static/media/Card1.png"}
                     alt={currentPost.title}
                     className="w-full h-full object-cover"
                   />

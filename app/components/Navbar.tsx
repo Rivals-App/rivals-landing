@@ -138,7 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 <div className="relative h-8 w-auto">
                   <img
-                    src="/static/imgs/asset 4@4x-8.png"
+                    src="/static/media/asset 4@4x-8.png"
                     alt="RIVALS Logo"
                     className="h-8 w-auto"
                   />

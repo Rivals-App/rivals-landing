@@ -18,7 +18,7 @@ const featureCardsData = [
     title: "Compete for Real Rewards",
     description:
       "Challenge friends and rivals in skill-based matches with real stakes. Play your favorite competitive games and earn rewards for your victories.",
-    image: "/static/imgs/Card2.png",
+    image: "/static/media/Card2.png",
     isMain: false,
   },
   {
@@ -26,7 +26,7 @@ const featureCardsData = [
     title: "Team Based Tournaments",
     description:
       "Join tournaments or create custom challenges with flexible rules. Whether you're playing solo or with a squad, RIVALS is built for competitive gamers",
-    image: "/static/imgs/Card5.png",
+    image: "/static/media/Card5.png",
     isMain: false,
   },
   {
@@ -34,7 +34,7 @@ const featureCardsData = [
     title: "Instant Score Validation & Payouts",
     description:
       "Our automated system tracks scores in real time. Win a match, get paid immediately. No waiting periods or complex withdrawal processes.",
-    image: "/static/imgs/Card1.png",
+    image: "/static/media/Card1.png",
     isMain: true,
   },
 
@@ -43,7 +43,7 @@ const featureCardsData = [
     title: "Custom Challenges & Matches",
     description:
       "Create personalized challenges with unique rules and stake amounts. Compete on your own terms!",
-    image: "/static/imgs/Card4.png",
+    image: "/static/media/Card4.png",
     isMain: false,
   },
   {
@@ -51,7 +51,7 @@ const featureCardsData = [
     title: "Secure & Transparent Gaming",
     description:
       "Powered by advanced anti-cheat systems and real-time verification, RIVALS ensures a fair gaming environment.",
-    image: "/static/imgs/Card3.png",
+    image: "/static/media/Card3.png",
     isMain: false,
   },
 ];
@@ -310,7 +310,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-0">
             {/* Logo */}
             <img
-              src="/static/imgs/asset 4@4x-8.png"
+              src="/static/media/asset 4@4x-8.png"
               alt="RIVALS Logo"
               className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
             />
@@ -331,7 +331,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           {/* Image Content */}
           <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 flex justify-end relative hidden md:flex">
             <img
-              src="/static/imgs/hero.png"
+              src="/static/media/hero.png"
               alt="Exciting esports action"
               className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
             />
@@ -376,7 +376,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Step 1 */}
             <div className="how-step flex flex-col md:flex-row items-center text-center md:text-right">
               <img
-                src="/static/imgs/howitworks1.png"
+                src="/static/media/howitworks1.png"
                 alt="Choose Your Game & Mode"
                 className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
               />
@@ -393,7 +393,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Step 2 */}
             <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left">
               <img
-                src="/static/imgs/howitworks2.png"
+                src="/static/media/howitworks2.png"
                 alt="Challenge & Stake"
                 className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
               />
@@ -410,7 +410,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Step 3 */}
             <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right">
               <img
-                src="/static/imgs/howitworks3.png"
+                src="/static/media/howitworks3.png"
                 alt="Play & Win"
                 className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
               />
@@ -427,7 +427,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Step 4 */}
             <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left">
               <img
-                src="/static/imgs/howitworks4.png"
+                src="/static/media/howitworks4.png"
                 alt="Get Paid Instantly"
                 className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
               />
@@ -477,7 +477,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           {/* Image Content */}
           <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
             <img
-              src="/static/imgs/tournaments.png"
+              src="/static/media/tournaments.png"
               alt="Compete in Rivals Tournaments"
               className="w-[100%] md:w-[80%] max-w-none object-contain"
             />
@@ -491,7 +491,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         >
           {/* Logo */}
           <img
-            src="/static/imgs/asset 4@4x-8.png"
+            src="/static/media/asset 4@4x-8.png"
             alt="RIVALS Logo"
             className="w-24 h-auto mb-6"
           />
