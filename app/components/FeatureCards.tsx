@@ -14,7 +14,7 @@ interface FeatureCardsProps {
   cards: FeatureCard[];
 }
 
-const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
+const FeatureCards: React.FC<FeatureCardsProps> = ({ cards }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
