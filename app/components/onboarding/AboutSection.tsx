@@ -365,24 +365,24 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           {/* How It Works Section */}
           <div
             ref={howItWorksSectionRef}
-            className="how-it-works w-full py-8 px-6 md:px-[120px] sm:px-12 rounded-lg"
+            className="how-it-works w-full py-8 px-6 md:px-32 sm:px-12 rounded-lg"
           >
             <h2 className="hiw-title text-3xl md:text-4xl font-bold mb-4 text-center">
               HOW <span className="text-[#02F199]">RIVALS</span> WORKS
             </h2>
-            <p className="hiw-subtitle text-gray-300 mb-8 md:mb-32 text-center text-base md:text-lg">
+            <p className="hiw-subtitle text-gray-300 mb-8 md:mb-16 text-center text-base md:text-lg">
               RIVALS makes competitive gaming seamless and rewarding.
             </p>
 
-            <div className="how-steps flex flex-col gap-6 md:gap-8">
+            <div className="how-steps flex flex-col gap-6 md:gap-8 items-center">
               {/* Step 1 */}
-              <div className="how-step flex flex-col md:flex-row items-center text-center md:text-right">
+              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-3xl">
                 <img
                   src="/static/media/HowItWorks1.png"
                   alt="Choose Your Game & Mode"
-                  className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
+                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
                 />
-                <div className="md:w-[70%] md:pl-6">
+                <div className="md:w-[60%] md:pl-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                     Choose Your Game & Mode
                   </h4>
@@ -394,13 +394,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Step 2 */}
-              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left">
+              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-3xl">
                 <img
                   src="/static/media/HowItWorks2.png"
                   alt="Challenge & Stake"
-                  className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
+                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
                 />
-                <div className="md:w-[70%] md:pr-6">
+                <div className="md:w-[60%] md:pr-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                     Challenge & Stake
                   </h4>
@@ -412,13 +412,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Step 3 */}
-              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right">
+              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-3xl">
                 <img
                   src="/static/media/HowItWorks3.png"
                   alt="Play & Win"
-                  className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
+                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
                 />
-                <div className="md:w-[70%] md:pl-6">
+                <div className="md:w-[60%] md:pl-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                     Play & Win
                   </h4>
@@ -430,13 +430,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Step 4 */}
-              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left">
+              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-3xl">
                 <img
                   src="/static/media/HowItWorks4.png"
                   alt="Get Paid Instantly"
-                  className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
+                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
                 />
-                <div className="md:w-[70%] md:pr-6">
+                <div className="md:w-[60%] md:pr-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                     Get Paid Instantly
                   </h4>
