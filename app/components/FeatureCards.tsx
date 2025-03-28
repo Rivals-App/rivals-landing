@@ -62,6 +62,31 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
     setIsDragging(false);
   };
 
+  // Add this useEffect to make touch events non-passive
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    // Options for the event listener
+    const options = { passive: false };
+
+    // Add event listeners with the non-passive option
+    const touchStartHandler = (e: TouchEvent) => handleDragStart(e as unknown as React.TouchEvent);
+    const touchMoveHandler = (e: TouchEvent) => handleDragMove(e as unknown as React.TouchEvent);
+    const touchEndHandler = () => handleDragEnd();
+
+    scrollContainer.addEventListener('touchstart', touchStartHandler, options);
+    scrollContainer.addEventListener('touchmove', touchMoveHandler, options);
+    scrollContainer.addEventListener('touchend', touchEndHandler);
+
+    // Clean up
+    return () => {
+      scrollContainer.removeEventListener('touchstart', touchStartHandler);
+      scrollContainer.removeEventListener('touchmove', touchMoveHandler);
+      scrollContainer.removeEventListener('touchend', touchEndHandler);
+    };
+  }, []);
+
   const renderTitle = (card: FeatureCard) => {
     if (!card.highlight) {
       return <h3 className="text-3xl font-bold text-white mb-2">{card.title}</h3>;
@@ -87,9 +112,6 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
       onMouseMove={handleDragMove}
       onMouseUp={handleDragEnd}
       onMouseLeave={handleDragEnd}
-      onTouchStart={handleDragStart}
-      onTouchMove={handleDragMove}
-      onTouchEnd={handleDragEnd}
       style={{
         scrollbarWidth: 'none', /* Firefox */
         msOverflowStyle: 'none', /* IE and Edge */
