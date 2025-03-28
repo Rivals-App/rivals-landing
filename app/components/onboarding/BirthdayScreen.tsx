@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
@@ -65,8 +66,7 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
     const age = currentDate.getFullYear() - selectedDate.getFullYear();
     const isOver18 =
       age > 18 ||
-      (age === 18 &&
-        currentDate.getMonth() >= selectedDate.getMonth());
+      (age === 18 && currentDate.getMonth() >= selectedDate.getMonth());
 
     if (!isOver18) {
       setError("You must be at least 18 years old to register.");
@@ -144,9 +144,7 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
               required
             />
           </div>
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           <div className="w-full flex flex-row justify-between align-bottom">
             <button
               type="button"

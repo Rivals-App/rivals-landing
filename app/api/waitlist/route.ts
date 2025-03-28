@@ -1,10 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-
 const supabase = createClient(
-  process.env.SUPABASE_URL || "",
-  process.env.SUPABASE_ANON_KEY || ""
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    "https://macguoyqxeijpszqwvbm.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hY2d1b3lxeGVpanBzenF3dmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxODQyODYsImV4cCI6MjA1ODc2MDI4Nn0.jtNSW59CnPNgNMWvhG6drk7ft2YilUATeMyfAI6YKgs"
 );
 
 function generateReferralCode(email: string): string {
@@ -31,7 +32,8 @@ export async function POST(req: Request) {
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
   response.headers.set("X-Content-Type-Options", "nosniff");
 
-  const { firstName, lastName, email, referredBy } = await req.json();
+  const { firstName, lastName, email, referredBy, preferredConsole, birthday } =
+    await req.json();
 
   if (!firstName || !lastName || !email) {
     return NextResponse.json(
@@ -45,18 +47,50 @@ export async function POST(req: Request) {
 
     // Check if referral code is valid if provided
     if (referredBy) {
-      const { data: referrerExists } = await supabase
+      const { data: referrerExists, error: referrerError } = await supabase
         .from("waitlist")
         .select("referral_code")
         .eq("referral_code", referredBy)
         .single();
 
-      if (!referrerExists) {
+      if (referrerError || !referrerExists) {
         return NextResponse.json(
           { error: "Invalid referral code." },
           { status: 400 }
         );
       }
+    }
+
+    // Validate preferred console
+    const validConsoles = ["PC", "PS", "XBOX", "Other"];
+    const consoleValue =
+      preferredConsole && validConsoles.includes(preferredConsole)
+        ? preferredConsole
+        : null;
+
+    // Validate birthday if provided (ensure they're at least 18)
+    let birthdayValue = null;
+    if (birthday) {
+      const birthDate = new Date(birthday);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+
+      if (age < 18) {
+        return NextResponse.json(
+          { error: "You must be at least 18 years old to register." },
+          { status: 400 }
+        );
+      }
+
+      birthdayValue = birthday;
     }
 
     // Insert new user
@@ -70,44 +104,65 @@ export async function POST(req: Request) {
           referral_code: referralCode,
           referred_by: referredBy || null,
           position_boost: 0,
+          preferred_console: consoleValue,
+          birthday: birthdayValue,
         },
       ])
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error("Error inserting into waitlist:", error);
+      throw error;
+    }
 
     // If there's a referrer, update their stats
     if (referredBy) {
-      const { data: referrerData } = await supabase
+      const { data: referrerData, error: referrerDataError } = await supabase
         .from("waitlist")
         .select("id, referral_code")
         .eq("referral_code", referredBy)
         .single();
 
+      if (referrerDataError) {
+        console.error("Error getting referrer data:", referrerDataError);
+      }
+
       if (referrerData) {
         // Count referrer's total referrals
-        const { count: referralCount } = await supabase
+        const { count: referralCount, error: countError } = await supabase
           .from("waitlist")
           .select("id", { count: "exact", head: true })
           .eq("referred_by", referredBy);
+
+        if (countError) {
+          console.error("Error counting referrals:", countError);
+        }
 
         // Calculate new position boost
         const positionBoost = Math.floor((referralCount ?? 0) / 5) * 100;
 
         // Update referrer's position boost
-        await supabase
+        const { error: updateError } = await supabase
           .from("waitlist")
           .update({ position_boost: positionBoost })
           .eq("id", referrerData.id);
+
+        if (updateError) {
+          console.error("Error updating position boost:", updateError);
+        }
       }
     }
 
     // Get user's position
-    const { count: position } = await supabase
+    const { count: position, error: positionError } = await supabase
       .from("waitlist")
       .select("id", { count: "exact", head: true })
       .lt("id", data.id);
+
+    if (positionError) {
+      console.error("Error getting position:", positionError);
+    }
 
     return NextResponse.json(
       {

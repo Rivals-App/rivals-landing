@@ -5,25 +5,45 @@ import { gsap } from "gsap";
 import { FaArrowLeft } from "react-icons/fa";
 
 interface ConfirmationScreenProps {
+  userData: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    preferredConsole: string;
+    position: number;
+    referralCode: string;
+    referrals: number;
+    referralsNeeded: number;
+  };
   onBack: () => void;
-  onGoToAbout?: () => void; // New prop for navigating to About section
+  onGoToAbout?: () => void;
 }
 
 const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
+  userData,
   onBack,
   onGoToAbout,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  // const [copied, setCopied] = useState(false);
+
+  // const referralLink =
+  //   typeof window !== "undefined"
+  //     ? `${window.location.origin}/waitlist?ref=${userData.referralCode}`
+  //     : "";
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     // Set initial states
-    gsap.set(".conf-title, .conf-subtitle, .conf-icon, .conf-back", {
-      opacity: 0,
-      y: 20,
-    });
+    gsap.set(
+      ".conf-title, .conf-subtitle, .conf-icon, .conf-back, .referral-section",
+      {
+        opacity: 0,
+        y: 20,
+      }
+    );
 
     // Create animation timeline
     const tl = gsap.timeline();
@@ -37,7 +57,7 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
       .to(".conf-title, .conf-subtitle", {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: 0.6,
         stagger: 0.2,
         ease: "power3.out",
       })
@@ -51,6 +71,16 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
           ease: "back.out(1.7)",
         },
         "-=0.4"
+      )
+      .to(
+        ".referral-section",
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+        },
+        "-=0.2"
       );
 
     return () => {
@@ -58,9 +88,20 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
     };
   }, []);
 
+  // const copyToClipboard = () => {
+  //   if (navigator.clipboard && referralLink) {
+  //     navigator.clipboard.writeText(referralLink);
+  //     setCopied(true);
+
+  //     // Reset the copied state after 3 seconds
+  //     setTimeout(() => {
+  //       setCopied(false);
+  //     }, 3000);
+  //   }
+  // };
+
   return (
-    <div className="h-full w-full px-12 flex flex-col items-center justify-center">
-      {" "}
+    <div className="h-full w-full px-4 md:px-12 flex flex-col items-center justify-center">
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
         {/* Back button */}
         <button
@@ -86,40 +127,36 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
         <h2 className="conf-title text-3xl font-bold mb-6 text-center">
           You're All Set!
         </h2>
-        <p className="conf-subtitle text-gray-300 mb-8 text-center">
-          Thanks for joining our waitlist. We'll notify you when we launch! In
-          the meantime feel free to try our{" "}
-          <a
-            href="https://getrivals.com/authentication"
-            target="_blank"
-            className="text-[#02F199] border-b border-[#02F199]"
-          >
-            demo
-          </a>{" "}
-          or go back to our{" "}
-          <a
-            onClick={onGoToAbout || onBack}
-            className="text-[#02F199] border-b border-[#02F199] bg-transparent cursor-pointer"
-          >
-            main page
-          </a>
-        </p>
 
-        <div className="conf-icon w-24 h-24 rounded-full bg-[#02F199]/20 flex items-center justify-center mx-auto scale-0">
-          <svg
-            className="w-12 h-12 text-[#02F199]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
+        <div className="conf-subtitle text-gray-300 mb-8 text-center">
+          <p className="mb-2">
+            Thanks for joining our waitlist, {userData.firstName}!
+          </p>
+          <p className="mb-4">
+            Your position in line:{" "}
+            <span className="text-[#02F199] font-bold">
+              #{userData.position}
+            </span>
+          </p>
+          <p>
+            We'll notify you at{" "}
+            <span className="font-medium">{userData.email}</span> when we
+            launch! In the meantime feel free to try our{" "}
+            <a
+              href="https://getrivals.com/authentication"
+              target="_blank"
+              className="text-[#02F199] border-b border-[#02F199]"
+            >
+              demo
+            </a>{" "}
+            or go back to our{" "}
+            <a
+              onClick={onGoToAbout || onBack}
+              className="text-[#02F199] border-b border-[#02F199] bg-transparent cursor-pointer"
+            >
+              main page
+            </a>
+          </p>
         </div>
       </div>
     </div>

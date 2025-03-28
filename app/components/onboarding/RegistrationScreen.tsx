@@ -1,22 +1,31 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 interface RegistrationScreenProps {
   email: string;
+  firstName: string;
+  lastName: string;
   onEmailChange: (email: string) => void;
-  onContinue: () => void;
+  onFirstNameChange: (firstName: string) => void;
+  onLastNameChange: (lastName: string) => void;
+  onContinue: (preferredConsole: string) => void;
   onBack: () => void;
 }
 
 const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
   email,
+  firstName,
+  lastName,
   onEmailChange,
+  onFirstNameChange,
+  onLastNameChange,
   onContinue,
   onBack,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [preferredConsole, setPreferredConsole] = React.useState<string>("");
+  const [preferredConsole, setPreferredConsole] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const container = containerRef.current;
@@ -51,10 +60,30 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email.trim() && email.includes("@")) {
-      console.log("Preferred Console:", preferredConsole); // Log the selected console
-      onContinue();
+    setError("");
+
+    if (!firstName.trim()) {
+      setError("Please enter your first name");
+      return;
     }
+
+    if (!lastName.trim()) {
+      setError("Please enter your last name");
+      return;
+    }
+
+    if (!email.trim() || !email.includes("@")) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    if (!preferredConsole) {
+      setError("Please select your preferred console");
+      return;
+    }
+
+    // Pass the selected console to the parent component
+    onContinue(preferredConsole);
   };
 
   return (
@@ -80,6 +109,28 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
         </p>
 
         <form onSubmit={handleSubmit} className="reg-form space-y-4">
+          <div className="flex space-x-4">
+            <div className="w-1/2">
+              <input
+                type="text"
+                placeholder="First Name"
+                className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+                value={firstName}
+                onChange={(e) => onFirstNameChange(e.target.value)}
+                required
+              />
+            </div>
+            <div className="w-1/2">
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+                value={lastName}
+                onChange={(e) => onLastNameChange(e.target.value)}
+                required
+              />
+            </div>
+          </div>
           <div>
             <input
               type="email"
@@ -106,8 +157,12 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
               <option value="Other">Other</option>
             </select>
           </div>
+
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
           <div className="w-full flex flex-row justify-between align-bottom">
             <button
+              type="button"
               onClick={onBack}
               aria-label="Go back"
               className="w-1/3 py-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-400 transition-colors"

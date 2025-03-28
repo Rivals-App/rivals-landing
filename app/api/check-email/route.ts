@@ -2,15 +2,16 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL || "",
-  process.env.SUPABASE_ANON_KEY || ""
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    "https://macguoyqxeijpszqwvbm.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hY2d1b3lxeGVpanBzenF3dmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxODQyODYsImV4cCI6MjA1ODc2MDI4Nn0.jtNSW59CnPNgNMWvhG6drk7ft2YilUATeMyfAI6YKgs"
 );
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    // Get user's record
     const { data: userData, error: userError } = await supabase
       .from("waitlist")
       .select("id, referral_code, position_boost")
@@ -18,35 +19,36 @@ export async function POST(req: Request) {
       .single();
 
     if (userError && userError.code !== "PGRST116") {
+      console.error("Error fetching user data:", userError);
       throw userError;
     }
 
     if (userData) {
-      // Count referrals for this user
       const { count: referralCount, error: countError } = await supabase
         .from("waitlist")
         .select("id", { count: "exact", head: true })
         .eq("referred_by", userData.referral_code);
 
       if (countError) {
+        console.error("Error counting referrals:", countError);
         throw countError;
       }
 
-      // Ensure referralCount is not null, default to 0 if it is
       const safeReferralCount = referralCount ?? 0;
 
-      // Calculate adjusted position based on referrals
-      const positionBoost = Math.floor(safeReferralCount / 5) * 100; // Move up 100 positions for every 5 referrals
+      const positionBoost = Math.floor(safeReferralCount / 5) * 100;
 
-      // If position boost has changed, update it
       if (positionBoost !== userData.position_boost) {
-        await supabase
+        const { error: updateError } = await supabase
           .from("waitlist")
           .update({ position_boost: positionBoost })
           .eq("id", userData.id);
+
+        if (updateError) {
+          console.error("Error updating position boost:", updateError);
+        }
       }
 
-      // Calculate final position
       const basePosition = await getBasePosition(userData.id);
       const finalPosition = Math.max(1, basePosition - positionBoost);
 
@@ -56,7 +58,7 @@ export async function POST(req: Request) {
           position: finalPosition,
           referralCode: userData.referral_code,
           referrals: safeReferralCount,
-          referralsNeeded: 5 - (safeReferralCount % 5), // Referrals needed for next boost
+          referralsNeeded: 5 - (safeReferralCount % 5),
         },
         { status: 200 }
       );
@@ -79,6 +81,7 @@ async function getBasePosition(userId: number) {
     .lt("id", userId);
 
   if (error) {
+    console.error("Error getting base position:", error);
     throw error;
   }
 
