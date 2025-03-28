@@ -156,14 +156,14 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Blog
               </button>
-              <Link
+              {/* <Link
                 href="/investors"
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
                   pathname === "/investors" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
                 Investors
-              </Link>
+              </Link> */}
               <Link
                 href="https://www.rivalsapp.com/terms-of-service"
                 target="_blank"
