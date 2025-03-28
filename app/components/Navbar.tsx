@@ -156,15 +156,7 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Blog
               </button>
-              <Link
-                href="https://www.rivalsapp.com/terms-of-service"
-                target="_blank"
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
-                  pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
-                }`}
-              >
-                Legal
-              </Link>
+              
             <Link
             href="https://getrivals.com"
             target="_blank"
@@ -248,13 +240,7 @@ const Navbar: React.FC<NavbarProps> = ({
           >
             Blog
           </button>
-          <Link
-            href="/legal"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Legal
-          </Link>
+      
          <Link
             href="https://getrivals.com"
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
