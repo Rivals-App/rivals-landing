@@ -128,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({
             : "bg-[#121212]/25 backdrop-blur-md"
         }`}
       >
-        <div className="max-w-[99vw] mx-auto px-3 sm:px-4 md:px-6">
+        <div className="max-w-[99vw] mx-auto px-6 sm:px-8 md:px-12">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -156,14 +156,6 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Blog
               </button>
-              {/* <Link
-                href="/investors"
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
-                  pathname === "/investors" ? "text-[#02F199]" : "text-gray-300"
-                }`}
-              >
-                Investors
-              </Link> */}
               <Link
                 href="https://www.rivalsapp.com/terms-of-service"
                 target="_blank"
@@ -173,6 +165,15 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Legal
               </Link>
+            <Link
+            href="https://getrivals.com"
+            target="_blank"
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
+                  pathname === "https://getrivals.com" ? "text-[#02F199]" : "text-gray-300"
+                }`}
+              >
+            Try Our Demo
+          </Link>
               <button
                 onClick={handleWaitlistClick}
                 className="inline-flex items-center px-6 py-2 text-md font-thin rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
@@ -247,13 +248,6 @@ const Navbar: React.FC<NavbarProps> = ({
           >
             Blog
           </button>
-          {/* <Link
-            href="/investors"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Investors
-          </Link> */}
           <Link
             href="/legal"
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
@@ -261,6 +255,14 @@ const Navbar: React.FC<NavbarProps> = ({
           >
             Legal
           </Link>
+         <Link
+            href="https://getrivals.com"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Try Our Demo
+          </Link>
+          
           <div className="px-3 py-2 mt-4">
             <button
               className="block py-2 w-full text-center rounded-full text-base font-medium bg-[#02F199] text-[#0c1622]"
