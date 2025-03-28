@@ -16,49 +16,56 @@ interface FeatureCardsProps {
 
 const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
-  // Find the index of the main card (or default to middle card)
+  // Find the index of the main card (or default to the first card)
   const mainCardIndex = cards.findIndex((card) => card.isMain);
-  const centerIndex =
-    mainCardIndex !== -1 ? mainCardIndex : Math.floor(cards.length / 2);
+  const centerIndex = mainCardIndex !== -1 ? mainCardIndex : 0; // Changed to start from 0
 
-  // Effect to measure container width
+  // Initial scroll setup
   useEffect(() => {
     if (scrollContainerRef.current) {
-      setContainerWidth(scrollContainerRef.current.offsetWidth);
-    }
-  }, []);
-
-  // Effect to scroll to initial position on mobile
-  useEffect(() => {
-    if (isMobileView && scrollContainerRef.current && containerWidth > 0) {
-      const cardWidth = 250; // Same as in the CSS
-      const cardMargin = 8;
+      const cardWidth = 400;
+      const cardMargin = 16;
       const cardSpacing = cardWidth + cardMargin * 2;
-
-      // Calculate the scroll position to center the main card
-      const totalOffset = centerIndex * cardSpacing;
-      const centeringOffset = (window.innerWidth - cardWidth) / 2;
-      const scrollPosition = Math.max(0, totalOffset - centeringOffset);
-
-      // Scroll to position
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollLeft = scrollPosition;
-        }
-      }, 50);
+      const containerWidth = scrollContainerRef.current.offsetWidth;
+      const scrollPosition = centerIndex * cardSpacing - (containerWidth - cardWidth) / 2;
+      
+      // Only apply scroll if it won't prevent left scrolling
+      if (scrollPosition > 0) {
+        scrollContainerRef.current.scrollLeft = scrollPosition;
+      }
     }
-  }, [isMobileView, containerWidth, centerIndex]);
+  }, [centerIndex, cards.length]);
+
+  // Mouse and touch event handlers for dragging
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true);
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    if (scrollContainerRef.current) {
+      setStartX(clientX);
+      setScrollLeft(scrollContainerRef.current.scrollLeft);
+    }
+  };
+
+  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const deltaX = clientX - startX;
+    scrollContainerRef.current.scrollLeft = scrollLeft - deltaX;
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
 
   const renderTitle = (card: FeatureCard) => {
     if (!card.highlight) {
-      return (
-        <h3 className="text-lg font-semibold text-white mb-2">{card.title}</h3>
-      );
+      return <h3 className="text-3xl font-bold text-white mb-2">{card.title}</h3>;
     }
-
-    // Split the title to insert the highlighted part
     const parts = card.title.split(card.highlight);
     return (
       <h3 className="text-lg font-semibold text-white mb-2">
@@ -69,69 +76,61 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ isMobileView, cards }) => {
     );
   };
 
-  // Mobile view
-  if (isMobileView) {
-    return (
-      <div className="w-full mb-10 mt-5 h-[336px]" ref={scrollContainerRef}>
-        <div className="overflow-x-auto scrollbar-hide snap-x snap-mandatory">
-          <div className="flex px-[calc((100vw-300px)/2)]">
-            {cards.map((card) => (
-              <div
-                key={card.id}
-                className={`relative flex-shrink-0 ${
-                  card.isMain ? "w-[240px] h-[336px]" : "w-[240px] h-[336px]"
-                } mx-3 rounded-xl overflow-hidden border border-white/10 shadow-lg snap-center`}
-              >
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-between">
-                  {/* Heading at the top */}
-                  <div>
-                    {renderTitle(card)}
-                  </div>
-                  {/* Description at the bottom */}
-                  <div>
-                    <p className="text-sm text-gray-300">{card.description}</p>
-                  </div>
+  const baseWidth = 400;
+  const baseHeight = 600;
+
+  return (
+    <div
+      className="w-full mb-10 mt-5 h-[650px] overflow-x-auto overflow-y-hidden select-none scrollbar-hide"
+      ref={scrollContainerRef}
+      onMouseDown={handleDragStart}
+      onMouseMove={handleDragMove}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
+      onTouchStart={handleDragStart}
+      onTouchMove={handleDragMove}
+      onTouchEnd={handleDragEnd}
+      style={{
+        scrollbarWidth: 'none', /* Firefox */
+        msOverflowStyle: 'none', /* IE and Edge */
+      }}
+    >
+      <div className="flex" style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
+        {cards.map((card) => {
+          const scale = 1;
+          const width = baseWidth * scale;
+          const height = baseHeight * scale;
+          return (
+            <div
+              key={card.id}
+              className="relative flex-shrink-0 mx-4 rounded-xl overflow-hidden border border-white/10 shadow-lg transition-transform duration-300"
+              style={{
+                width: `${width}px`,
+                height: `${height}px`,
+                transform: `translateY(0px)`,
+              }}
+            >
+              <img
+                src={card.image}
+                alt={card.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-between">
+                <div>{renderTitle(card)}</div>
+                <div>
+                  <p className="text-m text-gray-300">{card.description}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Desktop view
-  return (
-    <div className="w-full flex justify-center items-end mb-10 mt-5">
-      {cards.map((card) => (
-        <div
-          key={card.id}
-          className={`relative ${
-            card.isMain ? "w-[240px] h-[400px] -mt-12" : "w-[240px] h-[400px]"
-          } mx-3 rounded-xl overflow-hidden border border-white/10 shadow-lg`}
-        >
-        <img
-          src={card.image}
-          alt={card.title}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 flex flex-col justify-between">
-          {/* Heading at the top */}
-          <div>
-            {renderTitle(card)}
-          </div>
-          {/* Description at the bottom */}
-            <div>
-              <p className="text-sm text-gray-300">{card.description}</p>
             </div>
-          </div>
-        </div>
-      ))}
+          );
+        })}
+      </div>
+
+      <style jsx>{`
+        div::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, Opera */
+        }
+      `}</style>
     </div>
   );
 };

@@ -384,11 +384,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 />
                 <div className="md:w-[60%] md:pl-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
-                    Choose Your Game & Mode
+                    Explore & Create Matches
                   </h4>
                   <p className="text-sm md:text-base text-gray-300">
-                    Select from a variety of custom RIVALS games and supported
-                    games like DOTA 2.
+                    Users browse the active market of matches or create their own to compete.
                   </p>
                 </div>
               </div>
@@ -420,11 +419,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 />
                 <div className="md:w-[60%] md:pl-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
-                    Play & Win
+                    Compete & Invite
                   </h4>
                   <p className="text-sm md:text-base text-gray-300">
-                    Compete in real-time matches with automated score validation
-                    and our own ranking system.
+                    Players join matches, compete against opponents, or can invite friends. Live data integrations provides real-time statistics.
                   </p>
                 </div>
               </div>
@@ -438,11 +436,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 />
                 <div className="md:w-[60%] md:pr-6">
                   <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
-                    Get Paid Instantly
+                    Win & Instant Withdrawals
                   </h4>
                   <p className="text-sm md:text-base text-gray-300">
-                    Receive your winnings instantly with our secure payout
-                    system.
+                    After winning, users are able to instantly withdraw funds via traditional bank accounts or crypto wallets.
                   </p>
                 </div>
               </div>
