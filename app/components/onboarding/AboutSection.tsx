@@ -309,7 +309,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-0">
               {/* Logo */}
               <img
-                src="/static/media/Logo2.png"
+                src="/static/media/Logo1.png"
                 alt="RIVALS Logo"
                 className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
               />
