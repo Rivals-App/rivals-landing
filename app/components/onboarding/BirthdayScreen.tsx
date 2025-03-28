@@ -16,18 +16,9 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
   onBack,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dateInput, setDateInput] = useState<string>("");
-
-  // Format the initial birthday value if it exists
-  useEffect(() => {
-    if (birthday) {
-      const date = new Date(birthday);
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const year = date.getFullYear();
-      setDateInput(`${day}/${month}/${year}`);
-    }
-  }, []);
+  const [month, setMonth] = useState<string>("");
+  const [year, setYear] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const container = containerRef.current;
@@ -60,44 +51,32 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
     };
   }, []);
 
-  // Handle date input changes with formatting
-  const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-
-    // Remove any non-digit characters
-    value = value.replace(/\D/g, "");
-
-    // Format with slashes (DD/MM/YYYY)
-    if (value.length > 0) {
-      if (value.length <= 2) {
-        value = value;
-      } else if (value.length <= 4) {
-        value = `${value.slice(0, 2)}/${value.slice(2)}`;
-      } else {
-        value = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(
-          4,
-          8
-        )}`;
-      }
-    }
-
-    setDateInput(value);
-
-    // Only update the actual birthday value if we have a complete date
-    if (value.length === 10) {
-      const [day, month, year] = value.split("/");
-      const formattedDate = `${year}-${month}-${day}`;
-      onBirthdayChange(formattedDate);
-    } else {
-      onBirthdayChange("");
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (birthday) {
-      onContinue();
+
+    if (!month || !year) {
+      setError("Please select both month and year.");
+      return;
     }
+
+    const currentDate = new Date();
+    const selectedDate = new Date(parseInt(year), parseInt(month) - 1);
+
+    const age = currentDate.getFullYear() - selectedDate.getFullYear();
+    const isOver18 =
+      age > 18 ||
+      (age === 18 &&
+        currentDate.getMonth() >= selectedDate.getMonth());
+
+    if (!isOver18) {
+      setError("You must be at least 18 years old to register.");
+      return;
+    }
+
+    setError("");
+    const formattedDate = `${year}-${month.padStart(2, "0")}-01`;
+    onBirthdayChange(formattedDate);
+    onContinue();
   };
 
   return (
@@ -119,25 +98,58 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
           One More Step
         </h2>
         <p className="bday-subtitle text-gray-300 mb-8 text-center">
-          Please enter your date of birth
+          Please enter your birth month and year
         </p>
 
         <form onSubmit={handleSubmit} className="bday-form space-y-4">
           <div className="relative">
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="DD/MM/YYYY"
+            <select
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
               className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
-              value={dateInput}
-              onChange={handleDateInputChange}
-              maxLength={10}
+              required
+            >
+              <option value="" disabled>
+                Select Month
+              </option>
+              {[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ].map((monthName, index) => (
+                <option key={index} value={(index + 1).toString()}>
+                  {monthName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="relative">
+            <input
+              type="number"
+              placeholder="Enter Year"
+              className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              min={1900}
+              max={new Date().getFullYear()}
               required
             />
           </div>
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
           <div className="w-full flex flex-row justify-between align-bottom">
             <button
-              type="button" // Changed to type="button" to avoid form submission
+              type="button"
               onClick={onBack}
               aria-label="Go back"
               className="bday-back w-1/3 py-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-400 transition-colors"
@@ -147,7 +159,6 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
             <button
               type="submit"
               className="w-2/3 ml-4 py-2 bg-[#02F199] text-[#0c412e] font-semibold rounded-lg hover:bg-[#02F199]/90 transition-colors"
-              disabled={dateInput.length !== 10}
             >
               Complete Registration
             </button>

@@ -177,7 +177,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={handleWaitlistClick}
                 className="inline-flex items-center px-6 py-2 text-md font-thin rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
               >
-                <span>Join our waitlist</span>
+                <span>Join Waitlist</span>
               </button>
             </div>
 
@@ -247,13 +247,13 @@ const Navbar: React.FC<NavbarProps> = ({
           >
             Blog
           </button>
-          <Link
+          {/* <Link
             href="/investors"
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Investors
-          </Link>
+          </Link> */}
           <Link
             href="/legal"
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"

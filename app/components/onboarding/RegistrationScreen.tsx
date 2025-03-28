@@ -16,6 +16,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
   onBack,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [preferredConsole, setPreferredConsole] = React.useState<string>("");
 
   useEffect(() => {
     const container = containerRef.current;
@@ -51,13 +52,13 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email.trim() && email.includes("@")) {
+      console.log("Preferred Console:", preferredConsole); // Log the selected console
       onContinue();
     }
   };
 
   return (
     <div className="h-full w-full px-12 flex flex-col items-center justify-center">
-      {" "}
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
         {/* Logo */}
         <div className="flex justify-center mb-8">
@@ -88,6 +89,22 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
               onChange={(e) => onEmailChange(e.target.value)}
               required
             />
+          </div>
+          <div>
+            <select
+              value={preferredConsole}
+              onChange={(e) => setPreferredConsole(e.target.value)}
+              className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              required
+            >
+              <option value="" disabled>
+                Preferred Console
+              </option>
+              <option value="PC">PC</option>
+              <option value="PS">PlayStation</option>
+              <option value="XBOX">Xbox</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div className="w-full flex flex-row justify-between align-bottom">
             <button

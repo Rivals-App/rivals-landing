@@ -248,9 +248,9 @@ const BlogSection: React.FC<BlogSectionProps> = ({
 
       <div className="flex-grow flex flex-col items-start pt-20 md:pt-18 px-4 md:px-8 max-w-7xl mx-auto w-full">
         {/* Blog Header - Moved to the left */}
-        <div className="blog-header w-full mb-8">
-          <h1 className="text-5xl md:text-6xl font-thin text-white">
-            Rivals Blog
+        <div className="blog-header w-full max-w-6xl mb-8">
+           <h1 className="text-4xl md:text-5xl font-bold text-white text-center">
+             RIVALS <span className="text-[#02F199]">BLOG</span>
           </h1>
         </div>
 
