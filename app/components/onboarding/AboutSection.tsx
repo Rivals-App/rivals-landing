@@ -333,7 +333,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Image Content */}
             <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 flex justify-end relative hidden md:flex">
               <img
-                src="/static/media/hero.png"
+                src="/static/media/Hero.png"
                 alt="Exciting esports action"
                 className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
               />
@@ -378,7 +378,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               {/* Step 1 */}
               <div className="how-step flex flex-col md:flex-row items-center text-center md:text-right">
                 <img
-                  src="/static/media/howitworks1.png"
+                  src="/static/media/HowItWorks1.png"
                   alt="Choose Your Game & Mode"
                   className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
                 />
@@ -396,7 +396,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               {/* Step 2 */}
               <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left">
                 <img
-                  src="/static/media/howitworks2.png"
+                  src="/static/media/HowItWorks2.png"
                   alt="Challenge & Stake"
                   className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
                 />
@@ -414,7 +414,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               {/* Step 3 */}
               <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right">
                 <img
-                  src="/static/media/howitworks3.png"
+                  src="/static/media/HowItWorks3.png"
                   alt="Play & Win"
                   className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
                 />
@@ -432,7 +432,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               {/* Step 4 */}
               <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left">
                 <img
-                  src="/static/media/howitworks4.png"
+                  src="/static/media/HowItWorks4.png"
                   alt="Get Paid Instantly"
                   className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
                 />
