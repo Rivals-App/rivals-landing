@@ -14,38 +14,210 @@ if (typeof window !== "undefined") {
 const blogPosts = [
   {
     id: "1",
-    title: "The Future of Competitive Gaming",
+    title: "Unlocking Earnings with RIVALS Gaming",
     excerpt:
-      "How blockchain technology is revolutionizing the competitive gaming industry.",
+      "How Casual Gamers Can Monetize Their Playtime and Compete for Real Rewards",
     date: "March 15, 2025",
-    author: "Alex Johnson",
+    author: "Joshua Jones",
     image: "/static/imgs/Card1.png", // Using existing images
-    content:
-      "The competitive gaming landscape is evolving at a rapid pace. With the integration of blockchain technology, players can now enjoy true ownership of in-game assets, verifiable results, and transparent reward systems. This article explores how RIVALS is leading this revolution and what it means for gamers worldwide.",
-    tags: ["Gaming", "Blockchain", "Esports"],
+    content: `
+      <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+        <h1 style="margin-bottom: 0.5em; font-size: 30px;">The Rise of Gaming as a Source of Income</h1>
+        <p style="margin-bottom: 1.5em;">
+          Gaming is no longer just a hobby. What was once seen as mere entertainment has evolved into a thriving industry where players can turn their skills into income. While professional esports players and streamers dominate the headlines, casual gamers also have lucrative opportunities to monetize their playtime. Thanks to platforms like RIVALS, gamers of all levels can now engage in skill-based competitions and earn real money without the need for sponsorships or large audiences.
+        </p>
+
+        <h2 style="margin-bottom: 0.5em; font-size: 30px;">How Casual Gamers Can Earn Money</h2>
+        <p style="margin-bottom: 1.5em;">
+          Casual gamers can monetize their playtime in various ways, but many traditional options require extensive effort. Streaming on platforms like Twitch or YouTube demands a significant following, and content creation involves hours of editing. However, RIVALS simplifies the process by allowing gamers to stake money in peer-to-peer competitions, offering immediate earning potential based on skill rather than popularity.
+        </p>
+
+        <h3 style="margin-bottom: 0.5em; font-size: 30px;">1. Peer-to-Peer Competitions</h3>
+        <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+          <li>RIVALS enables casual gamers to compete in 1v1 or team-based matchups, where players stake a fixed amount against each other.</li>
+          <li>Players can challenge their friends for friendly wagers or matchmake against other RIVALS players to test their skills and earn real money.</li>
+          <li>The platform's real-time score validation ensures fair play, eliminating disputes and guaranteeing swift payouts.</li>
+        </ul>
+
+        <h3 style="margin-bottom: 0.5em; font-size: 30px;">2. Tournaments with Cash Prizes</h3>
+        <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+          <li>Unlike traditional gaming competitions that require invites or professional status, RIVALS hosts open tournaments for all skill levels.</li>
+          <li>Players can enter and win prize pools based on their performance, making it accessible for casual gamers looking to test their skills.</li>
+          <li>If it's a 1v1 tournament, simply join and compete. If it's a team-based tournament, you can either join with your friends as a team or sign up as a free agent to be matched with other players looking for teammates.</li>
+        </ul>
+
+        <h3 style="margin-bottom: 0.5em; font-size: 30px;">3. Skill-Based Matchmaking for Fair Play</h3>
+        <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+          <li>Many gamers hesitate to stake money due to fears of facing high-ranked players. RIVALS’ ranking system ensures balanced matchmaking, so competitors face opponents of similar skill levels.</li>
+          <li>This creates a fair ecosystem where earnings are based on skill rather than being at the mercy of more experienced players.</li>
+        </ul>
+
+        <h2 style="margin-bottom: 0.5em; font-size: 30px;">Common Mistakes to Avoid When Monetizing Gameplay</h2>
+        <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+          <li><strong>Ignoring Skill Progression:</strong> Many players jump into competitions without improving their skills, leading to losses. Practicing in casual matches before staking money can increase win rates.</li>
+          <li><strong>Overlooking Game Selection:</strong> Not every game is equally lucrative. Picking games with an active competitive scene on RIVALS maximizes earning potential.</li>
+          <li><strong>Poor Bankroll Management:</strong> Placing high stakes without a strategy can lead to quick losses. Smart players manage their stakes based on skill level and experience.</li>
+        </ul>
+
+        <h2 style="margin-bottom: 0.5em; font-size: 30px;">Why RIVALS is the Best Platform for Casual Gamers</h2>
+        <p style="margin-bottom: 1.5em;">
+          Traditional esports platforms cater mainly to professional players, leaving casual gamers with few earning options. RIVALS changes the game by providing secure, skill-based earnings without the need for sponsorships, social media presence, or elite gaming skills. With instant payouts, fair matchmaking, and various tournament options, RIVALS makes it easy for casual gamers to profit from their passion.
+        </p>
+
+        <h2 style="margin-bottom: 0.5em; font-size: 30px;">Ready to Turn Your Playtime into Profit?</h2>
+        <p style="margin-bottom: 1.5em;">
+          If you’ve ever wondered how to make money from gaming without streaming or grinding for sponsors, RIVALS offers the perfect solution. Sign up today, compete in skill-based matches, and start earning from your gameplay!
+        </p>
+      </div>
+    `,
+    tags: ["Gaming", "Money", "Esports"],
   },
   {
     id: "2",
-    title: "How to Build a Winning Tournament Strategy",
+    title: "From Casual to Pro: Developing Skills to Increase Gaming Income",
     excerpt:
-      "Expert tips for dominating in RIVALS tournaments and maximizing your rewards.",
+      "Expert tips for dominating in RIVALS and maximizing your rewards.",
     date: "February 28, 2025",
-    author: "Sarah Kim",
+    author: "Joshua Jones",
     image: "/static/imgs/Card2.png",
-    content:
-      "Winning in RIVALS tournaments requires more than just gaming skills. This comprehensive guide breaks down effective strategies for tournament preparation, in-game decision making, and managing your stake to maximize your potential rewards.",
+    content: `
+    <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+      <h1 style="margin-bottom: 0.5em; font-size: 30px;">
+        Elevating Your Game to Earn More
+      </h1>
+      <p style="margin-bottom: 1.5em;">
+        Gaming has evolved from a pastime into a viable source of income, but success requires more than just talent. Whether you’re looking to dominate peer-to-peer matches, excel in RIVALS tournaments, or climb the rankings, skill development is key to maximizing your earnings. By honing your abilities and leveraging the features of RIVALS, you can turn your gaming time into a profitable venture.
+      </p>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">
+        Essential Skills for Competitive Earnings
+      </h2>
+      <p style="margin-bottom: 1.5em;">
+        If you’re serious about boosting your income, mastering these core skills will give you an edge over the competition:
+      </p>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">1. In-Depth Game Knowledge</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>Understanding the latest meta strategies, character builds, and game mechanics can separate you from the average player.</li>
+        <li>Stay updated by following patch notes, watching top-tier players, and engaging in community discussions.</li>
+      </ul>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">2. Advanced Decision-Making &amp; Strategy</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>Whether in 1v1 matchups or team-based play, making quick, smart decisions is crucial.</li>
+        <li>Study professional gameplay, review your own replays, and develop strategies tailored to different opponents.</li>
+      </ul>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">3. Improving Mechanical Skill</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>Refining aim, reaction time, and movement can be the difference between victory and defeat.</li>
+        <li>Use aim trainers, practice in controlled settings, and focus on muscle memory.</li>
+      </ul>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">4. Team Coordination &amp; Communication</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>Team-based tournaments require strong teamwork. Whether you join with friends or as a free agent, clear and concise communication is vital.</li>
+        <li>Develop synergy with teammates, use effective callouts, and learn rotations and positioning for competitive play.</li>
+      </ul>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">5. Mental Resilience &amp; Adaptability</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>Losses are inevitable, but learning from them is what separates pros from casuals.</li>
+        <li>Analyze mistakes, adjust strategies, and stay mentally strong during tough matches.</li>
+      </ul>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">
+        Monetizing Your Skills on RIVALS
+      </h2>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>1v1 Peer-to-Peer Matches: Face off against other players or challenge friends in fair, skill-based competitions.</li>
+        <li>Team-Based Tournaments: Join as a team with friends or enter as a free agent in larger competitions.</li>
+        <li>Skill-Based Matchmaking: Compete against players of similar skill levels for balanced and competitive earnings.</li>
+      </ul>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">
+        Mistakes to Avoid on Your Journey
+      </h2>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em;">
+        <li>Neglecting Game Fundamentals: Fancy plays won’t help if you don’t have a strong grasp of the basics.</li>
+        <li>Not Adapting to Game Updates: Staying stagnant while the game evolves can make you fall behind.</li>
+        <li>Poor Bankroll Management: Bet strategically and only stake what aligns with your confidence level.</li>
+      </ul>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">
+        Ready to Level Up Your Earnings?
+      </h2>
+      <p style="margin-bottom: 1.5em;">
+        The journey from casual to pro takes time and dedication, but the rewards are worth it. Sign up on RIVALS today, put your skills to the test, and start earning from every game you play!
+      </p>
+    </div>
+    `,
     tags: ["Strategy", "Tournaments", "Tips"],
   },
   {
     id: "3",
-    title: "Behind the Scenes: How RIVALS Validates Scores",
-    excerpt: "An inside look at our proprietary score validation technology.",
+    title: "Introduction to RIVALS: Revolutionizing Gamer Earnings",
+    excerpt: "An inside look at how RIVALS is changing gaming.",
     date: "January 22, 2025",
-    author: "Michael Chen",
+    author: "Joshua Jones",
     image: "/static/imgs/Card3.png",
     content:
-      "Score validation is the backbone of fair gameplay on RIVALS. This technical deep dive explains our anti-cheat systems, real-time verification process, and how we ensure every match result is accurate and tamper-proof.",
-    tags: ["Technology", "Anti-cheat", "Fairness"],
+      `
+    <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">Introduction to RIVALS</h2>
+      <p style="margin-bottom: 1.5em; ">
+        The gaming industry has evolved beyond simple entertainment. Today, gamers seek platforms that offer both competitive excitement and financial rewards. RIVALS is at the forefront of this transformation, providing an innovative ecosystem where players can monetize their skills through peer-to-peer matches, real-time score validation, and skill-based tournaments. Unlike traditional esports models that require sponsorships or extensive social media followings, RIVALS enables players of all levels to earn money directly from their gameplay.
+      </p>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">How RIVALS is Changing the Game</h2>
+      <p style="margin-bottom: 1.5em; ">
+        RIVALS is not just another esports platform. It offers unique features that set it apart from conventional gaming ecosystems. Here’s how it is revolutionizing gamer earnings:
+      </p>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">1. Peer-to-Peer Competitions</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em; ">
+        <li>Players can engage in 1v1 matches or team-based competitions, staking real money against their opponents.</li>
+        <li>Users can challenge their friends for bragging rights or matchmake against other RIVALS players in fair, skill-based competitions.</li>
+        <li>The platform ensures transparent and instant payouts with real-time score validation, preventing disputes and enhancing trust.</li>
+      </ul>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">2. Skill-Based Tournaments</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em; ">
+        <li>RIVALS hosts tournaments for all skill levels, allowing casual and competitive players to participate.</li>
+        <li>Gamers can enter solo 1v1 tournaments or, in team-based competitions, join with their squad or sign up as a free agent to be matched with teammates.</li>
+        <li>Prize pools are distributed based on performance rather than popularity, giving everyone a fair shot at earning.</li>
+      </ul>
+
+      <h3 style="margin-bottom: 0.5em; font-size: 30px;">3. Fair Matchmaking &amp; Ranking System</h3>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em; ">
+        <li>Unlike traditional betting systems, RIVALS ensures fair competition by matching players with similar skill levels.</li>
+        <li>The ranking system tracks performance and adjusts matchmaking accordingly, creating an even playing field.</li>
+        <li>This prevents experienced players from dominating lower-skilled competitors, making every match competitive and rewarding.</li>
+      </ul>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">
+        The Advantages of RIVALS Over Traditional Esports Platforms
+      </h2>
+      <ul style="margin-bottom: 1.5em; padding-left: 1.5em; ">
+        <li>No Need for Sponsorships or Streaming: Unlike Twitch or YouTube gaming, where earnings rely on views and ad revenue, RIVALS allows direct earnings from playing.</li>
+        <li>Instant &amp; Secure Payouts: With built-in real-time score validation, winnings are processed instantly without lengthy withdrawal periods.</li>
+        <li>Play Anytime, Anywhere: Whether playing for fun or aiming to earn consistently, RIVALS offers flexible competition options that fit all schedules.</li>
+      </ul>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">Why Gamers Should Join RIVALS Today</h2>
+      <p style="margin-bottom: 1.5em; ">
+        If you're looking for a fair, competitive, and rewarding way to monetize your gaming skills, RIVALS is the ultimate platform. Whether you enjoy friendly matches with friends, high-stakes tournaments, or simply testing your skills against others, RIVALS provides a secure and engaging way to turn your passion into profit.
+      </p>
+
+      <h2 style="margin-bottom: 0.5em; font-size: 30px;">
+        Ready to Revolutionize Your Gaming Experience?
+      </h2>
+      <p style="margin-bottom: 1.5em; ">
+        Sign up on RIVALS today and start earning from your playtime!
+      </p>
+    </div>
+ `,
+    tags: ["Technology", "Gaming", "RIVALS"],
   },
 ];
 
@@ -319,32 +491,10 @@ const BlogSection: React.FC<BlogSectionProps> = ({
                     <span className="mx-2">•</span>
                     <span>By {currentPost.author}</span>
                   </div>
-                  <div className="post-detail-content prose prose-invert max-w-none text-gray-300">
-                    <p className="text-lg leading-relaxed">
-                      {currentPost.content}
-                    </p>
-                    {/* For a real blog, you would render the full content here */}
-                    <p className="mt-6 leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Nullam auctor, nisl eget ultricies tincidunt, nisl nisl
-                      aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam
-                      auctor, nisl eget ultricies tincidunt, nisl nisl aliquam
-                      nisl, eget ultricies nisl nisl eget nisl.
-                    </p>
-                    <p className="mt-6 leading-relaxed">
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium, totam rem
-                      aperiam, eaque ipsa quae ab illo inventore veritatis et
-                      quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                      enim ipsam voluptatem quia voluptas sit aspernatur aut
-                      odit aut fugit, sed quia consequuntur magni dolores eos
-                      qui ratione voluptatem sequi nesciunt. Neque porro
-                      quisquam est, qui dolorem ipsum quia dolor sit amet,
-                      consectetur, adipisci velit, sed quia non numquam eius
-                      modi tempora incidunt ut labore et dolore magnam aliquam
-                      quaerat voluptatem.
-                    </p>
-                  </div>
+                  <div
+                    className="post-detail-content prose prose-invert max-w-none text-gray-300"
+                    dangerouslySetInnerHTML={{ __html: currentPost.content }}
+                  />
                 </div>
               </div>
             )}

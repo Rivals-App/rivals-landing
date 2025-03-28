@@ -297,17 +297,17 @@ const AboutSection: React.FC<AboutSectionProps> = ({
   }, []);
 
   return (
+  <div>
+    <Navbar goToEmailStep={goToEmailStep} goToBlogSection={goToBlogSection} />
     <div className="w-full h-full flex flex-col" ref={containerRef}>
-      <Navbar goToEmailStep={goToEmailStep} goToBlogSection={goToBlogSection} />
-
-      <div className="flex-grow flex flex-col items-center justify-start pt-12 md:pt-14">
+      <div className="flex-grow flex flex-col items-center justify-start pt-6 md:pt-0">
         {/* Hero Section */}
         <div
           ref={heroRef}
-          className="cta-section w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 relative overflow-hidden"
+          className="cta-section w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-8 relative overflow-hidden"
         >
           {/* Text Content */}
-          <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-12 md:mt-0">
+          <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-0">
             {/* Logo */}
             <img
               src="/static/imgs/asset 4@4x-8.png"
@@ -315,13 +315,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
             />
             <h3 className="text-4xl font-bold text-white mb-6 leading-tight hero-text">
-              EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF
-              GAMING
+              EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF GAMING
             </h3>
             <p className="text-lg text-gray-300 mb-8 hero-text">
-              Take your gaming to the next level with RIVALS. Compete in
-              skill-based matches, win real rewards, and become part of the
-              ultimate competitive gaming community.
+              Take your gaming to the next level with RIVALS. Compete in skill-based matches, win real rewards, and become part of the ultimate competitive gaming community.
             </p>
             <button
               onClick={handleWaitlistClick}
@@ -340,7 +337,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             />
           </div>
         </div>
-
         {/* Feature Cards Section */}
         <div
           ref={featureSectionRef}
@@ -376,21 +372,20 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             RIVALS makes competitive gaming seamless and rewarding.
           </p>
 
-          <div className="hiw-steps flex flex-col gap-8 md:gap-12">
+          <div className="how-steps flex flex-col gap-6 md:gap-8">
             {/* Step 1 */}
-            <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right">
+            <div className="how-step flex flex-col md:flex-row items-center text-center md:text-right">
               <img
                 src="/static/imgs/howitworks1.png"
                 alt="Choose Your Game & Mode"
-                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+                className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
               />
-              <div className="md:w-[60%] md:pl-8">
-                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+              <div className="md:w-[70%] md:pl-6">
+                <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                   Choose Your Game & Mode
                 </h4>
                 <p className="text-sm md:text-base text-gray-300">
-                  Select from a variety of custom RIVALS games and supported
-                  games like DOTA 2.
+                  Select from a variety of custom RIVALS games and supported games like DOTA 2.
                 </p>
               </div>
             </div>
@@ -400,15 +395,14 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               <img
                 src="/static/imgs/howitworks2.png"
                 alt="Challenge & Stake"
-                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+                className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
               />
-              <div className="md:w-[60%] md:pr-8">
-                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+              <div className="md:w-[70%] md:pr-6">
+                <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                   Challenge & Stake
                 </h4>
                 <p className="text-sm md:text-base text-gray-300">
-                  Enter a match with a set stake and challenge your friends or
-                  other RIVALS players.
+                  Enter a match with a set stake and challenge your friends or other RIVALS players.
                 </p>
               </div>
             </div>
@@ -418,15 +412,14 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               <img
                 src="/static/imgs/howitworks3.png"
                 alt="Play & Win"
-                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+                className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:ml-auto"
               />
-              <div className="md:w-[60%] md:pl-8">
-                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+              <div className="md:w-[70%] md:pl-6">
+                <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                   Play & Win
                 </h4>
                 <p className="text-sm md:text-base text-gray-300">
-                  Compete in real-time matches with automated score validation
-                  and our own ranking system.
+                  Compete in real-time matches with automated score validation and our own ranking system.
                 </p>
               </div>
             </div>
@@ -436,10 +429,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               <img
                 src="/static/imgs/howitworks4.png"
                 alt="Get Paid Instantly"
-                className="w-full md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+                className="w-[80%] md:w-[30%] h-auto mb-4 md:mb-0 md:mr-auto"
               />
-              <div className="md:w-[60%] md:pr-8">
-                <h4 className="text-2xl md:text-3xl font-semibold text-[#02F199] mb-4">
+              <div className="md:w-[70%] md:pr-6">
+                <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
                   Get Paid Instantly
                 </h4>
                 <p className="text-sm md:text-base text-gray-300">
@@ -516,6 +509,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

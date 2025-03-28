@@ -65,7 +65,6 @@ const Navbar: React.FC<NavbarProps> = ({
 
     try {
       if (isMobileMenuOpen) {
-        // Simple display toggle with basic animation
         mobileMenuRef.current.style.display = "block";
         gsap.to(mobileMenuRef.current, {
           opacity: 1,
@@ -74,7 +73,6 @@ const Navbar: React.FC<NavbarProps> = ({
           ease: "power2.out",
         });
       } else {
-        // Hide the menu
         gsap.to(mobileMenuRef.current, {
           opacity: 0,
           y: -10,
@@ -89,7 +87,6 @@ const Navbar: React.FC<NavbarProps> = ({
       }
     } catch (error) {
       console.error("Error in navbar animation:", error);
-      // Fallback in case of animation errors
       if (mobileMenuRef.current) {
         mobileMenuRef.current.style.display = isMobileMenuOpen
           ? "block"
@@ -97,6 +94,18 @@ const Navbar: React.FC<NavbarProps> = ({
       }
     }
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    // Close the mobile menu when resizing the screen to a larger size
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Toggle mobile menu
   const toggleMobileMenu = () => {
@@ -110,17 +119,18 @@ const Navbar: React.FC<NavbarProps> = ({
   });
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8 md:py-6">
+    <div className="relative sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 px-4 md:px-8">
+      {/* Navbar */}
       <nav
-        className={`w-full rounded-full transition-all duration-300 border border-white/10 ${
+        className={`max-w-5xl w-full rounded-full transition-all duration-300 border border-white/10 ${
           isScrolled
             ? "bg-[#121212]/20 backdrop-blur-md shadow-xl"
             : "bg-[#121212]/25 backdrop-blur-md"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6">
           <div className="flex items-center justify-between h-16">
-            {/* Logo - Now with navigation to About section */}
+            {/* Logo */}
             <div className="flex-shrink-0">
               <button
                 onClick={handleLogoClick}
@@ -136,9 +146,8 @@ const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
 
-            {/* Desktop Navigation and Action Button - Now aligned right */}
+            {/* Desktop Navigation and Action Button */}
             <div className="hidden md:flex items-center space-x-8">
-              {/* Navigation Items */}
               <button
                 onClick={handleBlogClick}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
@@ -147,7 +156,6 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Blog
               </button>
-
               <Link
                 href="/investors"
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
@@ -156,7 +164,6 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Investors
               </Link>
-
               <Link
                 href="/legal"
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
@@ -165,27 +172,11 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 Legal
               </Link>
-
-              {/* Action Button */}
               <button
                 onClick={handleWaitlistClick}
-                className="inline-flex items-center px-6 py-2 text-md font-medium rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 transition-all duration-200 ease-in-out"
+                className="inline-flex items-center px-6 py-2 text-md font-medium rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out"
               >
                 <span>JOIN WAITLIST</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
               </button>
             </div>
 
@@ -236,13 +227,14 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
       </nav>
 
-      {/* Mobile menu, show/hide based on menu state */}
+      {/* Mobile Menu Dropdown */}
       <div
         ref={mobileMenuRef}
-        className="md:hidden mt-2 rounded-xl bg-[#121212]/95 backdrop-blur-md shadow-xl"
-        style={{ display: "none", opacity: 0 }}
+        className={`absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/95 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-300 ${
+          isMobileMenuOpen ? "block opacity-100" : "hidden opacity-0"
+        }`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="px-4 py-4 space-y-2">
           <button
             className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
             onClick={(e) => {
@@ -268,7 +260,6 @@ const Navbar: React.FC<NavbarProps> = ({
           >
             Legal
           </Link>
-          {/* Modified mobile waitlist button to use the handler */}
           <div className="px-3 py-2 mt-4">
             <button
               className="block py-2 w-full text-center rounded-full text-base font-medium bg-[#02F199] text-[#0c1622]"
