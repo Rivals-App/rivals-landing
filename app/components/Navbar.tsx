@@ -122,13 +122,13 @@ const Navbar: React.FC<NavbarProps> = ({
     <div className="relative sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 px-4 md:px-8">
       {/* Navbar */}
       <nav
-        className={`max-w-[98vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
+        className={`max-w-[99vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
           isScrolled
             ? "bg-[#121212]/20 backdrop-blur-md shadow-xl"
             : "bg-[#121212]/25 backdrop-blur-md"
         }`}
       >
-        <div className="max-w-[98vw] mx-auto px-3 sm:px-4 md:px-6">
+        <div className="max-w-[99vw] mx-auto px-3 sm:px-4 md:px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
