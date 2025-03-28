@@ -313,7 +313,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 alt="RIVALS Logo"
                 className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
               />
-              <h3 className="text-4xl font-bold text-white mb-6 leading-tight hero-text">
+              <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight hero-text">
                 EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF
                 GAMING
               </h3>
@@ -365,45 +365,45 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           {/* How It Works Section */}
           <div
             ref={howItWorksSectionRef}
-            className="how-it-works w-full py-8 px-6 md:px-32 sm:px-12 rounded-lg"
+            className="how-it-works w-full py-12 px-6 md:px-24 sm:px-12 rounded-lg"
           >
-            <h2 className="hiw-title text-3xl md:text-4xl font-bold mb-4 text-center">
+            <h2 className="hiw-title text-3xl md:text-5xl font-bold mb-4 text-center">
               HOW <span className="text-[#02F199]">RIVALS</span> WORKS
             </h2>
-            <p className="hiw-subtitle text-gray-300 mb-8 md:mb-16 text-center text-base md:text-lg">
+            <p className="hiw-subtitle text-gray-300 mb-10 md:mb-20 text-center text-base md:text-xl max-w-4xl mx-auto">
               RIVALS makes competitive gaming seamless and rewarding.
             </p>
 
-            <div className="how-steps flex flex-col gap-6 md:gap-8 items-center">
+            <div className="how-steps flex flex-col gap-8 md:gap-16 items-center">
               {/* Step 1 */}
-              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-3xl">
+              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
                 <img
                   src="/static/media/HowItWorks1.png"
                   alt="Choose Your Game & Mode"
-                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:ml-auto"
                 />
-                <div className="md:w-[60%] md:pl-6">
-                  <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
+                <div className="md:w-[55%] md:pl-8">
+                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Explore & Create Matches
                   </h4>
-                  <p className="text-sm md:text-base text-gray-300">
+                  <p className="text-base md:text-lg text-gray-300">
                     Users browse the active market of matches or create their own to compete.
                   </p>
                 </div>
               </div>
 
               {/* Step 2 */}
-              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-3xl">
+              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
                 <img
                   src="/static/media/HowItWorks2.png"
                   alt="Challenge & Stake"
-                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:mr-auto"
                 />
-                <div className="md:w-[60%] md:pr-6">
-                  <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
+                <div className="md:w-[55%] md:pr-8">
+                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Challenge & Stake
                   </h4>
-                  <p className="text-sm md:text-base text-gray-300">
+                  <p className="text-base md:text-lg text-gray-300">
                     Enter a match with a set stake and challenge your friends or
                     other RIVALS players.
                   </p>
@@ -411,34 +411,34 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
 
               {/* Step 3 */}
-              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-3xl">
+              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
                 <img
                   src="/static/media/HowItWorks3.png"
                   alt="Play & Win"
-                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:ml-auto"
+                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:ml-auto"
                 />
-                <div className="md:w-[60%] md:pl-6">
-                  <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
+                <div className="md:w-[55%] md:pl-8">
+                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Compete & Invite
                   </h4>
-                  <p className="text-sm md:text-base text-gray-300">
+                  <p className="text-base md:text-lg text-gray-300">
                     Players join matches, compete against opponents, or can invite friends. Live data integrations provides real-time statistics.
                   </p>
                 </div>
               </div>
 
               {/* Step 4 */}
-              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-3xl">
+              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
                 <img
                   src="/static/media/HowItWorks4.png"
                   alt="Get Paid Instantly"
-                  className="w-[80%] md:w-[40%] h-auto mb-4 md:mb-0 md:mr-auto"
+                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:mr-auto"
                 />
-                <div className="md:w-[60%] md:pr-6">
-                  <h4 className="text-xl md:text-2xl font-semibold text-[#02F199] mb-3">
+                <div className="md:w-[55%] md:pr-8">
+                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Win & Instant Withdrawals
                   </h4>
-                  <p className="text-sm md:text-base text-gray-300">
+                  <p className="text-base md:text-lg text-gray-300">
                     After winning, users are able to instantly withdraw funds via traditional bank accounts or crypto wallets.
                   </p>
                 </div>
