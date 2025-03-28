@@ -174,9 +174,9 @@ const Navbar: React.FC<NavbarProps> = ({
               </Link>
               <button
                 onClick={handleWaitlistClick}
-                className="inline-flex items-center px-6 py-2 text-md font-medium rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out"
+                className="inline-flex items-center px-6 py-2 text-md font-thin rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
               >
-                <span>JOIN WAITLIST</span>
+                <span>Join our waitlist</span>
               </button>
             </div>
 
