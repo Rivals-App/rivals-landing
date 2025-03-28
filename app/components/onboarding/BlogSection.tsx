@@ -79,7 +79,7 @@ const blogPosts = [
       "A detailed look at the legal frameworks governing skill-based competitions worldwide.",
     date: "March 22, 2025",
     author: "Raj Sandhu",
-    image: "/static/media/Legal.jpg",
+    image: "/static/media/legal.jpg",
     content: `
       <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
         <h2 style="margin-bottom: 0.8em; font-size: 30px;">Global Landscape of Legal Skill-Based Wagering</h2>
