@@ -483,7 +483,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Image Content */}
             <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
               <img
-                src="/static/media/tournaments.png"
+                src="/static/media/Tournaments.png"
                 alt="Compete in Rivals Tournaments"
                 className="w-[100%] md:w-[80%] max-w-none object-contain"
               />
