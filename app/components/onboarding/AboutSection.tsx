@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FeatureCards from "../FeatureCards";
 import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -512,6 +513,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
