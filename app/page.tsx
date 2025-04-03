@@ -7,6 +7,7 @@ import PerlinNoiseSketch from "./components/PerlinNoise";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FeatureCards from "./components/FeatureCards";
+import Footer from "./components/Footer";
 
 // Register GSAP ScrollTrigger on client side
 if (typeof window !== "undefined") {
@@ -492,6 +493,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

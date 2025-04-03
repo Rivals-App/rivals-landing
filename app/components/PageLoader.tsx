@@ -68,8 +68,8 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
           draggable={false}
         />
       </div>
-      <div className="w-80 h-[0.1rem] bg-gray-800 rounded-full overflow-hidden">
-        <div className="loader-progress h-full bg-[#02F199] w-0"></div>
+      <div className="w-80 h-[0.1rem] bg-[#0F2841] rounded-full overflow-hidden">
+        <div className="loader-progress h-full bg-[#0F2841] w-0"></div>
       </div>
     </div>
   );

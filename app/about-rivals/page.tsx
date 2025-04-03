@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 // Register GSAP ScrollTrigger
 if (typeof window !== "undefined") {
@@ -176,7 +177,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#121212] flex flex-col text-white">
+    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
       {/* Main content */}
       <div
         className="w-full min-h-screen flex flex-col bg-transparent"
@@ -465,6 +466,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
           }),
         }}
       />
+      <Footer />
     </div>
   );
 };

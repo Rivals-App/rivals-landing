@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 const ArcadePage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#121212] flex flex-col text-white">
+    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
       <div className="w-full min-h-screen flex flex-col bg-transparent">
         <Navbar />
 

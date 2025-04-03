@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
 import PerlinNoiseSketch from "../components/PerlinNoise";
 import blogPosts from "./data/blog.data";
+import Footer from "../components/Footer";
 
 // Register GSAP plugins on client side only
 if (typeof window !== "undefined") {
@@ -168,7 +169,7 @@ export default function BlogPage() {
   }, [selectedPost]);
 
   return (
-    <div className="min-h-screen bg-[#121212] flex flex-col text-white">
+    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
       {/* Main content */}
       <div
         className="w-full min-h-screen flex flex-col bg-transparent"
@@ -320,6 +321,7 @@ export default function BlogPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
