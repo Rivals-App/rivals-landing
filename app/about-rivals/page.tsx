@@ -237,14 +237,14 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                   <p>
                     Our founding team brings together years of experience in
                     competitive gaming, technology development, and community
-                    building. We've experienced firsthand how current platforms fail
-                    to serve the average gamer, focusing instead on professional
-                    players and content creators.
+                    building. We've experienced firsthand how current platforms
+                    fail to serve the average gamer, focusing instead on
+                    professional players and content creators.
                   </p>
                   <p>
-                    We set out to build something different: a platform that makes
-                    skill-based competition accessible to everyone, with real
-                    rewards and transparent systems.
+                    We set out to build something different: a platform that
+                    makes skill-based competition accessible to everyone, with
+                    real rewards and transparent systems.
                   </p>
                 </div>
               </div>
@@ -329,8 +329,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                       Our Vision
                     </h3>
                     <p className="text-lg text-gray-300">
-                      To make competitive gaming accessible, fair, and financially
-                      rewarding for all players — not just the top 1%.
+                      To make competitive gaming accessible, fair, and
+                      financially rewarding for all players — not just the top
+                      1%.
                     </p>
                   </div>
 
@@ -339,8 +340,8 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                       Our Mission
                     </h3>
                     <p className="text-lg text-gray-300">
-                      Build a trusted platform where players can compete, stake, and
-                      win — across any game, any format, any skill level.
+                      Build a trusted platform where players can compete, stake,
+                      and win — across any game, any format, any skill level.
                     </p>
                   </div>
                 </div>
@@ -371,9 +372,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                     </p>
                     <p className="text-lg text-gray-300 mb-6">
                       Avid gamer, tech entrepreneur, and competitive sports
-                      enthusiast with a passion for creating fair gaming ecosystems.
-                      Raj founded Rivals to bridge the gap between casual play and
-                      professional competition.
+                      enthusiast with a passion for creating fair gaming
+                      ecosystems. Raj founded Rivals to bridge the gap between
+                      casual play and professional competition.
                     </p>
                   </div>
                 </div>
@@ -432,7 +433,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                   </a>
                 </div>
 
-                <p className="text-md text-gray-400">Email: raj@rivalsapp.com</p>
+                <p className="text-md text-gray-400">
+                  Email: raj@rivalsapp.com
+                </p>
               </div>
             </div>
           </div>
@@ -466,4 +469,8 @@ const AboutSection: React.FC<AboutSectionProps> = ({
   );
 };
 
-export default AboutSection;
+const AboutPage: React.FC = () => {
+  return <AboutSection />;
+};
+
+export default AboutPage;
