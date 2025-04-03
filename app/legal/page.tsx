@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const LegalPage: React.FC = () => {
   return (
@@ -38,6 +39,7 @@ const LegalPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

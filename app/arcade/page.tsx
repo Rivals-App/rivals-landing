@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const ArcadePage: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ const ArcadePage: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

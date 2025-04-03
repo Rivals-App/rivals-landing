@@ -1,6 +1,42 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const router = useRouter();
+
+  // Handler for navigation actions (matching the Navbar)
+  const handleNavigation = (
+    action: "home" | "arcade" | "blog" | "about" | "legal" | "join-us" | "contact-us",
+    e: React.MouseEvent
+  ) => {
+    e.preventDefault();
+
+    // Use Next.js routing
+    switch (action) {
+      case "home":
+        router.push("/");
+        break;
+      case "blog":
+        router.push("/blog");
+        break;
+      case "about":
+        router.push("/about-rivals");
+        break;
+      case "arcade":
+        router.push("/arcade");
+        break;
+      case "legal":
+        router.push("/legal");
+        break;
+      case "join-us":
+        router.push("/join-us");
+        break;
+      case "contact-us":
+        router.push("/contact-us");
+        break;
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,37 +56,71 @@ const Footer = () => {
           {/* Right Section: Quick Links and Waitlist Button side-by-side */}
           <div className="flex flex-col md:flex-row md:items-start items-center w-full md:w-auto gap-8">
             {/* Quick Links */}
-            <div className="flex flex-col items-center md:items-start">
-              <h4 className="font-bold mt-4 mb-2 text-center md:text-left">QUICK LINKS</h4>
-              <ul className="space-y-1 text-center md:text-left">
+            <div className="flex flex-col items-center">
+              <h4 className="font-bold mt-4 mb-2 text-center">QUICK LINKS</h4>
+              <ul className="space-y-1 text-center">
                 <li>
-                  <a href="#" className="hover:text-[#02F199]">
+                  <a 
+                    href="/"
+                    onClick={(e) => handleNavigation("home", e)}
+                    className="hover:text-[#02F199]"
+                  >
                     Home
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#02F199]">
+                  <a 
+                    href="/about-rivals"
+                    onClick={(e) => handleNavigation("about", e)}
+                    className="hover:text-[#02F199]"
+                  >
                     About
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#02F199]">
-                    Arcade
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#02F199]">
+                  <a 
+                    href="/blog"
+                    onClick={(e) => handleNavigation("blog", e)}
+                    className="hover:text-[#02F199]"
+                  >
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#02F199]">
-                    Contact
+                  <a 
+                    href="/arcade"
+                    onClick={(e) => handleNavigation("arcade", e)}
+                    className="hover:text-[#02F199]"
+                  >
+                    Arcade
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#02F199]">
+                  <a 
+                    href="/legal"
+                    onClick={(e) => handleNavigation("legal", e)}
+                    className="hover:text-[#02F199]"
+                  >
                     Legal
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/contact-us"
+                    onClick={(e) => handleNavigation("contact-us", e)}
+                    className="hover:text-[#02F199]"
+                  >
+                    Contact Us
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://getrivals.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#02F199]"
+                  >
+                    Try Our Demo
                   </a>
                 </li>
               </ul>
@@ -58,7 +128,7 @@ const Footer = () => {
 
             {/* Waitlist Button */}
             <button
-              // onClick={handleWaitlistClick}
+              onClick={(e) => handleNavigation("join-us", e)}
               className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 mx-auto md:mx-0"
             >
               JOIN WAITLIST
