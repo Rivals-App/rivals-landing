@@ -1,28 +1,29 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
+import WelcomeScreen from "../components/onboarding/WelcomeSection";
 
 interface PageLoaderProps {
-  onLoadComplete?: () => void;
+  onLoadComplete: () => void;
 }
 
 const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
+
   useEffect(() => {
     // Set initial state of logo to be invisible
     gsap.set(".loader-logo-image", { opacity: 0, scale: 0.5 });
 
     // Create a direct GSAP timeline for the loader
-    const tl = gsap.timeline({
+    const loaderTl = gsap.timeline({
       onComplete: () => {
-        if (onLoadComplete) onLoadComplete();
+        // After loader completes, show welcome screen
+        setShowWelcomeScreen(true);
       },
     });
 
-    // Add a small delay before starting animations
-    tl.to({}, { duration: 0.3 });
-
     // Animate the logo directly
-    tl.to(".loader-logo-image", {
+    loaderTl.to(".loader-logo-image", {
       scale: 1,
       opacity: 1,
       duration: 0.8,
@@ -30,14 +31,14 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
     });
 
     // Progress bar animation
-    tl.to(".loader-progress", {
+    loaderTl.to(".loader-progress", {
       width: "100%",
       duration: 1.8,
       ease: "power2.inOut",
     });
 
     // Fade out the loader container
-    tl.to(".loader-container", {
+    loaderTl.to(".loader-container", {
       opacity: 0,
       pointerEvents: "none",
       duration: 0.8,
@@ -45,9 +46,14 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
 
     // Cleanup
     return () => {
-      tl.kill();
+      loaderTl.kill();
     };
-  }, [onLoadComplete]);
+  }, []);
+
+  // If welcome screen is shown, let the WelcomeScreen handle its own logic
+  if (showWelcomeScreen) {
+    return <WelcomeScreen onProceed={onLoadComplete} />;
+  }
 
   return (
     <div className="loader-container fixed inset-0 bg-[#101c2b] flex flex-col items-center justify-center z-50">
@@ -58,7 +64,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
           src="/static/svgs/Asset-2.svg"
           alt="logo"
           className="loader-logo-image"
-          style={{ opacity: 0 }} // Set initial opacity to 0 in inline style as well
+          style={{ opacity: 0 }}
           draggable={false}
         />
       </div>

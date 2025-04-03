@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { useRouter } from "next/navigation";
 
 interface RegistrationScreenProps {
   email: string;
@@ -10,7 +11,7 @@ interface RegistrationScreenProps {
   onFirstNameChange: (firstName: string) => void;
   onLastNameChange: (lastName: string) => void;
   onContinue: (preferredConsole: string) => void;
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
@@ -26,6 +27,10 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [preferredConsole, setPreferredConsole] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const router = useRouter();
+
+  // If onBack is not provided, default to navigating to home
+  const handleBack = onBack || (() => router.push("/"));
 
   useEffect(() => {
     const container = containerRef.current;
@@ -163,15 +168,15 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
           <div className="w-full flex flex-row justify-between align-bottom">
             <button
               type="button"
-              onClick={onBack}
+              onClick={handleBack}
               aria-label="Go back"
-              className="w-1/3 py-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-400 transition-colors"
+              className="w-1/5 py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"
             >
-              Go back
+              Home
             </button>
             <button
               type="submit"
-              className="reg-back w-2/3 ml-4 py-2 bg-[#02F199] text-[#0c412e] font-semibold rounded-lg hover:bg-[#02F199]/90 transition-colors"
+              className="reg-back w-4/5 ml-4 py-2 bg-[#02F199] text-[#0c412e] font-semibold rounded-lg hover:bg-[#02F199]/90 transition-colors"
             >
               Continue
             </button>

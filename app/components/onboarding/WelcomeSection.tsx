@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import PerlinNoiseSketch from "../PerlinNoise";
 
 interface WelcomeScreenProps {
   onProceed: () => void;
@@ -8,13 +9,15 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onProceed }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [showButton, setShowButton] = useState(false);
+  const [buttonOpacity, setButtonOpacity] = useState(0);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     // Set initial states - hide all elements
-    gsap.set(".welcome-title, .welcome-subtitle, .form-logo, .welcome-button", {
+    gsap.set(".welcome-title, .welcome-subtitle, .form-logo", {
       opacity: 0,
       y: 20,
     });
@@ -32,17 +35,14 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onProceed }) => {
       duration: 0.8,
       ease: "power3.out",
     })
-      // Button appears last after a delay
-      .to(
-        ".welcome-button",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-        },
-        "+=0.7" // Add 0.7s delay
-      );
+      // Trigger button visibility and fade-in after a delay
+      .add(() => {
+        setShowButton(true);
+        // Use a small delay to ensure smooth transition
+        setTimeout(() => {
+          setButtonOpacity(1);
+        }, 100);
+      }, "+=0.7");
 
     return () => {
       tl.kill();
@@ -50,35 +50,53 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onProceed }) => {
   }, []);
 
   return (
-    <div
-      className="w-full h-full flex flex-col justify-center items-center"
-      ref={containerRef}
-    >
-      <div className="flex justify-center mb-8">
-        <img
-          width={80}
-          height={80}
-          src="/static/svgs/Asset-2.svg"
-          alt="logo"
-          className="form-logo"
-          draggable={false}
-        />
+    <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+      {/* Perlin Noise Background */}
+      <div className="absolute inset-0 z-0">
+        <PerlinNoiseSketch />
       </div>
-      <h2 className="welcome-title uppercase w-full text-5xl font-bold mb-2 text-center">
-        The <span className="text-[#02F199]">future</span> of gaming is here
-      </h2>
-      <p className="welcome-subtitle text-white mb-4 text-center text-lg">
-        Welcome to where winners compete
-      </p>
 
-      <div className="flex justify-center mt-8">
-        <button
-          onClick={onProceed}
-          className="welcome-button px-6 py-2 bg-white/20 border border-white text-white font-semibold hover:scale-105 hover:bg-white/40 transition-all duration-200 flex items-center"
-        >
-          Enter
-          <span className="ml-6">⮐</span>
-        </button>
+      {/* Content Container */}
+      <div
+        className="relative z-10 flex flex-col items-center justify-center"
+        ref={containerRef}
+      >
+        <div className="text-center max-w-xl">
+          <div className="flex justify-center mb-8">
+            <img
+              width={80}
+              height={80}
+              src="/static/svgs/Asset-2.svg"
+              alt="logo"
+              className="form-logo"
+              draggable={false}
+            />
+          </div>
+          <h2 className="welcome-title uppercase text-5xl font-bold mb-2 text-center">
+            The <span className="text-[#02F199]">future</span> of gaming is here
+          </h2>
+          <p className="welcome-subtitle text-white mb-4 text-center text-lg">
+            Welcome to where winners compete
+          </p>
+
+          {/* Button container with fixed height to prevent layout shift */}
+          <div className="flex justify-center mt-8 h-[52px]">
+            {showButton && (
+              <button
+                onClick={onProceed}
+                className="welcome-button px-6 py-2 bg-white/20 border border-white text-white font-semibold hover:scale-105 hover:bg-white/40 transition-all duration-300 flex items-center"
+                style={{
+                  opacity: buttonOpacity,
+                  transition: "opacity 0.5s ease-in-out",
+                  transitionDelay: "0.1s",
+                }}
+              >
+                Enter
+                <span className="ml-6">⮐</span>
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
