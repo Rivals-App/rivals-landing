@@ -469,28 +469,28 @@ const HomePage = () => {
           </div>
 
           {/* Call to Action Section */}
-          <div
+          {/* <div
             ref={finalCtaRef}
             className="cta-final w-full flex flex-col items-center justify-center py-12 px-6 rounded-lg mt-12"
           >
-            {/* Logo */}
+            
             <img
               src="/static/media/Logo1.png"
               alt="RIVALS Logo"
               className="w-24 h-auto mb-6"
             />
-            {/* Heading */}
+           
             <h3 className="text-4xl font-bold text-white mb-6 text-center">
               JOIN <span className="text-[#02F199]">RIVALS NOW</span>
             </h3>
-            {/* Button */}
+            
             <Link
               href="/join-us"
               className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 inline-block"
             >
               JOIN WAITLIST
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />

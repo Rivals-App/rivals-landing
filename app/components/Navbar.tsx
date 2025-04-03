@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
 
   // Handler for navigation actions
   const handleNavigation = (
-    action: "home" | "arcade" | "blog" | "about" | "legal" | "join-us",
+    action: "home" | "arcade" | "blog" | "about" | "legal" | "join-us" | "contact-us",
     e: React.MouseEvent
   ) => {
     e.preventDefault();
@@ -45,6 +45,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
         break;
       case "join-us":
         router.push("/join-us");
+        break;
+      case "contact-us":
+        router.push("/contact-us");
         break;
     }
 
@@ -165,15 +168,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
               </button>
 
               <button
-                onClick={(e) => handleNavigation("blog", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
-                  pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
-                }`}
-              >
-                Blog
-              </button>
-
-              <button
                 onClick={(e) => handleNavigation("about", e)}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
                   pathname === "/about-rivals"
@@ -182,6 +176,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
                 }`}
               >
                 About
+              </button>
+
+              <button
+                onClick={(e) => handleNavigation("blog", e)}
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                  pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
+                }`}
+              >
+                Blog
               </button>
 
               <button
@@ -200,6 +203,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
                 }`}
               >
                 Legal
+              </button>
+
+              <button
+                onClick={(e) => handleNavigation("contact-us", e)}
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                  pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
+                }`}
+              >
+                Contact Us
               </button>
 
               <Link
@@ -272,7 +284,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
       {/* Mobile Menu Dropdown */}
       <div
         ref={mobileMenuRef}
-        className={`absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/95 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-300 ${
+        className={`absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-300 ${
           isMobileMenuOpen ? "block opacity-100" : "hidden opacity-0"
         }`}
       >
@@ -286,16 +298,16 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
 
           <button
             className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
-            onClick={(e) => handleNavigation("blog", e)}
+            onClick={(e) => handleNavigation("about", e)}
           >
-            Blog
+            About
           </button>
 
           <button
             className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
-            onClick={(e) => handleNavigation("about", e)}
+            onClick={(e) => handleNavigation("blog", e)}
           >
-            About
+            Blog
           </button>
 
           <button
@@ -310,6 +322,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
             onClick={(e) => handleNavigation("legal", e)}
           >
             Legal
+          </button>
+
+          <button
+            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            onClick={(e) => handleNavigation("contact-us", e)}
+          >
+            Contact Us
           </button>
 
           <Link
