@@ -208,7 +208,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
               <button
                 onClick={(e) => handleNavigation("contact-us", e)}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
-                  pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
+                  pathname === "/contact-us" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
                 Contact Us

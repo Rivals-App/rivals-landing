@@ -8,6 +8,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
+import { ReactTyped } from "react-typed";
 
 // Register GSAP ScrollTrigger on client side
 if (typeof window !== "undefined") {
@@ -18,41 +19,41 @@ if (typeof window !== "undefined") {
 const featureCardsData = [
   {
     id: "1",
-    title: "Compete for Real Rewards",
+    title: "Play for Real Stakes. Win Real Money.",
     description:
-      "Challenge friends and rivals in skill-based matches with real stakes. Play your favorite competitive games and earn rewards for your victories.",
+      "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
     image: "/static/media/Card2.png",
     isMain: false,
   },
   {
     id: "2",
-    title: "Team Based Tournaments",
+    title: "Every Match, Verified Instantly.",
     description:
-      "Join tournaments or create custom challenges with flexible rules. Whether you're playing solo or with a squad, RIVALS is built for competitive gamers",
+      "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
     image: "/static/media/Card5.png",
     isMain: false,
   },
   {
     id: "3",
-    title: "Instant Score Validation & Payouts",
+    title: "Compete in Games You Actually Play.",
     description:
-      "Our automated system tracks scores in real time. Win a match, get paid immediately. No waiting periods or complex withdrawal processes.",
+      "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It’s your battlefield.",
     image: "/static/media/Card1.png",
     isMain: true,
   },
   {
     id: "4",
-    title: "Custom Challenges & Matches",
+    title: "Custom Challenges. Your Rules.",
     description:
-      "Create personalized challenges with unique rules and stake amounts. Compete on your own terms!",
+      "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
     image: "/static/media/Card4.png",
     isMain: false,
   },
   {
     id: "5",
-    title: "Secure & Transparent Gaming",
+    title: "XP-Based Ranking That Actually Matters.",
     description:
-      "Powered by advanced anti-cheat systems and real-time verification, RIVALS ensures a fair gaming environment.",
+      "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
     image: "/static/media/Card3.png",
     isMain: false,
   },
@@ -428,69 +429,55 @@ const HomePage = () => {
           </div>
 
           {/* Compete in Tournaments Section */}
-          <div
-            ref={tournamentsSectionRef}
-            className="w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 px-12 md:px-28 sm:px-12 my-12"
-          >
-            {/* Text Content */}
-            <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
-              <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
-                COMPETE IN <span className="text-[#02F199]">TOURNAMENTS</span>
-              </h3>
-              <p className="text-lg text-gray-300 mb-6">
-                Take your skills to the next level with organized competitions.
-                Join daily, weekly, and seasonal tournaments where you can
-                compete against top players and squads. Earn bigger rewards,
-                climb the leaderboards, and prove you're the best!
-              </p>
-              <ul className="tournament-list text-gray-300 space-y-3 mb-6">
-                <li>
-                  <strong>Solo & Team Tournaments</strong> – Play in 1v1, 3v3,
-                  or 5v5 formats
-                </li>
-                <li>
-                  <strong>Leaderboard Rankings</strong> – Track your progress
-                  and achievements
-                </li>
-                <li>
-                  <strong>Exclusive Rewards</strong> – Win cash prizes, in-game
-                  items, and special perks
-                </li>
-              </ul>
-            </div>
-            {/* Image Content */}
-            <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
-              <img
-                src="/static/media/Tournaments.png"
-                alt="Compete in Rivals Tournaments"
-                className="w-[100%] md:w-[80%] max-w-none object-contain"
-              />
+          <div>
+            <div
+              ref={tournamentsSectionRef}
+              className="w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 px-12 md:px-28 sm:px-12 my-12"
+            >
+              {/* Text Content */}
+              <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
+                <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
+                  COMPETE IN{" "}
+                  <span className="text-[#02F199]">
+                    <ReactTyped
+                      strings={["TOURNAMENTS", "LEAGUES", "SINGLE MATCHES"]}
+                      typeSpeed={100}
+                      backSpeed={50}
+                      backDelay={1500}
+                      loop
+                    >
+                    </ReactTyped>
+                  </span>
+                </h3>
+                <p className="text-lg text-gray-300 mb-6">
+                  Take your skills to the next level with organized competitions.
+                  Join daily, weekly, and seasonal tournaments and matches where you can
+                  compete against top players and squads. Earn bigger rewards,
+                  climb the leaderboards, and prove you're the best!
+                </p>
+                <ul className="tournament-list text-gray-300 space-y-3 mb-6">
+                  <li>
+                    <strong>Single Matches</strong> – Go 1v1. Prove your skill. Win cash, XP, and bragging rights.
+                  </li>
+                  <li>
+                    <strong>Tournaments</strong> – Squad up or go solo in daily and weekly tournaments. Win bigger, climb leaderboards, and dominate the bracket.
+                  </li>
+                  <li>
+                    <strong>Leagues</strong> – Rise through divisions, unlock elite events, and earn rewards that matter. The grind pays off.
+                  </li>
+                </ul>
+              </div>
+              {/* Image Content */}
+              <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
+                <img
+                  src="/static/media/Tournaments.png"
+                  alt="Compete in Rivals Tournaments"
+                  className="w-[100%] md:w-[80%] max-w-none object-contain"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Call to Action Section */}
-          {/* <div
-            ref={finalCtaRef}
-            className="cta-final w-full flex flex-col items-center justify-center py-12 px-6 rounded-lg mt-12"
-          >
-            
-            <img
-              src="/static/media/Logo1.png"
-              alt="RIVALS Logo"
-              className="w-24 h-auto mb-6"
-            />
-           
-            <h3 className="text-4xl font-bold text-white mb-6 text-center">
-              JOIN <span className="text-[#02F199]">RIVALS NOW</span>
-            </h3>
-            
-            <Link
-              href="/join-us"
-              className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 inline-block"
-            >
-              JOIN WAITLIST
-            </Link>
-          </div> */}
         </div>
       </div>
       <Footer />
