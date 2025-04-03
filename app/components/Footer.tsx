@@ -58,7 +58,7 @@ const Footer = () => {
             {/* Quick Links */}
             <div className="flex flex-col items-center">
               <h4 className="font-bold mt-4 mb-2 text-center">QUICK LINKS</h4>
-              <ul className="space-y-1 text-center">
+              <ul className="space-y-1 text-left">
                 <li>
                   <a 
                     href="/"
