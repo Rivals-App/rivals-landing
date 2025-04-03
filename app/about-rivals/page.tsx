@@ -358,7 +358,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 <div className="flex flex-col md:flex-row items-center">
                   <div className="team-image md:w-1/3 mb-8 md:mb-0">
                     <img
-                      src="/static/media/founder.png"
+                      src="/static/media/rajprofile.jpg"
                       alt="Raj Sandhu - Founder & CEO"
                       className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
                     />
