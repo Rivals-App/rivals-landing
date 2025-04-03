@@ -2,14 +2,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { gsap } from "gsap";
-import WelcomeScreen from "./onboarding/WelcomeSection";
-import AboutSection from "./onboarding/AboutSection";
+import { useRouter, useSearchParams } from "next/navigation";
+import HomeSection from "./onboarding/HomeSection";
 import RegistrationScreen from "./onboarding/RegistrationScreen";
 import BirthdayScreen from "./onboarding/BirthdayScreen";
 import ConfirmationScreen from "./onboarding/ConfirmationScreen";
-import BlogSection from "./onboarding/BlogSection";
 
-const MultiStepForm = () => {
+interface MultiStepFormProps {
+  initialSection?: string | null;
+}
+
+const MultiStepForm: React.FC<MultiStepFormProps> = ({ initialSection }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [userInfo, setUserInfo] = useState({
     firstName: "",
@@ -25,29 +28,53 @@ const MultiStepForm = () => {
     error: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   console.log("Current step:", currentStep);
 
+  // Handle initialSection from URL param
+  useEffect(() => {
+    if (initialSection) {
+      switch (initialSection) {
+        case "home":
+          setCurrentStep(1);
+          break;
+        case "email":
+          setCurrentStep(2);
+          break;
+        default:
+          setCurrentStep(0);
+      }
+    } else {
+      setCurrentStep(0);
+    }
+  }, [initialSection]);
+
   // Extract referral code from URL if available
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const ref = urlParams.get("ref");
+    const ref = searchParams.get("ref");
     if (ref) {
       setUserInfo((prev) => ({ ...prev, referralCode: ref }));
     }
-  }, []);
+  }, [searchParams]);
 
-  // Transition to next step with direct GSAP animation
   const goToNextStep = () => {
     const currentStepEl = `.step-${currentStep}`;
     const nextStepEl = `.step-${currentStep + 1}`;
+    if (
+      !document.querySelector(currentStepEl) ||
+      !document.querySelector(nextStepEl)
+    ) {
+      setCurrentStep((prev) => prev + 1);
+      return;
+    }
 
     const tl = gsap.timeline({
       onComplete: () => {
         setCurrentStep((prev) => prev + 1);
       },
     });
-
     // Animate current step out
     tl.to(currentStepEl, {
       opacity: 0,
@@ -58,8 +85,6 @@ const MultiStepForm = () => {
         gsap.set(currentStepEl, { display: "none" });
       },
     });
-
-    // Set up next step and animate it in
     tl.add(() => {
       gsap.set(nextStepEl, { display: "block", opacity: 0, x: 30 });
     });
@@ -111,18 +136,18 @@ const MultiStepForm = () => {
     });
   };
 
-  // Go directly to About section (step 1) with animation
-  const goToAboutSection = () => {
-    console.log("Going to About section");
+  // Go directly to Home section (step 1) with animation
+  const goToHomeSection = () => {
+    console.log("Going to Home section");
 
-    if (currentStep === 1) return; // Already in About section
+    if (currentStep === 1) return; // Already in Home section
 
     const currentStepEl = `.step-${currentStep}`;
-    const aboutStepEl = ".step-1";
+    const homeStepEl = ".step-1";
 
     const tl = gsap.timeline({
       onComplete: () => {
-        setCurrentStep(1); // Set to About section (step 1)
+        setCurrentStep(1); // Set to Home section (step 1)
       },
     });
 
@@ -137,13 +162,13 @@ const MultiStepForm = () => {
       },
     });
 
-    // Set up About step and animate it in
+    // Set up Home step and animate it in
     tl.add(() => {
-      gsap.set(aboutStepEl, { display: "block", opacity: 0, x: -30 });
+      gsap.set(homeStepEl, { display: "block", opacity: 0, x: -30 });
     });
 
-    // Animate About step in
-    tl.to(aboutStepEl, {
+    // Animate Home step in
+    tl.to(homeStepEl, {
       opacity: 1,
       x: 0,
       duration: 0.4,
@@ -151,48 +176,16 @@ const MultiStepForm = () => {
     });
   };
 
-  // Go directly to Blog section (step 5) with animation
+  // Go directly to Blog section - now navigates to the blog page
   const goToBlogSection = () => {
-    console.log("Going to Blog section");
+    console.log("Navigating to Blog page");
 
-    if (currentStep === 5) return; // Already in Blog section
-
-    const currentStepEl = `.step-${currentStep}`;
-    const blogStepEl = ".step-5";
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setCurrentStep(5); // Set to Blog section (step 5)
-      },
-    });
-
-    // Animate current step out
-    tl.to(currentStepEl, {
-      opacity: 0,
-      x: 30,
-      duration: 0.4,
-      ease: "power2.in",
-      onComplete: () => {
-        gsap.set(currentStepEl, { display: "none" });
-      },
-    });
-
-    // Set up Blog step and animate it in
-    tl.add(() => {
-      gsap.set(blogStepEl, { display: "block", opacity: 0, x: -30 });
-    });
-
-    // Animate Blog step in
-    tl.to(blogStepEl, {
-      opacity: 1,
-      x: 0,
-      duration: 0.4,
-      ease: "power2.out",
-    });
+    // Use Next.js router to navigate to the blog page
+    router.push("/blog");
   };
 
   // Go directly to Email step (step 2) with animation
-  const goToEmailStep = () => {
+  const goToRegisterStep = () => {
     console.log("Going to Email step");
 
     if (currentStep === 2) return; // Already in Email section
@@ -329,16 +322,32 @@ const MultiStepForm = () => {
     }
   };
 
-  // Set initial visibility
   useEffect(() => {
-    // Show only the first step initially, hide others
-    gsap.set(".step-0", { opacity: 1, display: "block" });
-    gsap.set(".step-1, .step-2, .step-3, .step-4, .step-5", {
-      opacity: 0,
-      x: 30,
-      display: "none",
-    });
-  }, []);
+    // If we have an initialSection, show that section instead of Welcome
+    if (initialSection && initialSection !== "") {
+      const targetStep =
+        initialSection === "home" ? 1 : initialSection === "email" ? 2 : 1; // Default to step 1
+      setCurrentStep(targetStep);
+
+      // Show only the targeted step, hide others
+      for (let i = 1; i < 5; i++) {
+        // Start from step 1
+        if (i === targetStep) {
+          gsap.set(`.step-${i}`, { opacity: 1, x: 0, display: "block" });
+        } else {
+          gsap.set(`.step-${i}`, { opacity: 0, x: 30, display: "none" });
+        }
+      }
+    } else {
+      // Default behavior - show only the first step initially, hide others
+      gsap.set(".step-1", { opacity: 1, display: "block" });
+      gsap.set(".step-2, .step-3, .step-4", {
+        opacity: 0,
+        x: 30,
+        display: "none",
+      });
+    }
+  }, [initialSection]);
 
   return (
     <div className="w-full h-full min-h-screen flex flex-col items-center relative">
@@ -362,18 +371,15 @@ const MultiStepForm = () => {
         </div>
       )}
 
-      {/* Step 0: Welcome Screen */}
-      <div className="step-0 w-full h-screen flex flex-col items-center justify-center">
-        <WelcomeScreen onProceed={goToNextStep} />
-      </div>
-
-      {/* Step 1: About Rivals Section */}
+      {/* Step 1: Home Section */}
       <div className="step-1 w-full h-screen flex flex-col">
-        <AboutSection
+        <HomeSection
           onContinue={goToNextStep}
           onBack={goToPreviousStep}
-          goToEmailStep={goToEmailStep}
+          goToRegisterStep={goToRegisterStep}
           goToBlogSection={goToBlogSection}
+          goToHomeSection={goToHomeSection}
+          currentStep={currentStep}
         />
       </div>
 
@@ -406,17 +412,7 @@ const MultiStepForm = () => {
         <ConfirmationScreen
           userData={userInfo}
           onBack={goToPreviousStep}
-          onGoToAbout={goToAboutSection}
-        />
-      </div>
-
-      {/* Step 5: Blog section */}
-      <div className="step-5 w-full min-h-screen flex flex-col">
-        <BlogSection
-          onBack={goToAboutSection}
-          goToAboutSection={goToAboutSection}
-          goToEmailStep={goToEmailStep}
-          goToBlogSection={goToBlogSection}
+          onGoToAbout={goToHomeSection}
         />
       </div>
     </div>

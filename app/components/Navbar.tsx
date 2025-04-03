@@ -2,47 +2,54 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
 
 interface NavbarProps {
-  goToEmailStep?: () => void;
+  goToRegisterStep?: () => void;
   goToBlogSection?: () => void;
-  goToAboutSection?: () => void; // Navigation to About section
+  goToHomeSection?: () => void;
+  currentStep?: number;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  goToEmailStep,
-  goToBlogSection,
-  goToAboutSection,
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
-  // Handler for waitlist button click
-  const handleWaitlistClick = (e: React.MouseEvent) => {
-    if (goToEmailStep) {
-      e.preventDefault();
-      goToEmailStep();
-    }
-  };
+  // Handler for navigation actions
+  const handleNavigation = (
+    action: "home" | "arcade" | "blog" | "about" | "legal" | "join-us",
+    e: React.MouseEvent
+  ) => {
+    e.preventDefault();
 
-  // Handler for blog link click
-  const handleBlogClick = (e: React.MouseEvent) => {
-    if (goToBlogSection) {
-      e.preventDefault();
-      goToBlogSection();
+    // Always use Next.js routing
+    switch (action) {
+      case "home":
+        router.push("/");
+        break;
+      case "blog":
+        router.push("/blog");
+        break;
+      case "about":
+        router.push("/about-rivals");
+        break;
+      case "arcade":
+        router.push("/arcade");
+        break;
+      case "legal":
+        router.push("/legal");
+        break;
+      case "join-us":
+        router.push("/join-us");
+        break;
     }
-  };
 
-  // Handler for logo/home link click
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // Important to prevent default behavior
-    if (goToAboutSection) {
-      goToAboutSection();
-    }
+    // Close mobile menu if open
+    setIsMobileMenuOpen(false);
   };
 
   // Detect scroll to add background color on scroll
@@ -59,8 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Mobile menu animation
   useEffect(() => {
-    // Only run animations if the ref is available
     if (!mobileMenuRef.current) return;
 
     try {
@@ -95,8 +102,8 @@ const Navbar: React.FC<NavbarProps> = ({
     }
   }, [isMobileMenuOpen]);
 
+  // Close mobile menu on screen resize
   useEffect(() => {
-    // Close the mobile menu when resizing the screen to a larger size
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setIsMobileMenuOpen(false);
@@ -112,14 +119,14 @@ const Navbar: React.FC<NavbarProps> = ({
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  console.log("Navbar props:", {
-    goToEmailStep,
-    goToBlogSection,
-    goToAboutSection,
-  });
+  // Handle logo click - goes to home page
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push("/");
+  };
 
   return (
-    <div className="relative sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 px-4 md:px-8">
+    <div className="relative sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 mb-12 px-4 md:px-8">
       {/* Navbar */}
       <nav
         className={`max-w-[99vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
@@ -128,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({
             : "bg-[#121212]/25 backdrop-blur-md"
         }`}
       >
-        <div className="max-w-[99vw] mx-auto px-6 sm:px-8 md:px-12">
+        <div className="mx-auto px-6 sm:px-8 md:px-12">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -138,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({
               >
                 <div className="relative h-8 w-auto">
                   <img
-                    src="/static/media/Logo2.png"
+                    src="/static/media/Logo1.png"
                     alt="RIVALS Logo"
                     className="h-8 w-auto"
                   />
@@ -149,25 +156,66 @@ const Navbar: React.FC<NavbarProps> = ({
             {/* Desktop Navigation and Action Button */}
             <div className="hidden md:flex items-center space-x-8">
               <button
-                onClick={handleBlogClick}
+                onClick={(e) => handleNavigation("home", e)}
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                  pathname === "/" ? "text-[#02F199]" : "text-gray-300"
+                }`}
+              >
+                Home
+              </button>
+
+              <button
+                onClick={(e) => handleNavigation("blog", e)}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
                   pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
                 Blog
               </button>
-              
-            <Link
-            href="https://getrivals.com"
-            target="_blank"
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
-                  pathname === "https://getrivals.com" ? "text-[#02F199]" : "text-gray-300"
+
+              <button
+                onClick={(e) => handleNavigation("about", e)}
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                  pathname === "/about-rivals"
+                    ? "text-[#02F199]"
+                    : "text-gray-300"
                 }`}
               >
-            Try Our Demo
-          </Link>
+                About
+              </button>
+
               <button
-                onClick={handleWaitlistClick}
+                onClick={(e) => handleNavigation("arcade", e)}
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                  pathname === "/arcade" ? "text-[#02F199]" : "text-gray-300"
+                }`}
+              >
+                Arcade
+              </button>
+
+              <button
+                onClick={(e) => handleNavigation("legal", e)}
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                  pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
+                }`}
+              >
+                Legal
+              </button>
+
+              <Link
+                href="https://getrivals.com"
+                target="_blank"
+                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
+                  pathname === "https://getrivals.com"
+                    ? "text-[#02F199]"
+                    : "text-gray-300"
+                }`}
+              >
+                Try Our Demo
+              </Link>
+
+              <button
+                onClick={(e) => handleNavigation("join-us", e)}
                 className="inline-flex items-center px-6 py-2 text-md font-thin rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
               >
                 <span>Join Waitlist</span>
@@ -231,33 +279,51 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="px-4 py-4 space-y-2">
           <button
             className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
-            onClick={(e) => {
-              setIsMobileMenuOpen(false);
-              if (goToBlogSection) {
-                goToBlogSection();
-              }
-            }}
+            onClick={(e) => handleNavigation("home", e)}
+          >
+            Home
+          </button>
+
+          <button
+            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            onClick={(e) => handleNavigation("blog", e)}
           >
             Blog
           </button>
-      
-         <Link
+
+          <button
+            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            onClick={(e) => handleNavigation("about", e)}
+          >
+            About
+          </button>
+
+          <button
+            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            onClick={(e) => handleNavigation("arcade", e)}
+          >
+            Arcade
+          </button>
+
+          <button
+            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            onClick={(e) => handleNavigation("legal", e)}
+          >
+            Legal
+          </button>
+
+          <Link
             href="https://getrivals.com"
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Try Our Demo
           </Link>
-          
+
           <div className="px-3 py-2 mt-4">
             <button
               className="block py-2 w-full text-center rounded-full text-base font-medium bg-[#02F199] text-[#0c1622]"
-              onClick={(e) => {
-                setIsMobileMenuOpen(false);
-                if (goToEmailStep) {
-                  goToEmailStep();
-                }
-              }}
+              onClick={(e) => handleNavigation("join-us", e)}
             >
               JOIN WAITLIST
             </button>

@@ -1,19 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import Navbar from "./components/Navbar";
-import PerlinNoiseSketch from "./components/PerlinNoise";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import FeatureCards from "./components/FeatureCards";
+import FeatureCards from "../FeatureCards";
+import Navbar from "../Navbar";
+import { useRouter } from "next/navigation";
+import router from "next/router";
 
-// Register GSAP ScrollTrigger on client side
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Feature cards data
 const featureCardsData = [
   {
     id: "1",
@@ -39,6 +39,7 @@ const featureCardsData = [
     image: "/static/media/Card1.png",
     isMain: true,
   },
+
   {
     id: "4",
     title: "Custom Challenges & Matches",
@@ -57,7 +58,23 @@ const featureCardsData = [
   },
 ];
 
-const HomePage = () => {
+interface HomeSectionProps {
+  onContinue: () => void;
+  onBack: () => void;
+  goToRegisterStep?: () => void;
+  goToBlogSection?: () => void;
+  goToHomeSection?: () => void;
+  currentStep?: number;
+}
+
+const HomeSection: React.FC<HomeSectionProps> = ({
+  onContinue,
+  onBack,
+  goToHomeSection,
+  currentStep,
+  goToRegisterStep,
+  goToBlogSection,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const featureSectionRef = useRef<HTMLDivElement>(null);
@@ -65,6 +82,10 @@ const HomePage = () => {
   const tournamentsSectionRef = useRef<HTMLDivElement>(null);
   const finalCtaRef = useRef<HTMLDivElement>(null);
   const [isMobileView, setIsMobileView] = useState(false);
+
+  const handleWaitlistClick = () => {
+    router.push("/join-us");
+  };
 
   // Check if the screen is mobile size
   useEffect(() => {
@@ -111,7 +132,7 @@ const HomePage = () => {
       "-=0.4"
     );
 
-    // Set up scroll triggers for different sections
+    // Set up scroll triggers for different sections after a slight delay to ensure DOM is ready
     const initScrollTriggers = () => {
       // Feature section scroll animations
       if (featureSectionRef.current) {
@@ -140,6 +161,8 @@ const HomePage = () => {
           ease: "power3.out",
         });
 
+        // We target the container of the feature cards, not the cards themselves,
+        // as the FeatureCards component might handle its own animations
         gsap.from(".feature-cards-container", {
           scrollTrigger: {
             trigger: ".feature-cards",
@@ -264,16 +287,14 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col text-white">
-      {/* Perlin Noise Background */}
-      <PerlinNoiseSketch />
-
-      <div
-        ref={containerRef}
-        className="w-full h-full flex flex-col relative z-10"
-      >
-        <Navbar />
-
+    <div>
+      <Navbar
+        goToRegisterStep={goToRegisterStep}
+        goToBlogSection={goToBlogSection}
+        goToHomeSection={goToHomeSection}
+        currentStep={currentStep}
+      />
+      <div className="w-full h-full flex flex-col" ref={containerRef}>
         <div className="flex-grow flex flex-col items-center justify-start pt-6 md:pt-0">
           {/* Hero Section */}
           <div
@@ -297,12 +318,12 @@ const HomePage = () => {
                 skill-based matches, win real rewards, and become part of the
                 ultimate competitive gaming community.
               </p>
-              <Link
-                href="/join-us"
-                className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block"
+              <button
+                onClick={handleWaitlistClick}
+                className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button"
               >
                 JOIN WAITLIST
-              </Link>
+              </button>
             </div>
 
             {/* Image Content */}
@@ -314,7 +335,6 @@ const HomePage = () => {
               />
             </div>
           </div>
-
           {/* Feature Cards Section */}
           <div
             ref={featureSectionRef}
@@ -483,12 +503,12 @@ const HomePage = () => {
               JOIN <span className="text-[#02F199]">RIVALS NOW</span>
             </h3>
             {/* Button */}
-            <Link
-              href="/join-us"
-              className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 inline-block"
+            <button
+              onClick={handleWaitlistClick}
+              className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200"
             >
               JOIN WAITLIST
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -496,4 +516,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomeSection;
