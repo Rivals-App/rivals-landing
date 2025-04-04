@@ -216,7 +216,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
               <div className="h-60 w-full overflow-hidden">
                 <img
-                  src="/static/media/about-hero.png"
+                  src="/static/media/rivalspresent.jpg"
                   alt="Rivals team"
                   className="w-full h-full object-cover"
                 />
@@ -355,7 +355,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
                   Meet the <span className="text-[#02F199]">Team</span>
                 </h2>
-                <div className="flex flex-col md:flex-row items-center">
+                <div className="flex flex-col md:flex-row items-center mb-12">
                   <div className="team-image md:w-1/3 mb-8 md:mb-0">
                     <img
                       src="/static/media/rajprofile.jpg"
@@ -370,6 +370,106 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                     </h3>
                     <p className="text-xl font-medium text-white mb-4">
                       Founder & CEO
+                    </p>
+                    <p className="text-lg text-gray-300 mb-6">
+                      Avid gamer, tech entrepreneur, and competitive sports
+                      enthusiast with a passion for creating fair gaming
+                      ecosystems. Raj founded Rivals to bridge the gap between
+                      casual play and professional competition.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center mb-12">
+                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
+                    <img
+                      src="/static/media/rajprofile.jpg"
+                      alt="Joshua jones"
+                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
+                    />
+                  </div>
+
+                  <div className="team-content md:w-2/3 md:pl-12">
+                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
+                      Joshua Jones
+                    </h3>
+                    <p className="text-xl font-medium text-white mb-4">
+                      Head of Vibe Coding
+                    </p>
+                    <p className="text-lg text-gray-300 mb-6">
+                      Avid gamer, tech entrepreneur, and competitive sports
+                      enthusiast with a passion for creating fair gaming
+                      ecosystems. Raj founded Rivals to bridge the gap between
+                      casual play and professional competition.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center mb-12">
+                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
+                    <img
+                      src="/static/media/rajprofile.jpg"
+                      alt="Kamsi"
+                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
+                    />
+                  </div>
+
+                  <div className="team-content md:w-2/3 md:pl-12">
+                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
+                      Kamsi
+                    </h3>
+                    <p className="text-xl font-medium text-white mb-4">
+                      Frontend Developer
+                    </p>
+                    <p className="text-lg text-gray-300 mb-6">
+                      Avid gamer, tech entrepreneur, and competitive sports
+                      enthusiast with a passion for creating fair gaming
+                      ecosystems. Raj founded Rivals to bridge the gap between
+                      casual play and professional competition.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center mb-12">
+                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
+                    <img
+                      src="/static/media/rajprofile.jpg"
+                      alt="Cleo"
+                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
+                    />
+                  </div>
+
+                  <div className="team-content md:w-2/3 md:pl-12">
+                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
+                      Cleo
+                    </h3>
+                    <p className="text-xl font-medium text-white mb-4">
+                      Backend Developer
+                    </p>
+                    <p className="text-lg text-gray-300 mb-6">
+                      Avid gamer, tech entrepreneur, and competitive sports
+                      enthusiast with a passion for creating fair gaming
+                      ecosystems. Raj founded Rivals to bridge the gap between
+                      casual play and professional competition.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center mb-12">
+                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
+                    <img
+                      src="/static/media/rajprofile.jpg"
+                      alt="Dorian"
+                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
+                    />
+                  </div>
+
+                  <div className="team-content md:w-2/3 md:pl-12">
+                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
+                      Dorian
+                    </h3>
+                    <p className="text-xl font-medium text-white mb-4">
+                      Backend Developer
                     </p>
                     <p className="text-lg text-gray-300 mb-6">
                       Avid gamer, tech entrepreneur, and competitive sports
