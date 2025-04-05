@@ -341,7 +341,7 @@ const HomePage = () => {
           </div>
 
           {/* How It Works Section */}
-          <div
+          {/* <div
             ref={howItWorksSectionRef}
             className="how-it-works w-full py-12 px-6 md:px-24 sm:px-12 rounded-lg"
           >
@@ -353,13 +353,15 @@ const HomePage = () => {
             </p>
 
             <div className="how-steps flex flex-col gap-8 md:gap-16 items-center">
-              {/* Step 1 */}
+             
               <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
-                <img
-                  src="/static/media/HowItWorks1.png"
-                  alt="Choose Your Game & Mode"
-                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:ml-auto"
-                />
+                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:ml-auto">
+                  <img
+                    src="/static/media/HowItWorks1.png"
+                    alt="Choose Your Game & Mode"
+                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                  />
+                </div>
                 <div className="md:w-[55%] md:pl-8">
                   <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Explore & Create Matches
@@ -371,13 +373,15 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* Step 2 */}
+             
               <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
-                <img
-                  src="/static/media/HowItWorks2.png"
-                  alt="Challenge & Stake"
-                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:mr-auto"
-                />
+                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:mr-auto">
+                  <img
+                    src="/static/media/HowItWorks2.png"
+                    alt="Challenge & Stake"
+                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                  />
+                </div>
                 <div className="md:w-[55%] md:pr-8">
                   <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Challenge & Stake
@@ -389,13 +393,15 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* Step 3 */}
+            
               <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
-                <img
-                  src="/static/media/HowItWorks3.png"
-                  alt="Play & Win"
-                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:ml-auto"
-                />
+                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:ml-auto">
+                  <img
+                    src="/static/media/HowItWorks3.png"
+                    alt="Play & Win"
+                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                  />
+                </div>
                 <div className="md:w-[55%] md:pl-8">
                   <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Compete & Invite
@@ -408,13 +414,15 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* Step 4 */}
+            
               <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
-                <img
-                  src="/static/media/HowItWorks4.png"
-                  alt="Get Paid Instantly"
-                  className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:mr-auto"
-                />
+                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:mr-auto">
+                  <img
+                    src="/static/media/HowItWorks4.png"
+                    alt="Get Paid Instantly"
+                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                  />
+                </div>
                 <div className="md:w-[55%] md:pr-8">
                   <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
                     Win & Instant Withdrawals
@@ -426,7 +434,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Compete in Tournaments Section */}
           <div>
