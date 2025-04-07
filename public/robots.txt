@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.rivalsapp.com
+
+# Sitemaps
+Sitemap: https://www.rivalsapp.com/sitemap.xml
