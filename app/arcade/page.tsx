@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import React from "react";
 import Navbar from "../components/Navbar";
@@ -11,7 +12,7 @@ const ArcadePage: React.FC = () => {
         <Navbar />
 
         {/* Hero Section */}
-        <div className="flex-grow flex flex-col items-center pt-20 md:pt-24 px-4 md:px-8 max-w-7xl mx-auto w-full">
+        <div className="flex-grow flex flex-col items-center pt-16 md:pt-18 px-4 md:px-8 max-w-7xl mx-auto w-full">
           <div className="w-full max-w-6xl text-center mb-12 md:mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
               STAKE. PLAY. <span className="text-[#02F199]">WIN.</span>
@@ -207,7 +208,7 @@ const ArcadePage: React.FC = () => {
           
           {/* CTA Banner */}
           <div className="w-full max-w-6xl mx-auto mb-16">
-            <div className="bg-gradient-to-r from-[#121212] to-[#121212]/80 border border-white/10 backdrop-blur-md rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between">
+            <div className="bg-gradient-to-r from-[#121212]/10 to-[#121212]/80 border border-white/10 backdrop-blur-md rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between">
               <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0 text-center md:text-left">
                 Ready to play for more than just fun?
               </h3>

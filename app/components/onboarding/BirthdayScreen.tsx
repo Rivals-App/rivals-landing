@@ -106,7 +106,7 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
             <select
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
               required
             >
               <option value="" disabled>
@@ -136,7 +136,7 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
             <input
               type="number"
               placeholder="Enter Year"
-              className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
               value={year}
               onChange={(e) => setYear(e.target.value)}
               min={1900}

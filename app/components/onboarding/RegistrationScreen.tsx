@@ -119,7 +119,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
               <input
                 type="text"
                 placeholder="First Name"
-                className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+                className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
                 value={firstName}
                 onChange={(e) => onFirstNameChange(e.target.value)}
                 required
@@ -129,7 +129,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
               <input
                 type="text"
                 placeholder="Last Name"
-                className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+                className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
                 value={lastName}
                 onChange={(e) => onLastNameChange(e.target.value)}
                 required
@@ -140,7 +140,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
             <input
               type="email"
               placeholder="Your email address"
-              className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
               value={email}
               onChange={(e) => onEmailChange(e.target.value)}
               required
@@ -150,7 +150,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
             <select
               value={preferredConsole}
               onChange={(e) => setPreferredConsole(e.target.value)}
-              className="w-full px-4 py-2 bg-[#1E2A3B] border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
               required
             >
               <option value="" disabled>

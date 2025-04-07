@@ -177,7 +177,7 @@ export default function BlogPage() {
       >
         <Navbar />
 
-        <div className="flex-grow flex flex-col items-start pt-20 md:pt-18 px-4 md:px-8 max-w-7xl mx-auto w-full">
+        <div className="flex-grow flex flex-col items-start pt-16 md:pt-12 px-4 md:px-8 max-w-7xl mx-auto w-full">
           {/* Blog Header */}
           <div className="blog-header w-full max-w-6xl mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-white text-center">

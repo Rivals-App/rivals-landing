@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
@@ -125,7 +126,7 @@ const LegalPage: React.FC = () => {
       <div className="w-full min-h-screen flex flex-col bg-transparent mb-12">
         <Navbar />
 
-        <div className="pt-20 md:pt-24 px-4 md:px-8 max-w-7xl mx-auto w-full">
+        <div className="pt-14 md:pt-18 px-4 md:px-8 max-w-7xl mx-auto w-full">
           <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-8">
             <span className="text-[#02F199]">RIVALS</span> LEGAL
           </h1>

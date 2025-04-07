@@ -2,8 +2,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { FaArrowLeft } from "react-icons/fa";
-
 interface ConfirmationScreenProps {
   userData: {
     email: string;
@@ -103,15 +101,6 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
   return (
     <div className="h-full w-full px-4 md:px-12 flex flex-col items-center justify-center">
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
-        {/* Back button */}
-        <button
-          onClick={onBack}
-          className="conf-back absolute top-0 left-0 -mt-16 text-gray-400 hover:text-[#02F199] transition-colors z-50"
-          aria-label="Go back"
-        >
-          <FaArrowLeft size={20} />
-        </button>
-
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <img

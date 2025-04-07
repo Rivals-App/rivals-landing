@@ -231,7 +231,7 @@ const JoinUsPage: React.FC = () => {
         )}
 
         {/* Step 1: Registration Screen */}
-        <div className="step-1 w-full h-full pt-24">
+        <div className="step-1 w-full h-full pt-4 pb-20">
           <RegistrationScreen
             firstName={userInfo.firstName}
             lastName={userInfo.lastName}
@@ -245,7 +245,7 @@ const JoinUsPage: React.FC = () => {
         </div>
 
         {/* Step 2: Birthday Screen */}
-        <div className="step-2 w-full h-full pt-24">
+        <div className="step-2 w-full h-full pt-4 pb-20">
           <BirthdayScreen
             birthday={userInfo.birthday}
             onBirthdayChange={handleBirthdayChange}
@@ -255,7 +255,7 @@ const JoinUsPage: React.FC = () => {
         </div>
 
         {/* Step 3: Confirmation Screen */}
-        <div className="step-3 w-full h-full pt-24">
+        <div className="step-3 w-full h-full pt-4 pb-20">
           <ConfirmationScreen
             userData={userInfo}
             onBack={goToPreviousStep}
