@@ -1,61 +1,60 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { gsap } from "gsap";
+import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Link from "next/link";
 
 // Legal document content
 const legalDocuments = {
   terms: {
-    title: "Terms of Service",
+    title: "Website Terms of Use",
     effectiveDate: "17 January 2025",
     content: [
       {
         title: "Introduction",
-        text: "Rivals, a trading name of Rivals Gaming Ltd (Company No. 16249665), registered at 71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ (\"we,\" \"us,\" or \"our\"). By accessing or using Rivals, you agree to these Terms of Service (\"Terms\"). If you do not agree, please refrain from using our services."
+        text: 'Rivals, a trading name of Rivals Gaming Ltd (Company No. 16249665), registered at 71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ ("we," "us," or "our"). By accessing or using Rivals, you agree to these Terms of Service ("Terms"). If you do not agree, please refrain from using our services.',
       },
       {
         title: "1. Eligibility",
-        text: "1.1. You must be at least 18 years old to use Rivals.\n\n1.2. If you are under 18 but at least 13, you may use Rivals only if your parent or legal guardian creates an account on your behalf and agrees to these Terms.\n\n1.3. Users under 13 are not permitted to access Rivals."
+        text: "1.1. You must be at least 18 years old to use Rivals.\n\n1.2. If you are under 18 but at least 13, you may use Rivals only if your parent or legal guardian creates an account on your behalf and agrees to these Terms.\n\n1.3. Users under 13 are not permitted to access Rivals.",
       },
       {
         title: "2. Accounts",
-        text: "2.1. Each individual is allowed one account. Creating multiple accounts may result in termination.\n\n2.2. Users are responsible for maintaining the security of their accounts.\n\n2.3. In the future, account verification may require ID checks to confirm your identity."
+        text: "2.1. Each individual is allowed one account. Creating multiple accounts may result in termination.\n\n2.2. Users are responsible for maintaining the security of their accounts.\n\n2.3. In the future, account verification may require ID checks to confirm your identity.",
+      },
+      // Additional sections...
+    ],
+  },
+  conditions: {
+    title: "Rivals Terms & Conditions",
+    effectiveDate: "17 January 2025",
+    content: [
+      {
+        title: "Introduction",
+        text: "These Terms and Conditions govern your use of the Rivals platform and services. By registering for and using Rivals, you accept and agree to be bound by these Terms and Conditions.",
       },
       {
-        title: "3. Monetisation and Transactions",
-        text: "3.1. Rivals operates using real money.\n\n3.2. By using our services, you agree to the applicable transaction fees, which are disclosed during payment or withdrawal processes.\n\n3.3. All deposits and withdrawals are final. Ensure your account details are accurate before completing transactions."
+        title: "1. Service Description",
+        text: "1.1. Rivals provides a platform for skill-based gaming competitions.\n\n1.2. Users can participate in matches, tournaments and other competitive formats.\n\n1.3. Rivals is not gambling – outcomes are primarily determined by player skill.",
+      },
+      // Additional sections...
+    ],
+  },
+  dataProtection: {
+    title: "Data Protection",
+    effectiveDate: "17 January 2025",
+    content: [
+      {
+        title: "Data Protection Notice",
+        text: "Rivals Gaming Ltd is committed to protecting and respecting your privacy. This Data Protection Notice explains how we collect, use, and safeguard your personal information.",
       },
       {
-        title: "4. User Responsibilities and Conduct",
-        text: "4.1. Users must adhere to the following rules of conduct:\n- No hate speech, harassment, or discrimination of any kind.\n- No cheating, fraud, or unfair practices.\n\n4.2. Failure to comply may result in account suspension or termination.\n\n4.3. All disputes regarding gameplay or matches will be handled by Rivals' Admins. The Admin's decision is final."
+        title: "1. Data Controller",
+        text: "1.1. Rivals Gaming Ltd (Company No. 16249665) is the data controller responsible for your personal data.\n\n1.2. We are registered with the Information Commissioner's Office (ICO) in the United Kingdom.",
       },
-      {
-        title: "5. Inactive Accounts and Termination",
-        text: "5.1. Accounts with no activity for 12 months will be deemed inactive and may be permanently closed.\n\n5.2. Upon termination of an account, unused funds will not be refunded unless required by law."
-      },
-      {
-        title: "6. Uploaded Content and Intellectual Property",
-        text: "6.1. By using Rivals, you grant us the right to use, modify, and display any content you upload (e.g., gameplay clips, images) for purposes related to Rivals.\n\n6.2. Rivals and its associated intellectual property remain the exclusive property of MS UN LTD."
-      },
-      {
-        title: "7. Privacy Policy",
-        text: "7.1. Rivals collects and uses personal data in accordance with its Privacy Policy, outlined separately."
-      },
-      {
-        title: "8. Governing Law and Dispute Resolution",
-        text: "8.1. These Terms are governed by the laws of England and Wales.\n\n8.2. Any disputes will be resolved in the simplest possible manner, such as small claims court or informal negotiation."
-      },
-      {
-        title: "9. Changes to Terms",
-        text: "9.1. We reserve the right to modify these Terms at any time. Changes will be communicated via email or through the platform. Your continued use of Rivals constitutes acceptance of the updated Terms."
-      },
-      {
-        title: "10. Contact Us",
-        text: "If you have questions regarding these Terms, please contact us at support@rivalsapp.com."
-      }
-    ]
+      // Additional sections...
+    ],
   },
   privacy: {
     title: "Privacy Policy",
@@ -63,77 +62,185 @@ const legalDocuments = {
     content: [
       {
         title: "Introduction",
-        text: "This Privacy Policy explains how Rivals Gaming Ltd collects, uses, and protects your personal information when you use our platform. We are committed to ensuring the privacy and security of your data."
+        text: "This Privacy Policy explains how Rivals Gaming Ltd collects, uses, and protects your personal information when you use our platform. We are committed to ensuring the privacy and security of your data.",
       },
       {
         title: "1. Information We Collect",
-        text: "1.1. Account Information: Name, email address, date of birth, and other details provided during registration.\n\n1.2. Financial Information: Payment details, transaction history, and withdrawal information.\n\n1.3. Gameplay Data: Game statistics, match history, and interaction with other users.\n\n1.4. Technical Data: IP address, device information, browser type, and operating system."
+        text: "1.1. Account Information: Name, email address, date of birth, and other details provided during registration.\n\n1.2. Financial Information: Payment details, transaction history, and withdrawal information.\n\n1.3. Gameplay Data: Game statistics, match history, and interaction with other users.\n\n1.4. Technical Data: IP address, device information, browser type, and operating system.",
+      },
+      // Additional sections...
+    ],
+  },
+  cookies: {
+    title: "Cookie Policy",
+    effectiveDate: "17 January 2025",
+    content: [
+      {
+        title: "Introduction",
+        text: "This Cookie Policy explains how Rivals Gaming Ltd uses cookies and similar technologies on our website and platform.",
       },
       {
-        title: "2. How We Use Your Information",
-        text: "2.1. To provide and improve our services.\n\n2.2. To process transactions and manage your account.\n\n2.3. To verify your identity and prevent fraud.\n\n2.4. To communicate with you about updates, promotions, and support."
+        title: "1. What Are Cookies",
+        text: "1.1. Cookies are small text files that are stored on your device when you visit a website.\n\n1.2. They help the website recognize your device and remember certain information about your visit.",
+      },
+      // Additional sections...
+    ],
+  },
+  acceptableUse: {
+    title: "Acceptable Use Policy",
+    effectiveDate: "17 January 2025",
+    content: [
+      {
+        title: "Introduction",
+        text: "This Acceptable Use Policy outlines the rules governing how you may use the Rivals platform and services.",
       },
       {
-        title: "3. Data Sharing",
-        text: "3.1. Service Providers: We may share data with third-party service providers who assist us in operating our platform (e.g., payment processors, analytics services).\n\n3.2. Legal Requirements: We may disclose information when required by law or to protect our rights or the safety of users."
+        title: "1. Prohibited Activities",
+        text: "1.1. Harassment or bullying of other users.\n\n1.2. Cheating or exploiting game mechanics.\n\n1.3. Creating multiple accounts to gain unfair advantages.",
+      },
+      // Additional sections...
+    ],
+  },
+  skillGaming: {
+    title: "Legality of Skill Gaming",
+    effectiveDate: "17 January 2025",
+    content: [
+      {
+        title: "Introduction",
+        text: "This document provides information about the legal status of skill-based gaming competitions on the Rivals platform.",
       },
       {
-        title: "4. Data Security",
-        text: "We implement appropriate technical and organizational measures to protect your personal data from unauthorized access, loss, or alteration."
+        title: "1. Skill vs. Chance",
+        text: "1.1. Rivals provides competitions where the outcome is primarily determined by player skill, not chance.\n\n1.2. Games that require physical or mental skill differentiate our platform from traditional gambling services.",
+      },
+      // Additional sections...
+    ],
+  },
+  companies: {
+    title: "Rivals Companies",
+    effectiveDate: "17 January 2025",
+    content: [
+      {
+        title: "Corporate Structure",
+        text: "Information about the Rivals corporate structure, subsidiaries, and registered entities.",
       },
       {
-        title: "5. Your Rights",
-        text: "You have the right to access, correct, delete, or restrict the processing of your personal data. To exercise these rights, contact us at privacy@rivalsapp.com."
+        title: "1. Main Operating Entity",
+        text: "1.1. Rivals Gaming Ltd\n\n1.2. Company Registration: 16249665\n\n1.3. Registered Address: 71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ",
       },
-      {
-        title: "6. Data Retention",
-        text: "We retain your personal data for as long as necessary to fulfill the purposes outlined in this Privacy Policy or as required by law."
-      },
-      {
-        title: "7. Cookies",
-        text: "We use cookies and similar technologies to enhance your experience on our platform. You can manage cookie preferences through your browser settings."
-      },
-      {
-        title: "8. Changes to This Policy",
-        text: "We may update this Privacy Policy from time to time. We will notify you of significant changes by email or through our platform."
-      },
-      {
-        title: "9. Contact Information",
-        text: "If you have questions about this Privacy Policy, please contact us at privacy@rivalsapp.com."
-      }
-    ]
-  }
+      // Additional sections...
+    ],
+  },
 };
 
-const LegalPage: React.FC = () => {
+const LegalPage = () => {
+  // Default to terms if no slug is provided
   const [activeDocument, setActiveDocument] = useState("terms");
 
+  // Extract the slug from the URL path on client-side
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname;
+      const segments = path.split("/");
+      const lastSegment = segments[segments.length - 1];
+
+      // Check if the lastSegment is a valid document key
+      if (lastSegment && Object.keys(legalDocuments).includes(lastSegment)) {
+        setActiveDocument(lastSegment);
+      }
+    }
+  }, []);
+
+  // Menu items for sidebar and dropdown
   const menuItems = [
-    { id: "terms", label: "Terms of Service" },
-    { id: "privacy", label: "Privacy Policy" },
-    { id: "data", label: "Data Protection" },
-    { id: "cookies", label: "Cookie Policy" },
-    { id: "acceptable", label: "Acceptable Use" },
-    { id: "skill", label: "Legality of Skill Gaming" },
-    { id: "companies", label: "Rivals Companies" }
+    { id: "terms", label: "Website Terms of Use", path: "/legal/terms" },
+    {
+      id: "conditions",
+      label: "Rivals Terms & Conditions",
+      path: "/legal/conditions",
+    },
+    {
+      id: "dataProtection",
+      label: "Data Protection",
+      path: "/legal/dataProtection",
+    },
+    { id: "privacy", label: "Privacy Policy", path: "/legal/privacy" },
+    { id: "cookies", label: "Cookie Policy", path: "/legal/cookies" },
+    {
+      id: "acceptableUse",
+      label: "Acceptable Use",
+      path: "/legal/acceptableUse",
+    },
+    {
+      id: "skillGaming",
+      label: "Legality of Skill Gaming",
+      path: "/legal/skillGaming",
+    },
+    { id: "companies", label: "Rivals Companies", path: "/legal/companies" },
   ];
 
+  // Animation setup
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".legal-hero", { opacity: 0, y: 50, duration: 1 });
+      gsap.from(".legal-sidebar", {
+        opacity: 0,
+        x: -30,
+        duration: 0.8,
+        delay: 0.3,
+      });
+      gsap.from(".legal-content", {
+        opacity: 0,
+        x: 30,
+        duration: 0.8,
+        delay: 0.3,
+      });
+    });
+    return () => ctx.revert();
+  }, [activeDocument]);
+
   // Get the current document data
-  const currentDoc = legalDocuments[activeDocument as keyof typeof legalDocuments] || legalDocuments.terms;
+  const currentDoc =
+    legalDocuments[activeDocument as keyof typeof legalDocuments] ||
+    legalDocuments.terms;
+
+  // Handle document change without router dependency
+  const handleDocChange = (docId: string) => {
+    setActiveDocument(docId);
+
+    // Navigate using window.location for client-side navigation
+    if (typeof window !== "undefined") {
+      window.history.pushState({}, "", `/legal/${docId}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
-      <div className="w-full min-h-screen flex flex-col bg-transparent mb-12">
+      <Head>
+        <title>{currentDoc.title} | Rivals Legal</title>
+        <meta
+          name="description"
+          content={`Rivals ${currentDoc.title} - Effective date: ${currentDoc.effectiveDate}`}
+        />
+        <link
+          rel="canonical"
+          href={`https://getrivals.com/legal/${activeDocument}`}
+        />
+      </Head>
+
+      <div className="w-full min-h-screen flex flex-col bg-transparent">
         <Navbar />
 
-        <div className="pt-14 md:pt-18 px-4 md:px-8 max-w-7xl mx-auto w-full">
+        {/* Header Section */}
+        <div className="legal-hero pt-14 md:pt-20 px-4 md:px-8 max-w-7xl mx-auto w-full">
           <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-8">
             <span className="text-[#02F199]">RIVALS</span> LEGAL
           </h1>
 
           <p className="text-lg text-gray-300 max-w-3xl mx-auto text-center mb-12">
-            This section outlines the legal documents governing the use of Rivals, including terms, policies,
-            and company registrations. By using our platform, you agree to the terms detailed here.
+            This section outlines the legal documents governing the use of
+            Rivals, including terms, policies, and company registrations. By
+            using our platform, you agree to the terms detailed here.
           </p>
 
           {/* Mobile dropdown */}
@@ -141,7 +248,7 @@ const LegalPage: React.FC = () => {
             <select
               className="w-full p-3 bg-[#121212]/40 border border-white/20 text-white rounded-lg"
               value={activeDocument}
-              onChange={(e) => setActiveDocument(e.target.value)}
+              onChange={(e) => handleDocChange(e.target.value)}
             >
               {menuItems.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -150,22 +257,53 @@ const LegalPage: React.FC = () => {
               ))}
             </select>
           </div>
+        </div>
 
-          {/* Desktop layout: main content centered with an absolutely positioned sidebar */}
-          <div className="relative">
-            <div className="max-w-3xl mx-auto">
-              <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl p-6 md:p-8">
+        {/* Main Content Area with Sidebar */}
+        <div className="flex-grow pb-16 px-4 md:px-8">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+            {/* Sidebar - Desktop Only */}
+            <div className="legal-sidebar hidden md:block md:w-64 lg:w-72 flex-shrink-0">
+              <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl sticky top-24">
+                <div className="p-4 border-b border-white/10">
+                  <h2 className="font-bold text-xl text-white">
+                    Legal Documents
+                  </h2>
+                </div>
+                <nav className="p-2">
+                  {menuItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => handleDocChange(item.id)}
+                      className={`w-full text-left p-3 rounded-lg transition-colors mb-1 ${
+                        activeDocument === item.id
+                          ? "bg-[#02F199]/20 text-[#02F199] font-medium"
+                          : "text-gray-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </div>
+
+            {/* Content Panel */}
+            <div className="legal-content flex-grow">
+              <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl p-6 md:p-8">
                 {currentDoc ? (
-                  <div>
-                    <h2 className="text-3xl font-bold text-white mb-2">{currentDoc.title}</h2>
+                  <article>
+                    <h2 className="text-3xl font-bold text-white mb-2">
+                      {currentDoc.title}
+                    </h2>
                     <p className="text-[#02F199] mb-6">
                       Effective Date: {currentDoc.effectiveDate}
                     </p>
 
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                       {currentDoc.content.map((section, index) => (
-                        <div key={index}>
-                          <h3 className="text-xl font-semibold text-white mb-2">
+                        <section key={index}>
+                          <h3 className="text-xl font-semibold text-white mb-4">
                             {section.title}
                           </h3>
                           <div className="text-gray-300 whitespace-pre-wrap">
@@ -175,41 +313,18 @@ const LegalPage: React.FC = () => {
                               </p>
                             ))}
                           </div>
-                        </div>
+                        </section>
                       ))}
                     </div>
-                  </div>
+                  </article>
                 ) : (
-                  <div className="text-center py-8">
+                  <div className="text-center py-12">
                     <p className="text-lg text-gray-300">
-                      This content is coming soon. We are currently updating our legal documents.
+                      This content is coming soon. We are currently updating our
+                      legal documents.
                     </p>
                   </div>
                 )}
-              </div>
-            </div>
-
-            {/* Sidebar for Desktop */}
-            <div className="hidden md:block absolute top-0 left-[-80px] w-56">
-              <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
-                <div className="p-4 border-b border-white/10">
-                  <h2 className="font-bold text-xl">Legal Documents</h2>
-                </div>
-                <div className="p-2">
-                  {menuItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => setActiveDocument(item.id)}
-                      className={`w-full text-left p-3 rounded-lg transition-colors ${
-                        activeDocument === item.id
-                          ? "bg-[#02F199]/20 text-[#02F199]"
-                          : "hover:bg-white/5"
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
           </div>

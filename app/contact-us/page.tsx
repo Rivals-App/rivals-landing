@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { gsap } from "gsap";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -19,6 +20,26 @@ const ContactUs = () => {
   const [submitStatus, setSubmitStatus] = useState<null | "success" | "error">(
     null
   );
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".contact-hero", { opacity: 0, y: 50, duration: 1 });
+      gsap.from(".contact-info", {
+        opacity: 0,
+        x: -50,
+        duration: 1,
+        delay: 0.5,
+      });
+      gsap.from(".contact-form", {
+        opacity: 0,
+        x: 50,
+        duration: 1,
+        delay: 0.5,
+      });
+      gsap.from(".faq-section", { opacity: 0, y: 50, duration: 1, delay: 1 });
+    });
+    return () => ctx.revert();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -64,21 +85,21 @@ const ContactUs = () => {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ContactPage",
-              "name": "Contact Rivals",
-              "url": "https://www.rivalsapp.com/contact",
-              "mainEntity": {
+              name: "Contact Rivals",
+              url: "https://www.rivalsapp.com/contact",
+              mainEntity: {
                 "@type": "Organization",
-                "name": "Rivals Gaming Ltd",
-                "url": "https://www.rivalsapp.com",
-                "email": "raj@rivalsapp.com",
-                "contactPoint": {
+                name: "Rivals Gaming Ltd",
+                url: "https://www.rivalsapp.com",
+                email: "raj@rivalsapp.com",
+                contactPoint: {
                   "@type": "ContactPoint",
-                  "contactType": "Customer Support",
-                  "email": "raj@rivalsapp.com",
-                  "availableLanguage": "English"
-                }
-              }
-            })
+                  contactType: "Customer Support",
+                  email: "raj@rivalsapp.com",
+                  availableLanguage: "English",
+                },
+              },
+            }),
           }}
         />
       </Head>
@@ -86,7 +107,7 @@ const ContactUs = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <main className="flex-grow container mx-auto px-4 py-16">
+      <main className="contact-hero flex-grow container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#02F199] to-[#04D9FF]">
             CONTACT US
@@ -98,7 +119,7 @@ const ContactUs = () => {
 
           <div className="grid md:grid-cols-3 gap-12">
             {/* Contact Information */}
-            <div className="md:col-span-1 space-y-8">
+            <div className="contact-info md:col-span-1 space-y-8">
               <div className="bg-gray-800/50 p-6 rounded-lg backdrop-blur-sm border border-gray-700">
                 <div className="text-[#02F199] mb-3">
                   <svg
@@ -193,7 +214,7 @@ const ContactUs = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="md:col-span-2">
+            <div className="contact-form md:col-span-2">
               <div className="bg-gray-800/30 p-8 rounded-lg backdrop-blur-sm border border-gray-700">
                 {submitStatus === "success" ? (
                   <div className="text-center py-8">
@@ -352,7 +373,7 @@ const ContactUs = () => {
           </div>
 
           {/* FAQ Section */}
-          <div className="mt-16">
+          <div className="faq-section mt-16">
             <h2 className="text-2xl font-bold mb-6 text-center">
               Frequently Asked Questions
             </h2>

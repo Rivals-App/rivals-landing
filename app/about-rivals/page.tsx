@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Head from "next/head";
 
 // Register GSAP ScrollTrigger
 if (typeof window !== "undefined") {
@@ -32,10 +32,8 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const storyRef = useRef<HTMLDivElement>(null);
   const milestonesRef = useRef<HTMLDivElement>(null);
   const visionRef = useRef<HTMLDivElement>(null);
-  const teamRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   // Animation setup
@@ -44,7 +42,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
     if (!container) return;
 
     // Set initial opacity for hero section elements
-    gsap.set(".about-hero-text, .about-hero-image", {
+    gsap.set(".about-hero-text", {
       opacity: 0,
       y: 30,
     });
@@ -59,35 +57,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
       duration: 0.8,
       ease: "power3.out",
       stagger: 0.1,
-    }).to(
-      ".about-hero-image",
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      },
-      "-=0.4"
-    );
+    });
 
     // Setup scroll animations
     const setupScrollAnimations = () => {
-      // Founding Story animations
-      if (storyRef.current) {
-        gsap.from(".story-title, .story-content", {
-          scrollTrigger: {
-            trigger: storyRef.current,
-            start: "top 75%",
-            toggleActions: "play none none none",
-          },
-          opacity: 0,
-          y: 30,
-          stagger: 0.2,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-      }
-
       // Milestones animations
       if (milestonesRef.current) {
         gsap.from(".milestones-title", {
@@ -121,22 +94,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         gsap.from(".vision-title, .vision-content, .mission-content", {
           scrollTrigger: {
             trigger: visionRef.current,
-            start: "top 75%",
-            toggleActions: "play none none none",
-          },
-          opacity: 0,
-          y: 30,
-          stagger: 0.2,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-      }
-
-      // Team animations
-      if (teamRef.current) {
-        gsap.from(".team-title, .team-content, .team-image", {
-          scrollTrigger: {
-            trigger: teamRef.current,
             start: "top 75%",
             toggleActions: "play none none none",
           },
@@ -200,61 +157,32 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         </div>
 
         {/* About Content */}
-        <div className="w-full pb-16 px-14">
-          <div className="flex flex-col gap-8">
+        <div className="w-full pb-16 px-4 md:px-8 lg:px-14">
+          <div className="flex flex-col gap-8 max-w-7xl mx-auto">
             {/* Hero Section */}
-            <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
+            <div
+              ref={heroRef}
+              className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl"
+            >
               <div className="p-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                <h2 className="about-hero-text text-3xl md:text-4xl font-bold text-white mb-4">
                   Built for <span className="text-[#02F199]">Players</span>.
                   Backed by <span className="text-[#02F199]">Believers</span>.
                 </h2>
-                <p className="text-lg text-gray-300">
+                <p className="about-hero-text text-lg text-gray-300">
                   Rivals was created to give every gamer the chance to win — not
                   just streamers and pros.
                 </p>
               </div>
-              <div className="h-60 w-full overflow-hidden">
-                <img
-                  src="/static/media/rivalspresent.jpg"
-                  alt="Rivals team"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Founding Story Section */}
-            <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Our <span className="text-[#02F199]">Story</span>
-                </h2>
-                <p className="text-lg text-gray-300">
-                  Rivals was born from a simple realization: the gaming world
-                  needed a platform where any player could compete and earn—not
-                  just the top 1%.
-                </p>
-                <div className="story-content text-lg text-gray-300 space-y-6">
-                  <p>
-                    Our founding team brings together years of experience in
-                    competitive gaming, technology development, and community
-                    building. We've experienced firsthand how current platforms
-                    fail to serve the average gamer, focusing instead on
-                    professional players and content creators.
-                  </p>
-                  <p>
-                    We set out to build something different: a platform that
-                    makes skill-based competition accessible to everyone, with
-                    real rewards and transparent systems.
-                  </p>
-                </div>
-              </div>
             </div>
 
             {/* Milestones Timeline */}
-            <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
+            <div
+              ref={milestonesRef}
+              className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl"
+            >
               <div className="p-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+                <h2 className="milestones-title text-3xl md:text-4xl font-bold text-white mb-8 text-center">
                   From <span className="text-[#02F199]">Idea</span> to{" "}
                   <span className="text-[#02F199]">Impact</span>
                 </h2>
@@ -272,13 +200,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                         Founded and First designs done
                       </p>
                     </div>
-                    <div className="hidden md:block absolute left-1/2 top-3 w-2 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
+                    <div className="hidden md:block absolute left-1/2 top-3 w-4 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
                     <div className="md:w-[45%] md:pl-12 mt-3 md:mt-0"></div>
                   </div>
 
                   <div className="milestone-item flex flex-col md:flex-row md:justify-between mb-12 relative">
                     <div className="md:w-[45%] md:text-right md:pr-12"></div>
-                    <div className="hidden md:block absolute left-1/2 top-3 w-2 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
+                    <div className="hidden md:block absolute left-1/2 top-3 w-4 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
                     <div className="md:w-[45%] md:pl-12">
                       <h3 className="text-2xl font-bold text-[#02F199] mb-2">
                         2025 Mar
@@ -298,13 +226,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                         First tournament league, arcade games go live
                       </p>
                     </div>
-                    <div className="hidden md:block absolute left-1/2 top-3 w-2 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
+                    <div className="hidden md:block absolute left-1/2 top-3 w-4 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
                     <div className="md:w-[45%] md:pl-12 mt-3 md:mt-0"></div>
                   </div>
 
                   <div className="milestone-item flex flex-col md:flex-row md:justify-between relative">
                     <div className="md:w-[45%] md:text-right md:pr-12"></div>
-                    <div className="hidden md:block absolute left-1/2 top-3 w-2 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
+                    <div className="hidden md:block absolute left-1/2 top-3 w-4 h-4 bg-[#02F199] rounded-full transform translate-x-[-50%]"></div>
                     <div className="md:w-[45%] md:pl-12">
                       <h3 className="text-2xl font-bold text-[#02F199] mb-2">
                         2025 Q3+
@@ -319,9 +247,12 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Vision & Mission */}
-            <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
+            <div
+              ref={visionRef}
+              className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl"
+            >
               <div className="p-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+                <h2 className="vision-title text-3xl md:text-4xl font-bold text-white mb-8 text-center">
                   Where We're <span className="text-[#02F199]">Headed</span>
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -349,142 +280,12 @@ const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
             </div>
 
-            {/* Team Block */}
-            <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
-                  Meet the <span className="text-[#02F199]">Team</span>
-                </h2>
-                <div className="flex flex-col md:flex-row items-center mb-12">
-                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
-                    <img
-                      src="/static/media/rajprofile.jpg"
-                      alt="Raj Sandhu - Founder & CEO"
-                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
-                    />
-                  </div>
-
-                  <div className="team-content md:w-2/3 md:pl-12">
-                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
-                      Raj Sandhu
-                    </h3>
-                    <p className="text-xl font-medium text-white mb-4">
-                      Founder & CEO
-                    </p>
-                    <p className="text-lg text-gray-300 mb-6">
-                      Avid gamer, tech entrepreneur, and competitive sports
-                      enthusiast with a passion for creating fair gaming
-                      ecosystems. Raj founded Rivals to bridge the gap between
-                      casual play and professional competition.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-center mb-12">
-                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
-                    <img
-                      src="/static/media/rajprofile.jpg"
-                      alt="Joshua jones"
-                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
-                    />
-                  </div>
-
-                  <div className="team-content md:w-2/3 md:pl-12">
-                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
-                      Joshua Jones
-                    </h3>
-                    <p className="text-xl font-medium text-white mb-4">
-                      Head of Vibe Coding
-                    </p>
-                    <p className="text-lg text-gray-300 mb-6">
-                      Avid gamer, tech entrepreneur, and competitive sports
-                      enthusiast with a passion for creating fair gaming
-                      ecosystems. Raj founded Rivals to bridge the gap between
-                      casual play and professional competition.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-center mb-12">
-                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
-                    <img
-                      src="/static/media/rajprofile.jpg"
-                      alt="Kamsi"
-                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
-                    />
-                  </div>
-
-                  <div className="team-content md:w-2/3 md:pl-12">
-                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
-                      Kamsi
-                    </h3>
-                    <p className="text-xl font-medium text-white mb-4">
-                      Frontend Developer
-                    </p>
-                    <p className="text-lg text-gray-300 mb-6">
-                      Avid gamer, tech entrepreneur, and competitive sports
-                      enthusiast with a passion for creating fair gaming
-                      ecosystems. Raj founded Rivals to bridge the gap between
-                      casual play and professional competition.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-center mb-12">
-                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
-                    <img
-                      src="/static/media/rajprofile.jpg"
-                      alt="Cleo"
-                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
-                    />
-                  </div>
-
-                  <div className="team-content md:w-2/3 md:pl-12">
-                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
-                      Cleo
-                    </h3>
-                    <p className="text-xl font-medium text-white mb-4">
-                      Backend Developer
-                    </p>
-                    <p className="text-lg text-gray-300 mb-6">
-                      Avid gamer, tech entrepreneur, and competitive sports
-                      enthusiast with a passion for creating fair gaming
-                      ecosystems. Raj founded Rivals to bridge the gap between
-                      casual play and professional competition.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-center mb-12">
-                  <div className="team-image md:w-1/3 mb-8 md:mb-0">
-                    <img
-                      src="/static/media/rajprofile.jpg"
-                      alt="Dorian"
-                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full mx-auto"
-                    />
-                  </div>
-
-                  <div className="team-content md:w-2/3 md:pl-12">
-                    <h3 className="text-2xl font-bold text-[#02F199] mb-2">
-                      Dorian
-                    </h3>
-                    <p className="text-xl font-medium text-white mb-4">
-                      Backend Developer
-                    </p>
-                    <p className="text-lg text-gray-300 mb-6">
-                      Avid gamer, tech entrepreneur, and competitive sports
-                      enthusiast with a passion for creating fair gaming
-                      ecosystems. Raj founded Rivals to bridge the gap between
-                      casual play and professional competition.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* CTA Section */}
-            <div className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-8 text-center">
+            <div
+              ref={ctaRef}
+              className="bg-[#121212]/20 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl"
+            >
+              <div className="p-8 text-center cta-content">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white">
                   Talk to the <span className="text-[#02F199]">Team</span>
                 </h2>
@@ -520,7 +321,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
                     href="https://linkedin.com/in/raj-s-sandhu"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 flex items-center justify-center"
+                    className="px-6 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:opacity-90 transition-all duration-200 flex items-center justify-center"
                   >
                     <svg
                       className="w-5 h-5 mr-2"
@@ -543,36 +344,45 @@ const AboutSection: React.FC<AboutSectionProps> = ({
         </div>
       </div>
 
-      {/* Structured data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Rivals",
-            url: "https://getrivals.com",
-            logo: "https://getrivals.com/static/media/Logo1.png",
-            description:
-              "A competitive gaming platform where players can compete, stake, and win across any game, any format, any skill level.",
-            foundingDate: "2025-01",
-            founder: {
-              "@type": "Person",
-              name: "Raj Sandhu",
-              jobTitle: "Founder & CEO",
-              email: "raj@rivalsapp.com",
-              sameAs: "https://linkedin.com/in/raj-s-sandhu",
-            },
-          }),
-        }}
-      />
       <Footer />
     </div>
   );
 };
 
 const AboutPage: React.FC = () => {
-  return <AboutSection />;
+  return (
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Rivals",
+              url: "https://getrivals.com",
+              logo: "https://getrivals.com/static/media/Logo1.png",
+              description:
+                "A competitive gaming platform where players can compete, stake, and win across any game, any format, any skill level.",
+              foundingDate: "2025-01",
+              founder: {
+                "@type": "Person",
+                name: "Raj Sandhu",
+                jobTitle: "Founder & CEO",
+                email: "raj@rivalsapp.com",
+                sameAs: "https://linkedin.com/in/raj-s-sandhu",
+              },
+              sameAs: [
+                "https://www.linkedin.com/company/rivals-gaming/",
+                "https://discord.gg/YztnrmQT5M",
+              ],
+            }),
+          }}
+        />
+      </Head>
+      <AboutSection />
+    </>
+  );
 };
 
 export default AboutPage;
