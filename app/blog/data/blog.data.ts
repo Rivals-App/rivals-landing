@@ -1,6 +1,7 @@
 // Define type for blog posts
 export interface BlogPost {
   id: string;
+  slug: string; // NEW: add slug property
   title: string;
   excerpt: string;
   date: string;
@@ -15,6 +16,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
+    slug: "introduction-to-rivals-revolutionizing-gamer-earnings",
     title: "Introduction to RIVALS: Revolutionizing Gamer Earnings",
     excerpt:
       "An inside look at how RIVALS is changing the competitive gaming landscape.",
@@ -76,6 +78,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: "2",
+    slug: "global-landscape-of-legal-skill-based-wagering",
     title:
       "Global Landscape of Legal Skill-Based Wagering: A Comprehensive Analysis",
     excerpt:
