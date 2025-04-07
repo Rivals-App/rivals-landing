@@ -150,16 +150,17 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
             <select
               value={preferredConsole}
               onChange={(e) => setPreferredConsole(e.target.value)}
-              className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199]"
+              className="w-full px-4 py-2 bg-transparent border border-gray-700 rounded-lg focus:outline-none focus:border-[#02F199] text-white"
+              style={{ backgroundColor: '#0F2841' }}
               required
             >
-              <option value="" disabled>
+              <option value="" disabled style={{ backgroundColor: '#121212', color: 'white' }}>
                 Preferred Console
               </option>
-              <option value="PC">PC</option>
-              <option value="PS">PlayStation</option>
-              <option value="XBOX">Xbox</option>
-              <option value="Other">Other</option>
+              <option value="PC" style={{ backgroundColor: '#121212', color: 'white' }}>PC</option>
+              <option value="PS" style={{ backgroundColor: '#121212', color: 'white' }}>PlayStation</option>
+              <option value="XBOX" style={{ backgroundColor: '#121212', color: 'white' }}>Xbox</option>
+              <option value="Other" style={{ backgroundColor: '#121212', color: 'white' }}>Other</option>
             </select>
           </div>
 
