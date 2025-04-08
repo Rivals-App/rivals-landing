@@ -258,7 +258,7 @@ const HomePage = () => {
     const timeoutId = setTimeout(initScrollTriggers, 200);
 
     return () => {
-      // Clean up all scroll triggers when component unmounts
+      // Clean all scroll triggers when component unmounts
       clearTimeout(timeoutId);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       tl.kill();
