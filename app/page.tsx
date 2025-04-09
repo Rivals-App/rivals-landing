@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useState, useEffect, useRef } from "react";
@@ -10,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import { ReactTyped } from "react-typed";
+import Image from "next/image";
 
 // Register GSAP ScrollTrigger on client side
 if (typeof window !== "undefined") {
@@ -286,9 +286,11 @@ const HomePage = () => {
             {/* Text Content */}
             <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-0">
               {/* Logo */}
-              <img
+              <Image
                 src="/static/media/Logo1.png"
                 alt="RIVALS Logo"
+                width={96}
+                height={96}
                 className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
               />
               <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight hero-text">
@@ -310,9 +312,11 @@ const HomePage = () => {
 
             {/* Image Content */}
             <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 flex justify-end relative hidden md:flex">
-              <img
+              <Image
                 src="/static/media/Hero.png"
                 alt="Exciting esports action"
+                width={700}
+                height={700}
                 className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
               />
             </div>
@@ -477,9 +481,11 @@ const HomePage = () => {
               </div>
               {/* Image Content */}
               <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
-                <img
+                <Image
                   src="/static/media/Tournaments.png"
                   alt="Compete in Rivals Tournaments"
+                  width={800}
+                  height={800}
                   className="w-[100%] md:w-[80%] max-w-none object-contain"
                 />
               </div>

@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface RegistrationScreenProps {
   email: string;
@@ -96,7 +97,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <img
+          <Image
             width={80}
             height={80}
             src="/static/svgs/Asset-2.svg"

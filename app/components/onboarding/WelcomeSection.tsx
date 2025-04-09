@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import PerlinNoiseSketch from "../PerlinNoise";
+import Image from "next/image";
 
 interface WelcomeScreenProps {
   onProceed: () => void;
@@ -63,7 +64,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onProceed }) => {
       >
         <div className="text-center max-w-xl">
           <div className="flex justify-center mb-8">
-            <img
+            <Image
               width={80}
               height={80}
               src="/static/svgs/Asset-2.svg"

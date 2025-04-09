@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @next/next/no-img-element */
-"use client";
+ "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation"; // Add this import
 import Navbar from "../components/Navbar";
 import blogPosts from "./data/blog.data";
 import Footer from "../components/Footer";
+import Image from "next/image";
 
 // Register GSAP plugins on client side only
 if (typeof window !== "undefined") {
@@ -91,9 +91,11 @@ export default function BlogPage() {
                 onClick={() => handleOpenPost(post.slug)}
               >
                 <div className="h-60 w-full overflow-hidden border-b border-white/10">
-                  <img
+                  <Image
                     src={post.image}
                     alt={post.title}
+                    width={600}
+                    height={240}
                     className="w-full h-full object-cover"
                   />
                 </div>

@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { SponsorMarqueeProps } from "../interface/types";
+import Image from "next/image";
 
 const SponsorMarquee = ({ sponsorLogos }: SponsorMarqueeProps) => {
   const duplicatedLogos = [
@@ -18,9 +18,11 @@ const SponsorMarquee = ({ sponsorLogos }: SponsorMarqueeProps) => {
         <div className="inline-flex animate-marquee">
           {duplicatedLogos.map((logo, index) => (
             <div key={`${logo.id}-${index}`} className="flex-shrink-0 px-8">
-              <img
+              <Image
                 src={logo.src}
                 alt={logo.name}
+                width={128}
+                height={128}
                 className={`w-32 grayscale transition-all duration-300 hover:grayscale-0 ${
                   logo.name === "ApplePayLogo" ? "invert" : ""
                 }`}

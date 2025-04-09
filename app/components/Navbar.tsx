@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 interface NavbarProps {
   goToRegisterStep?: () => void;
@@ -129,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
   };
 
   return (
-    <div className="relative sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 mb-12 px-4 md:px-8">
+    <div className="sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 mb-12 px-4 md:px-8">
       {/* Navbar */}
       <nav
         className={`max-w-[99vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
@@ -147,9 +148,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
                 className="flex items-center cursor-pointer focus:outline-none"
               >
                 <div className="relative h-8 w-auto">
-                  <img
+                  <Image
                     src="/static/media/Logo1.png"
                     alt="RIVALS Logo"
+                    width={32}
+                    height={32}
                     className="h-8 w-auto"
                   />
                 </div>

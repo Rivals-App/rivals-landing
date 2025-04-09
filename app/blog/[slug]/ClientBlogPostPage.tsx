@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -11,6 +10,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import blogPosts from "../data/blog.data";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 export default function ClientBlogPostPage({
   params,
@@ -109,9 +109,11 @@ export default function ClientBlogPostPage({
 
             <div className="bg-[#121212]/80 border border-white/10 rounded-xl overflow-hidden shadow-xl">
               <div className="h-64 md:h-96 overflow-hidden">
-                <img
+                <Image
                   src={post.image}
                   alt={post.title}
+                  width={1024}
+                  height={384}
                   className="w-full h-full object-cover"
                 />
               </div>

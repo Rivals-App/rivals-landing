@@ -2,6 +2,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import Image from "next/image";
 interface ConfirmationScreenProps {
   userData: {
     email: string;
@@ -103,11 +104,11 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <img
-            width={80}
-            height={80}
+          <Image
             src="/static/svgs/Asset-2.svg"
             alt="logo"
+            width={80}
+            height={80}
             className="form-logo"
             draggable={false}
           />

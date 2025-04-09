@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
+import Image from "next/image";
 
 interface Card {
   id: string;
@@ -52,6 +53,7 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ cards, isMobileView }) => {
     return () => {
       if (marqueeRef.current) {
         marqueeRef.current.removeEventListener("mouseenter", handleMouseEnter);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         marqueeRef.current.removeEventListener("mouseleave", handleMouseLeave);
       }
       marqueeAnimation.kill(); // Stop animation on unmount
@@ -73,9 +75,11 @@ const FeatureCards: React.FC<FeatureCardsProps> = ({ cards, isMobileView }) => {
             }}
           >
             <div className="h-[400px] overflow-hidden">
-              <img
+              <Image
                 src={card.image}
                 alt={card.title}
+                width={400}
+                height={400}
                 className="w-full h-full object-cover"
               />
             </div>

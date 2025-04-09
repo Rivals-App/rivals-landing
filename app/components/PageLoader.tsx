@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import WelcomeScreen from "../components/onboarding/WelcomeSection";
+import Image from "next/image";
 
 interface PageLoaderProps {
   onLoadComplete: () => void;
@@ -58,7 +59,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
   return (
     <div className="loader-container fixed inset-0 bg-[#101c2b] flex flex-col items-center justify-center z-50">
       <div className="mb-8">
-        <img
+        <Image
           width={100}
           height={100}
           src="/static/svgs/Asset-2.svg"
