@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
@@ -7,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FeatureCards from "../FeatureCards";
 import Navbar from "../Navbar";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -308,9 +308,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             {/* Text Content */}
             <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-0">
               {/* Logo */}
-              <img
+              <Image
                 src="/static/media/Logo1.png"
                 alt="RIVALS Logo"
+                width={96}
+                height={96}
                 className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
               />
               <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight hero-text">
@@ -331,10 +333,12 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Image Content */}
-            <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 flex justify-end relative hidden md:flex">
-              <img
+            <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 justify-end relative hidden md:flex">
+              <Image
                 src="/static/media/Hero.png"
                 alt="Exciting esports action"
+                width={700}
+                height={700}
                 className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
               />
             </div>
@@ -377,9 +381,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             <div className="how-steps flex flex-col gap-8 md:gap-16 items-center">
               {/* Step 1 */}
               <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
-                <img
+                <Image
                   src="/static/media/HowItWorks1.png"
                   alt="Choose Your Game & Mode"
+                  width={400}
+                  height={400}
                   className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:ml-auto"
                 />
                 <div className="md:w-[55%] md:pl-8">
@@ -394,9 +400,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
               {/* Step 2 */}
               <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
-                <img
+                <Image
                   src="/static/media/HowItWorks2.png"
                   alt="Challenge & Stake"
+                  width={400}
+                  height={400}
                   className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:mr-auto"
                 />
                 <div className="md:w-[55%] md:pr-8">
@@ -412,9 +420,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
               {/* Step 3 */}
               <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
-                <img
+                <Image
                   src="/static/media/HowItWorks3.png"
                   alt="Play & Win"
+                  width={400}
+                  height={400}
                   className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:ml-auto"
                 />
                 <div className="md:w-[55%] md:pl-8">
@@ -429,9 +439,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
 
               {/* Step 4 */}
               <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
-                <img
+                <Image
                   src="/static/media/HowItWorks4.png"
                   alt="Get Paid Instantly"
+                  width={400}
+                  height={400}
                   className="w-[85%] md:w-[45%] h-auto mb-6 md:mb-0 md:mr-auto"
                 />
                 <div className="md:w-[55%] md:pr-8">
@@ -479,9 +491,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
             {/* Image Content */}
             <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
-              <img
+              <Image
                 src="/static/media/Tournaments.png"
                 alt="Compete in Rivals Tournaments"
+                width={800}
+                height={800}
                 className="w-[100%] md:w-[80%] max-w-none object-contain"
               />
             </div>
@@ -493,9 +507,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             className="cta-final w-full flex flex-col items-center justify-center py-12 px-6 rounded-lg mt-12"
           >
             {/* Logo */}
-            <img
+            <Image
               src="/static/media/Logo1.png"
               alt="RIVALS Logo"
+              width={96}
+              height={96}
               className="w-24 h-auto mb-6"
             />
             {/* Heading */}

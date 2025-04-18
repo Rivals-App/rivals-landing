@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Footer = () => {
   const router = useRouter();
@@ -53,9 +54,11 @@ const Footer = () => {
           {/* Logo and About */}
           <div className="flex flex-col space-y-4">
             <div className="flex items-center">
-              <img
+              <Image
                 src="/static/media/Logo2.png"
                 alt="RIVALS Logo"
+                width={48}
+                height={48}
                 className="h-12 w-auto"
               />
             </div>

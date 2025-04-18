@@ -2,6 +2,8 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import Image from "next/image";
+
 interface ConfirmationScreenProps {
   userData: {
     email: string;
@@ -23,12 +25,6 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
   onGoToAbout,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // const [copied, setCopied] = useState(false);
-
-  // const referralLink =
-  //   typeof window !== "undefined"
-  //     ? `${window.location.origin}/waitlist?ref=${userData.referralCode}`
-  //     : "";
 
   useEffect(() => {
     const container = containerRef.current;
@@ -86,24 +82,12 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
     };
   }, []);
 
-  // const copyToClipboard = () => {
-  //   if (navigator.clipboard && referralLink) {
-  //     navigator.clipboard.writeText(referralLink);
-  //     setCopied(true);
-
-  //     // Reset the copied state after 3 seconds
-  //     setTimeout(() => {
-  //       setCopied(false);
-  //     }, 3000);
-  //   }
-  // };
-
   return (
     <div className="h-full w-full px-4 md:px-12 flex flex-col items-center justify-center">
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <img
+          <Image
             width={80}
             height={80}
             src="/static/svgs/Asset-2.svg"

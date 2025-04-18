@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 interface NavbarProps {
   goToRegisterStep?: () => void;
@@ -12,16 +12,24 @@ interface NavbarProps {
   currentStep?: number;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
+const Navbar: React.FC<NavbarProps> = ({ }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
   const pathname = usePathname();
   const router = useRouter();
 
   // Handler for navigation actions
   const handleNavigation = (
-    action: "home" | "arcade" | "blog" | "about" | "legal" | "join-us" | "contact-us",
+    action:
+      | "home"
+      | "arcade"
+      | "blog"
+      | "about"
+      | "legal"
+      | "join-us"
+      | "contact-us",
     e: React.MouseEvent
   ) => {
     e.preventDefault();
@@ -55,17 +63,69 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
     setIsMobileMenuOpen(false);
   };
 
-  // Detect scroll to add background color on scroll
+  // Detect scroll to add background color on scroll and resize logo and navbar padding
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
         setIsScrolled(true);
+
+        // Animate logo to smaller size
+        if (logoRef.current) {
+          gsap.to(logoRef.current, {
+            height: "2rem", // Smaller size
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+
+        // Animate navbar padding when scrolled
+        const navbarElement = document.querySelector(".navbar-container");
+        if (navbarElement) {
+          gsap.to(navbarElement, {
+            padding: "0.5rem 1rem",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
       } else {
         setIsScrolled(false);
+
+        // Animate logo back to original size
+        if (logoRef.current) {
+          gsap.to(logoRef.current, {
+            height: "3rem", // Larger size
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+
+        // Animate navbar padding back to original
+        const navbarElement = document.querySelector(".navbar-container");
+        if (navbarElement) {
+          gsap.to(navbarElement, {
+            padding: "1rem 1.5rem",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
+
+    // Set initial logo size and navbar padding
+    if (logoRef.current) {
+      logoRef.current.style.height = window.scrollY > 20 ? "2rem" : "3rem";
+    }
+
+    const navbarElement = document.querySelector(
+      ".navbar-container"
+    ) as HTMLElement;
+    if (navbarElement) {
+      navbarElement.style.padding =
+        window.scrollY > 20 ? "0.5rem 1rem" : "1rem 1.5rem";
+    }
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -129,28 +189,31 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
   };
 
   return (
-    <div className="relative sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 mb-12 px-4 md:px-8">
+    <div className="sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 mb-12 px-4 md:px-8">
       {/* Navbar */}
       <nav
-        className={`max-w-[99vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
+        className={`navbar-container max-w-[99vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
           isScrolled
             ? "bg-[#121212]/20 backdrop-blur-md shadow-xl"
             : "bg-[#121212]/25 backdrop-blur-md"
         }`}
       >
-        <div className="mx-auto px-6 sm:px-8 md:px-12">
-          <div className="flex items-center justify-between h-16">
+        <div className="mx-auto">
+          <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
               <button
                 onClick={handleLogoClick}
                 className="flex items-center cursor-pointer focus:outline-none"
               >
-                <div className="relative h-8 w-auto">
-                  <img
+                <div className="relative">
+                  <Image
+                    ref={logoRef}
                     src="/static/media/Logo1.png"
                     alt="RIVALS Logo"
-                    className="h-8 w-auto"
+                    width={60}
+                    height={60}
+                    className="w-auto ml-4 transition-all duration-300"
                   />
                 </div>
               </button>
@@ -196,19 +259,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
                 Arcade
               </button>
 
-              {/* <button
+              <button
                 onClick={(e) => handleNavigation("legal", e)}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
                   pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
                 Legal
-              </button> */}
+              </button>
 
               <button
                 onClick={(e) => handleNavigation("contact-us", e)}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
-                  pathname === "/contact-us" ? "text-[#02F199]" : "text-gray-300"
+                  pathname === "/contact-us"
+                    ? "text-[#02F199]"
+                    : "text-gray-300"
                 }`}
               >
                 Contact Us
@@ -284,48 +349,59 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
       {/* Mobile Menu Dropdown */}
       <div
         ref={mobileMenuRef}
-        className={`absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-300 ${
-          isMobileMenuOpen ? "block opacity-100" : "hidden opacity-0"
-        }`}
+        className="md:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-300 opacity-0"
+        style={{ display: "none", transform: "translateY(-10px)" }}
       >
         <div className="px-4 py-4 space-y-2">
           <button
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+              pathname === "/" ? "text-[#02F199]" : "text-gray-300"
+            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
             onClick={(e) => handleNavigation("home", e)}
           >
             Home
           </button>
 
           <button
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+              pathname === "/about-rivals" ? "text-[#02F199]" : "text-gray-300"
+            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
             onClick={(e) => handleNavigation("about", e)}
           >
             About
           </button>
 
           <button
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+              pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
+            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
             onClick={(e) => handleNavigation("blog", e)}
           >
             Blog
           </button>
 
           <button
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+              pathname === "/arcade" ? "text-[#02F199]" : "text-gray-300"
+            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
             onClick={(e) => handleNavigation("arcade", e)}
           >
             Arcade
           </button>
 
           <button
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+              pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
+            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
             onClick={(e) => handleNavigation("legal", e)}
           >
             Legal
           </button>
 
           <button
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+              pathname === "/contact-us" ? "text-[#02F199]" : "text-gray-300"
+            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
             onClick={(e) => handleNavigation("contact-us", e)}
           >
             Contact Us
@@ -341,7 +417,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentStep }) => {
 
           <div className="px-3 py-2 mt-4">
             <button
-              className="block py-2 w-full text-center rounded-full text-base font-medium bg-[#02F199] text-[#0c1622]"
+              className="block py-2 w-full text-center rounded-full text-base font-medium bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200"
               onClick={(e) => handleNavigation("join-us", e)}
             >
               JOIN WAITLIST

@@ -2,6 +2,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 interface BirthdayScreenProps {
   birthday: string;
@@ -82,19 +83,7 @@ const BirthdayScreen: React.FC<BirthdayScreenProps> = ({
   return (
     <div className="h-full w-full px-12 flex flex-col items-center justify-center">
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <img
-            width={80}
-            height={80}
-            src="/static/svgs/Asset-2.svg"
-            alt="logo"
-            className="form-logo"
-            draggable={false}
-          />
-        </div>
-
-        <h2 className="bday-title text-3xl font-bold mb-6 text-center">
+        <h2 className="bday-title text-3xl md:text-5xl font-bold mb-4 text-center">
           One More Step
         </h2>
         <p className="bday-subtitle text-gray-300 mb-8 text-center">
