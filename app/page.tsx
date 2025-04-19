@@ -12,6 +12,7 @@ import { TextPlugin } from "gsap/TextPlugin";
 import StatsCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Image from "next/image";
+import AnimatedTextCycle from "./components/AnimatedTextCycle";
 
 // Register GSAP ScrollTrigger and TextPlugin on client side
 if (typeof window !== "undefined") {
@@ -25,7 +26,7 @@ const popularGames = [
   "Valorant",
   "Chess",
   "Connect 4",
-  "F1",
+  "Formula 1",
   "Fortnite",
 ];
 
@@ -34,11 +35,9 @@ const HomePage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroSubtitleRef = useRef<HTMLHeadingElement>(null);
-  const gameTextRef = useRef<HTMLSpanElement>(null);
   const featureSectionRef = useRef<HTMLDivElement>(null);
   const tournamentsSectionRef = useRef<HTMLDivElement>(null);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [currentWord, setCurrentWord] = useState("RIVALS");
 
   const words = [
     "FRIENDS",
@@ -62,69 +61,6 @@ const HomePage = () => {
       window.removeEventListener("resize", checkMobile);
     };
   }, []);
-
-  // Synchronize animations for heroTitleRef and heroSubtitleRef
-  useEffect(() => {
-    if (!heroTitleRef.current || !gameTextRef.current) return;
-
-    const titleSpan = heroTitleRef.current.querySelector("span");
-    const subtitleSpan = gameTextRef.current;
-
-    if (!titleSpan || !subtitleSpan) return;
-
-    // Ensure initial visibility
-    gsap.set([titleSpan, subtitleSpan], { opacity: 1, yPercent: 0 });
-
-    let titleIndex = 0;
-    let subtitleIndex = 0;
-
-    const timeline = gsap.timeline({ repeat: -1, repeatDelay: 2 });
-
-    timeline.to({}, {
-      duration: 3, // Show each word for 3 seconds
-      onComplete: () => {
-        // Update indices
-        const nextTitleIndex = (titleIndex + 1) % words.length;
-        const nextSubtitleIndex = (subtitleIndex + 1) % popularGames.length;
-
-        // Animate out both spans
-        gsap.to([titleSpan, subtitleSpan], {
-          yPercent: -20,
-          opacity: 0,
-          duration: 0.5,
-          ease: "power2.in",
-          onComplete: () => {
-            // Update text content
-            setCurrentWord(words[nextTitleIndex]);
-            subtitleSpan.textContent = popularGames[nextSubtitleIndex];
-
-            // Animate in both spans
-            gsap.fromTo(
-              [titleSpan, subtitleSpan],
-              { yPercent: 20, opacity: 0 },
-              { yPercent: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
-            );
-
-            // Update indices
-            titleIndex = nextTitleIndex;
-            subtitleIndex = nextSubtitleIndex;
-          },
-        });
-      },
-    });
-
-    return () => {
-      timeline.kill();
-    };
-  }, [words, popularGames]);
-
-  // Remove the typing animation logic
-  useEffect(() => {
-    if (!gameTextRef.current) return;
-
-    // Set the initial text to the first game in the list
-    gameTextRef.current.textContent = popularGames[0];
-  }, [popularGames]);
 
   // Main animations setup
   useEffect(() => {
@@ -269,40 +205,36 @@ const HomePage = () => {
             <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-12">
               <h3
                 ref={heroTitleRef}
-                className="hero-title text-4xl md:text-5xl font-bold text-white mb-4 leading-tight"
+                className="hero-title text-2xl md:text-3xl font-bold text-white mb-4 leading-tight"
               >
-                WIN MONEY AGAINST{" "}
-                <span
-                  className="text-6xl md:text-7xl inline-block min-w-[180px] overflow-hidden"
+                WIN MONEY AGAINST <br />
+                <AnimatedTextCycle
+                  words={words}
+                  className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
                   style={{
                     background: "linear-gradient(90deg, #02F199, #00AFFF)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
-                >
-                  {currentWord}
-                </span>
+                />
               </h3>
 
               <h4
                 ref={heroSubtitleRef}
-                className="hero-subtitle text-2xl md:text-3xl font-semibold text-gray-200 mb-6"
+                className="hero-subtitle text-center md:text-left text-xl md:text-2xl font-semibold text-gray-200 mb-6"
               >
-                On games like{" "}
+                on games like{" "}
                 <span className="text-[#02F199]">
-                  <span
-                    ref={gameTextRef}
-                    className="inline-block min-w-[100px]"
-                  >
-                    {popularGames[0]}
-                  </span>
+                  <AnimatedTextCycle
+                    words={popularGames}
+                    className="inline-block text-left min-w-[100px]"
+                  />
                 </span>
               </h4>
 
               <p className="hero-description text-lg text-gray-300 mb-8">
-                Challenge players in your favorite games, stake your match, and
-                cash out instantly. RIVALS is where real gamers compete. No
-                luck, just skill.
+                From arcade games to esports, Rivals turns every match into a
+                market. Stake your match, beat real opponents, and get paid – instantly.
               </p>
               <Link
                 href="/join-us"

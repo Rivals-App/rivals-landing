@@ -13,12 +13,14 @@ const MaskedBackgroundComponent: React.FC<MaskedBackgroundProps> = ({
   logoPath = "/static/svgs/logo.svg",
   primaryColor = [2, 241, 153], // Your green color [#02F199]
   backgroundColor = "#0A1928", // Dark blue background
-  logoSize = "40%", // Increased from 30% to 40%
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const maskRef = useRef<HTMLDivElement>(null);
   const animationInitialized = useRef<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  // Dynamic logo size based on device - 100% for mobile, 40% for desktop
+  const dynamicLogoSize = isMobile ? "100%" : "40%";
 
   // Radial gradient blobs config
   const blobConfig = useMemo(
@@ -28,8 +30,8 @@ const MaskedBackgroundComponent: React.FC<MaskedBackgroundProps> = ({
         [primaryColor[0], primaryColor[1], primaryColor[2], 0.6],
         [primaryColor[0], primaryColor[1], primaryColor[2], 0.4],
       ],
-      minSize: isMobile ? 36 : 25, // Increased from 16 to 25 for desktop
-      maxSize: isMobile ? 46 : 35, // Increased from 26 to 35 for desktop
+      minSize: isMobile ? 50 : 25, // Increased for mobile
+      maxSize: isMobile ? 70 : 35, // Increased for mobile
       animationDuration: {
         min: 15,
         max: 25,
@@ -68,7 +70,7 @@ const MaskedBackgroundComponent: React.FC<MaskedBackgroundProps> = ({
       // We'll leave animations running and just clean up when component unmounts
       animationInitialized.current = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Only re-initialize when blobConfig changes significantly
@@ -77,7 +79,7 @@ const MaskedBackgroundComponent: React.FC<MaskedBackgroundProps> = ({
 
     // Re-initialize animations when blobConfig changes
     initializeAnimations();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobConfig.count, blobConfig.minSize, blobConfig.maxSize]);
 
   // Extract animation initialization to a separate function
@@ -171,14 +173,14 @@ const MaskedBackgroundComponent: React.FC<MaskedBackgroundProps> = ({
         backgroundColor: backgroundColor,
       }}
     >
-      {/* Logo Mask Container - Now centered and sized explicitly */}
+      {/* Logo Mask Container - Now using dynamicLogoSize based on device */}
       <div
         className="absolute"
         style={{
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: logoSize,
+          width: dynamicLogoSize, // Use dynamic size based on device
           aspectRatio: "1/1",
         }}
       >
