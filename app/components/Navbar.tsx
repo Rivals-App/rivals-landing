@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import Image from "next/image";
+import JoinWaitlistButton from "./JoinWaitlistButton";
 
 interface NavbarProps {
   goToRegisterStep?: () => void;
@@ -12,7 +13,7 @@ interface NavbarProps {
   currentStep?: number;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ }) => {
+const Navbar: React.FC<NavbarProps> = ({}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -291,12 +292,7 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
                 Try Our Demo
               </Link>
 
-              <button
-                onClick={(e) => handleNavigation("join-us", e)}
-                className="inline-flex items-center px-6 py-2 text-md font-thin rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
-              >
-                <span>Join Waitlist</span>
-              </button>
+              <JoinWaitlistButton className="inline-flex items-center px-6 py-2 text-md font-thin tracking-tight" />
             </div>
 
             {/* Mobile menu button */}
@@ -416,12 +412,7 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
           </Link>
 
           <div className="px-3 py-2 mt-4">
-            <button
-              className="block py-2 w-full text-center rounded-full text-base font-medium bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200"
-              onClick={(e) => handleNavigation("join-us", e)}
-            >
-              JOIN WAITLIST
-            </button>
+            <JoinWaitlistButton />
           </div>
         </div>
       </div>

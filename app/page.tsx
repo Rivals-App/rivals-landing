@@ -13,6 +13,7 @@ import StatsCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Image from "next/image";
 import AnimatedTextCycle from "./components/AnimatedTextCycle";
+import JoinWaitlistButton from "./components/JoinWaitlistButton";
 
 // Register GSAP ScrollTrigger and TextPlugin on client side
 if (typeof window !== "undefined") {
@@ -227,21 +228,22 @@ const HomePage = () => {
                 <span className="text-[#02F199]">
                   <AnimatedTextCycle
                     words={popularGames}
-                    className="inline-block text-left min-w-[100px]"
+                    className="inline-block font-bold text-left min-w-[100px]"
+                    style={{
+                      background: "linear-gradient(90deg, #00AFFF, #02F199)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
                   />
                 </span>
               </h4>
 
               <p className="hero-description text-lg text-gray-300 mb-8">
                 From arcade games to esports, Rivals turns every match into a
-                market. Stake your match, beat real opponents, and get paid – instantly.
+                market. Stake your match, beat real opponents, and get paid –
+                instantly.
               </p>
-              <Link
-                href="/join-us"
-                className="hero-button px-8 py-3 bg-[#02F199] text-black font-thin rounded-full hover:scale-105 transition-all duration-200"
-              >
-                JOIN WAITLIST
-              </Link>
+              <JoinWaitlistButton />
             </div>
 
             {/* Image Content */}
