@@ -11,10 +11,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 import StatsCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
-<<<<<<< HEAD
-import { ReactTyped } from "react-typed";
-=======
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import Image from "next/image";
 
 // Register GSAP ScrollTrigger and TextPlugin on client side
@@ -243,12 +239,7 @@ const HomePage = () => {
     }
 
     return () => {
-<<<<<<< HEAD
-      // Clean all scroll triggers when component unmounts
-      clearTimeout(timeoutId);
-=======
       // Clean up
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       tl.kill();
     };
@@ -275,20 +266,6 @@ const HomePage = () => {
             className="cta-section w-full flex flex-col md:flex-row items-start justify-between rounded-lg py-8 relative overflow-hidden"
           >
             {/* Text Content */}
-<<<<<<< HEAD
-            <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-0">
-              {/* Logo */}
-              <Image
-                src="/static/media/Logo1.png"
-                alt="RIVALS Logo"
-                width={96}
-                height={96}
-                className="w-24 h-auto mx-auto md:mx-0 mb-6 hero-text"
-              />
-              <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight hero-text">
-                EXPERIENCE THE <span className="text-[#02F199]">FUTURE</span> OF
-                GAMING
-=======
             <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-12">
               <h3
                 ref={heroTitleRef}
@@ -305,7 +282,6 @@ const HomePage = () => {
                 >
                   {currentWord}
                 </span>
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
               </h3>
 
               <h4
@@ -337,11 +313,7 @@ const HomePage = () => {
             </div>
 
             {/* Image Content */}
-<<<<<<< HEAD
-            <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 flex justify-end relative hidden md:flex">
-=======
             <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 justify-end relative hidden md:flex">
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
               <Image
                 src="/static/media/Hero.png"
                 alt="Exciting esports action"
@@ -416,157 +388,6 @@ const HomePage = () => {
               />
             </div>
           </div>
-<<<<<<< HEAD
-
-          {/* How It Works Section */}
-          {/* <div
-            ref={howItWorksSectionRef}
-            className="how-it-works w-full py-12 px-6 md:px-24 sm:px-12 rounded-lg"
-          >
-            <h2 className="hiw-title text-3xl md:text-5xl font-bold mb-4 text-center">
-              HOW <span className="text-[#02F199]">RIVALS</span> WORKS
-            </h2>
-            <p className="hiw-subtitle text-gray-300 mb-10 md:mb-20 text-center text-base md:text-xl max-w-4xl mx-auto">
-              RIVALS makes competitive gaming seamless and rewarding.
-            </p>
-
-            <div className="how-steps flex flex-col gap-8 md:gap-16 items-center">
-             
-              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
-                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:ml-auto">
-                  <img
-                    src="/static/media/HowItWorks1.png"
-                    alt="Choose Your Game & Mode"
-                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                  />
-                </div>
-                <div className="md:w-[55%] md:pl-8">
-                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Explore & Create Matches
-                  </h4>
-                  <p className="text-base md:text-lg text-gray-300">
-                    Users browse the active market of matches or create their
-                    own to compete.
-                  </p>
-                </div>
-              </div>
-
-             
-              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
-                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:mr-auto">
-                  <img
-                    src="/static/media/HowItWorks2.png"
-                    alt="Challenge & Stake"
-                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                  />
-                </div>
-                <div className="md:w-[55%] md:pr-8">
-                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Challenge & Stake
-                  </h4>
-                  <p className="text-base md:text-lg text-gray-300">
-                    Enter a match with a set stake and challenge your friends or
-                    other RIVALS players.
-                  </p>
-                </div>
-              </div>
-
-            
-              <div className="hiw-step flex flex-col md:flex-row items-center text-center md:text-right md:max-w-4xl w-full">
-                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:ml-auto">
-                  <img
-                    src="/static/media/HowItWorks3.png"
-                    alt="Play & Win"
-                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                  />
-                </div>
-                <div className="md:w-[55%] md:pl-8">
-                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Compete & Invite
-                  </h4>
-                  <p className="text-base md:text-lg text-gray-300">
-                    Players join matches, compete against opponents, or can
-                    invite friends. Live data integrations provides real-time
-                    statistics.
-                  </p>
-                </div>
-              </div>
-
-            
-              <div className="hiw-step flex flex-col md:flex-row-reverse items-center text-center md:text-left md:max-w-4xl w-full">
-                <div className="relative w-[85%] md:w-[45%] mb-6 md:mb-0 md:mr-auto">
-                  <img
-                    src="/static/media/HowItWorks4.png"
-                    alt="Get Paid Instantly"
-                    className="w-full h-auto border-2 border-white/30 rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                  />
-                </div>
-                <div className="md:w-[55%] md:pr-8">
-                  <h4 className="text-xl md:text-3xl font-semibold text-[#02F199] mb-4">
-                    Win & Instant Withdrawals
-                  </h4>
-                  <p className="text-base md:text-lg text-gray-300">
-                    After winning, users are able to instantly withdraw funds
-                    via traditional bank accounts or crypto wallets.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          {/* Compete in Tournaments Section */}
-          <div>
-            <div
-              ref={tournamentsSectionRef}
-              className="w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 px-12 md:px-28 sm:px-12 my-12"
-            >
-              {/* Text Content */}
-              <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
-                <h3 className="text-4xl font-bold text-white mb-2 leading-tight">
-                  COMPETE IN
-                </h3>
-                <div className="text-[#02F199] text-4xl font-bold mb-6">
-                  <ReactTyped
-                    strings={["TOURNAMENTS", "LEAGUES", "SINGLE MATCHES"]}
-                    typeSpeed={100}
-                    backSpeed={50}
-                    backDelay={1500}
-                    loop
-                  />
-                </div>
-                <p className="text-lg text-gray-300 mb-6">
-                  Take your skills to the next level with organized competitions.
-                  Join daily, weekly, and seasonal tournaments and matches where you can
-                  compete against top players and squads. Earn bigger rewards,
-                  climb the leaderboards, and prove you're the best!
-                </p>
-                <ul className="tournament-list text-gray-300 space-y-3 mb-6">
-                  <li>
-                    <strong>Single Matches</strong> – Go 1v1. Prove your skill. Win cash, XP, and bragging rights.
-                  </li>
-                  <li>
-                    <strong>Tournaments</strong> – Squad up or go solo in daily and weekly tournaments. Win bigger, climb leaderboards, and dominate the bracket.
-                  </li>
-                  <li>
-                    <strong>Leagues</strong> – Rise through divisions, unlock elite events, and earn rewards that matter. The grind pays off.
-                  </li>
-                </ul>
-              </div>
-              {/* Image Content */}
-              <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
-                <Image
-                  src="/static/media/Tournaments.png"
-                  alt="Compete in Rivals Tournaments"
-                  width={800}
-                  height={800}
-                  className="w-[100%] md:w-[80%] max-w-none object-contain"
-                />
-              </div>
-            </div>
-          </div>
-
-=======
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
         </div>
       </div>
       <Footer />
