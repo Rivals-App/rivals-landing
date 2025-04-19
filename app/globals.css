@@ -6,13 +6,14 @@
   --background: #1a1a1a;
   --foreground: #ededed;
   --accent: #02F199;
-  --card-bg: #142F4C;
+  --card-bg: #1a1a1a;
 }
 
 body {
   color: var(--foreground);
   background-color: var(--background);
   font-family: 'Inter', Arial, sans-serif;
+  
 }
 
 .gradient-text {

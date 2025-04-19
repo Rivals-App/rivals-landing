@@ -171,7 +171,10 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col text-white bg-[#1a1a1a]">
+    <div 
+      className="min-h-screen flex flex-col text-white"
+      style={{ backgroundColor: '#0F2841' }} // Force background color inline
+    >
       <div
         ref={containerRef}
         className="w-full h-full flex flex-col relative z-10"
