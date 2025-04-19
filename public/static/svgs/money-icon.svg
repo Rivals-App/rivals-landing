@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="moneyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#02F199"/>
+      <stop offset="100%" stop-color="#00AFFF"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <circle cx="24" cy="24" r="20" fill="none" stroke="url(#moneyGradient)" stroke-width="2"/>
+    <path d="M24 15v18" stroke="url(#moneyGradient)" stroke-width="2"/>
+    <path d="M28 19h-8c-2 0-4 1-4 3s2 3 4 3h8c2 0 4 1 4 3s-2 3-4 3h-8" stroke="url(#moneyGradient)" stroke-width="2"/>
+    <path d="M20 15h8" stroke="url(#moneyGradient)" stroke-width="2"/>
+    <path d="M20 33h8" stroke="url(#moneyGradient)" stroke-width="2"/>
+  </g>
+</svg>

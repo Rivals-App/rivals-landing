@@ -64,7 +64,11 @@ const ArcadePage: React.FC = () => {
                 <Image
                   src="/static/media/tictactoe.png"
                   alt="Tic Tac Toe"
+<<<<<<< HEAD
                   width={600}
+=======
+                  width={400}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                   height={192}
                   className="w-full h-full object-cover"
                 />
@@ -94,7 +98,11 @@ const ArcadePage: React.FC = () => {
                 <Image
                   src="/static/media/wordgrid.png"
                   alt="Word Grid"
+<<<<<<< HEAD
                   width={600}
+=======
+                  width={400}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                   height={192}
                   className="w-full h-full object-cover"
                 />
@@ -122,7 +130,11 @@ const ArcadePage: React.FC = () => {
                 <Image
                   src="/static/media/rockpaperscissors.png"
                   alt="Rock Paper Scissors"
+<<<<<<< HEAD
                   width={600}
+=======
+                  width={400}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                   height={192}
                   className="w-full h-full object-cover"
                 />
@@ -174,8 +186,13 @@ const ArcadePage: React.FC = () => {
                   <Image
                     src="/static/media/HowItWorks1.png"
                     alt="Choose a game"
+<<<<<<< HEAD
                     width={200}
                     height={200}
+=======
+                    width={130}
+                    height={130}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -199,8 +216,13 @@ const ArcadePage: React.FC = () => {
                   <Image
                     src="/static/media/HowItWorks2.png"
                     alt="Stake XP or money"
+<<<<<<< HEAD
                     width={200}
                     height={200}
+=======
+                    width={130}
+                    height={130}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -224,8 +246,13 @@ const ArcadePage: React.FC = () => {
                   <Image
                     src="/static/media/HowItWorks3.png"
                     alt="Match with a rival"
+<<<<<<< HEAD
                     width={200}
                     height={200}
+=======
+                    width={130}
+                    height={130}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -249,8 +276,13 @@ const ArcadePage: React.FC = () => {
                   <Image
                     src="/static/media/HowItWorks4.png"
                     alt="Win and withdraw"
+<<<<<<< HEAD
                     width={200}
                     height={200}
+=======
+                    width={130}
+                    height={130}
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                     className="w-full h-full object-contain"
                   />
                 </div>

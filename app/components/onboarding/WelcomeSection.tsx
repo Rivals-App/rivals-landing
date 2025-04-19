@@ -1,7 +1,11 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+<<<<<<< HEAD
 import PerlinNoiseSketch from "../PerlinNoise";
+=======
+import MaskedBackground from "../PerlinNoise";
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import Image from "next/image";
 
 interface WelcomeScreenProps {
@@ -54,7 +58,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onProceed }) => {
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
       {/* Perlin Noise Background */}
       <div className="absolute inset-0 z-0">
-        <PerlinNoiseSketch />
+        <MaskedBackground logoPath={"/static/svgs/logo.svg"} />
       </div>
 
       {/* Content Container */}

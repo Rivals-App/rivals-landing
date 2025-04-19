@@ -1,7 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { gsap } from "gsap";
+<<<<<<< HEAD
 import WelcomeScreen from "../components/onboarding/WelcomeSection";
+=======
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import Image from "next/image";
 
 interface PageLoaderProps {
@@ -9,8 +12,6 @@ interface PageLoaderProps {
 }
 
 const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
-  const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
-
   useEffect(() => {
     // Set initial state of logo to be invisible
     gsap.set(".loader-logo-image", { opacity: 0, scale: 0.5 });
@@ -18,8 +19,8 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
     // Create a direct GSAP timeline for the loader
     const loaderTl = gsap.timeline({
       onComplete: () => {
-        // After loader completes, show welcome screen
-        setShowWelcomeScreen(true);
+        // Notify parent component when loading is complete
+        onLoadComplete();
       },
     });
 
@@ -49,12 +50,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
     return () => {
       loaderTl.kill();
     };
-  }, []);
-
-  // If welcome screen is shown, let the WelcomeScreen handle its own logic
-  if (showWelcomeScreen) {
-    return <WelcomeScreen onProceed={onLoadComplete} />;
-  }
+  }, [onLoadComplete]);
 
   return (
     <div className="loader-container fixed inset-0 bg-[#101c2b] flex flex-col items-center justify-center z-50">

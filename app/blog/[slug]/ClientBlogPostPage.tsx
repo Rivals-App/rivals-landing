@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+=======
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react-hooks/rules-of-hooks */
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -9,7 +15,10 @@ import { useRouter } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import blogPosts from "../data/blog.data";
+<<<<<<< HEAD
 import { notFound } from "next/navigation";
+=======
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import Image from "next/image";
 
 export default function ClientBlogPostPage({

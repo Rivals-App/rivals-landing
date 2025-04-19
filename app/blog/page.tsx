@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+<<<<<<< HEAD
  "use client";
+=======
+"use client";
+>>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
