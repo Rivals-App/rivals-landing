@@ -171,7 +171,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col text-white bg-[#0A1928]">
+    <div className="min-h-screen flex flex-col text-white bg-[#1a1a1a]">
       <div
         ref={containerRef}
         className="w-full h-full flex flex-col relative z-10"

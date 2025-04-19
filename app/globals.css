@@ -3,88 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --background: #0F2841;
+  --background: #1a1a1a;
   --foreground: #ededed;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0F2841;
-    --foreground: #ededed;
-  }
+  --accent: #02F199;
+  --card-bg: #142F4C;
 }
 
 body {
   color: var(--foreground);
-  background-color: #0A1928;
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  font-family: 'Inter', Arial, sans-serif;
 }
 
 .gradient-text {
-  background: #02F199;
+  background: linear-gradient(90deg, var(--accent), #00AFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
 }
 
-.card {
-  perspective: 2000px;
-  transform-style: preserve-3d;
-  transition: box-shadow 0.2s ease, transform 0.5s ease;
+/* Clean slate for cards - removing all previous effects */
+.feature-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
-.card:before,
-.card:after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: color-dodge;
-  transition: all 0.33s ease;
-}
-.card:before {
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    var(--color1) 25%,
-    transparent 47%,
-    transparent 53%,
-    var(--color2) 75%,
-    transparent 100%
-  );
-  background-size: 300% 300%;
-  opacity: 0.5;
-  filter: brightness(0.5) contrast(1);
-  z-index: 1;
-}
-.card:after {
-  background-image:
-    url("https://assets.codepen.io/13471/sparkles.gif"),
-    url("https://assets.codepen.io/13471/holo.png"),
-    linear-gradient(
-      125deg,
-      #ff008450 15%,
-      #fca40040 30%,
-      #ffff0030 40%,
-      #00ff8a20 60%,
-      #00cfff40 70%,
-      #cc4cfa50 85%
-    );
-  background-position: 50% 50%;
-  background-size: 160%;
-  mix-blend-mode: overlay;
-  opacity: 0.75;
-  filter: brightness(1) contrast(1);
-  z-index: 2;
-}
-.card:hover {
-  box-shadow:
-    -20px -20px 30px -25px var(--color1),
-    20px 20px 30px -25px var(--color2),
-    0 0 13px 4px rgba(255,255,255,0.3),
-    0 55px 35px -20px rgba(0,0,0,0.5);
-}
-.animated {
-  animation: holoCard 12s ease forwards, holoGradient 12s ease forwards, holoSparkle 12s ease forwards;
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(2, 241, 153, 0.15);
 }
 
 
