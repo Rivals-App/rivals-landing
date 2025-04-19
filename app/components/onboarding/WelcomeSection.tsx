@@ -1,11 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-<<<<<<< HEAD
-import PerlinNoiseSketch from "../PerlinNoise";
-=======
 import MaskedBackground from "../PerlinNoise";
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import Image from "next/image";
 
 interface WelcomeScreenProps {

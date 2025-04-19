@@ -206,15 +206,6 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
                 onClick={handleLogoClick}
                 className="flex items-center cursor-pointer focus:outline-none"
               >
-<<<<<<< HEAD
-                <div className="relative h-8 w-auto">
-                  <Image
-                    src="/static/media/Logo1.png"
-                    alt="RIVALS Logo"
-                    width={32}
-                    height={32}
-                    className="h-8 w-auto"
-=======
                 <div className="relative">
                   <Image
                     ref={logoRef}
@@ -223,7 +214,6 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
                     width={60}
                     height={60}
                     className="w-auto ml-4 transition-all duration-300"
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
                   />
                 </div>
               </button>

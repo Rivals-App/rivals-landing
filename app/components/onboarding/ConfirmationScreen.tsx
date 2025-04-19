@@ -3,10 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
-<<<<<<< HEAD
-=======
-
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 interface ConfirmationScreenProps {
   userData: {
     email: string;
@@ -91,11 +87,6 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <Image
-<<<<<<< HEAD
-=======
-            width={80}
-            height={80}
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
             src="/static/svgs/Asset-2.svg"
             alt="logo"
             width={80}

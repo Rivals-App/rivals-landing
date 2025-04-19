@@ -1,10 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
-<<<<<<< HEAD
-import WelcomeScreen from "../components/onboarding/WelcomeSection";
-=======
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
 import Image from "next/image";
 
 interface PageLoaderProps {

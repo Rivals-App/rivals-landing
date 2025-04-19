@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 interface RegistrationScreenProps {
   email: string;
@@ -95,23 +94,7 @@ const RegistrationScreen: React.FC<RegistrationScreenProps> = ({
   return (
     <div className="h-full w-full px-12 flex flex-col items-center justify-center">
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
-<<<<<<< HEAD
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <Image
-            width={80}
-            height={80}
-            src="/static/svgs/Asset-2.svg"
-            alt="logo"
-            className="form-logo"
-            draggable={false}
-          />
-        </div>
-
-        <h2 className="reg-title text-3xl font-bold mb-6 text-center">
-=======
         <h2 className="reg-title text-3xl md:text-5xl font-bold mb-4 text-center">
->>>>>>> 8f26c83f8856a2c467766dad8f41296032c8d780
           Join the Waitlist
         </h2>
         <p className="reg-subtitle text-gray-300 mb-8 text-center">
