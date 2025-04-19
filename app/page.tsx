@@ -39,6 +39,8 @@ const HomePage = () => {
   const featureSectionRef = useRef<HTMLDivElement>(null);
   const tournamentsSectionRef = useRef<HTMLDivElement>(null);
   const [isMobileView, setIsMobileView] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   const words = [
     "FRIENDS",
@@ -48,6 +50,18 @@ const HomePage = () => {
     "TEAMMATES",
     "ANYONE",
   ];
+
+  // Check if we're in the client-side environment and set initial states
+  useEffect(() => {
+    setIsClient(true);
+
+    // Short delay to ensure DOM is fully ready before revealing content
+    const timer = setTimeout(() => {
+      setPageLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Check if the screen is mobile size
   useEffect(() => {
@@ -63,9 +77,9 @@ const HomePage = () => {
     };
   }, []);
 
-  // Main animations setup
+  // Main animations setup - only run after page is loaded
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !pageLoaded) return;
 
     // Clear any existing ScrollTriggers
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -180,10 +194,41 @@ const HomePage = () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       tl.kill();
     };
-  }, []);
+  }, [pageLoaded]);
+
+  // Static placeholders for pre-hydration
+  const staticTitle = (
+    <span
+      className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
+      style={{
+        background: "linear-gradient(90deg, #02F199, #00AFFF)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+      }}
+    >
+      RIVALS
+    </span>
+  );
+
+  const staticGameName = (
+    <span
+      className="inline-block font-bold text-left min-w-[100px]"
+      style={{
+        background: "linear-gradient(90deg, #00AFFF, #02F199)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+      }}
+    >
+      FC25
+    </span>
+  );
 
   return (
-    <div className="min-h-screen flex flex-col text-white">
+    <div
+      className={`min-h-screen flex flex-col text-white transition-opacity duration-500 ${
+        pageLoaded ? "opacity-100" : "opacity-0"
+      }`}
+    >
       {/* Background */}
       <MaskedBackground
         logoPath="/static/svgs/logo.svg"
@@ -203,21 +248,25 @@ const HomePage = () => {
             className="cta-section w-full flex flex-col md:flex-row items-start justify-between rounded-lg py-8 relative overflow-hidden"
           >
             {/* Text Content */}
-            <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-12">
+            <div className="text-content md:w-1/2 w-full text-center px-6 sm:px-12 mt-8 md:mt-12">
               <h3
                 ref={heroTitleRef}
-                className="hero-title text-2xl md:text-3xl font-bold text-white mb-4 leading-tight"
+                className="hero-title text-center md:text-left text-2xl md:text-3xl font-bold text-white mb-4 leading-tight"
               >
                 WIN MONEY AGAINST <br />
-                <AnimatedTextCycle
-                  words={words}
-                  className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
-                  style={{
-                    background: "linear-gradient(90deg, #02F199, #00AFFF)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                />
+                {isClient ? (
+                  <AnimatedTextCycle
+                    words={words}
+                    className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
+                    style={{
+                      background: "linear-gradient(90deg, #02F199, #00AFFF)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  />
+                ) : (
+                  staticTitle
+                )}
               </h3>
 
               <h4
@@ -226,24 +275,28 @@ const HomePage = () => {
               >
                 on games like{" "}
                 <span className="text-[#02F199]">
-                  <AnimatedTextCycle
-                    words={popularGames}
-                    className="inline-block font-bold text-left min-w-[100px]"
-                    style={{
-                      background: "linear-gradient(90deg, #00AFFF, #02F199)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                  />
+                  {isClient ? (
+                    <AnimatedTextCycle
+                      words={popularGames}
+                      className="inline-block font-bold text-left min-w-[100px]"
+                      style={{
+                        background: "linear-gradient(90deg, #00AFFF, #02F199)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    />
+                  ) : (
+                    staticGameName
+                  )}
                 </span>
               </h4>
 
-              <p className="hero-description text-lg text-gray-300 mb-8">
+              <p className="hero-description text-center md:text-left text-md text-gray-300 mb-8">
                 From arcade games to esports, Rivals turns every match into a
                 market. Stake your match, beat real opponents, and get paid –
                 instantly.
               </p>
-              <JoinWaitlistButton />
+              <JoinWaitlistButton className="mx-auto md:mx-0" />
             </div>
 
             {/* Image Content */}
@@ -254,6 +307,7 @@ const HomePage = () => {
                 width={700}
                 height={700}
                 className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
+                priority={true}
               />
             </div>
           </div>
@@ -319,6 +373,7 @@ const HomePage = () => {
                 width={800}
                 height={800}
                 className="w-[100%] md:w-[80%] max-w-none object-contain"
+                priority={true}
               />
             </div>
           </div>
