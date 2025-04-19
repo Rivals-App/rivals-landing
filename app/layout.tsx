@@ -16,6 +16,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.ttf",
+  variable: "--font-satoshi",
+  weight: "300 900",
+});
+
 export const metadata: Metadata = {
   title: "Rivals – Stake. Play. Get Paid.",
   description:
@@ -51,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${satoshi.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
         <Analytics />
