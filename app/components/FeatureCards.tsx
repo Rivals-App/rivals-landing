@@ -1,86 +1,83 @@
 import React from "react";
-import Image from "next/image";
 
-// Feature cards data
-const featureCardsData = [
-  {
-    id: "1",
-    icon: "/static/svgs/logo.svg",
-    title: "Play for Real Stakes. Win Real Money.",
-    label: "in payouts",
-    description:
-      "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
-  },
-  {
-    id: "2",
-    icon: "/static/svgs/logo.svg",
-    title: "Every Match, Verified Instantly.",
-    label: "downloads",
-    description:
-      "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
-  },
-  {
-    id: "3",
-    icon: "/static/svgs/logo.svg",
-    title: "Compete in Games You Actually Play.",
-    label: "games played",
-    description:
-      "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It's your battlefield.",
-  },
-  {
-    id: "4",
-    icon: "/static/svgs/logo.svg",
-    title: "Custom Challenges. Your Rules.",
-    label: "App Store Reviews",
-    description:
-      "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
-  },
-  {
-    id: "5",
-    icon: "/static/svgs/logo.svg",
-    title: "XP-Based Ranking That Actually Matters.",
-    label: "Rankings",
-    description:
-      "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
-  },
-];
+const StatsCards = () => {
+  const cardData = [
+    {
+      title: "SKILL-BASED MATCHES",
+      description: "100% skill-based competition. No random elements, no luck—just your ability against theirs.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <line x1="10" y1="9" x2="8" y2="9"></line>
+        </svg>
+      ),
+      gradient: "from-[#00C2FF] to-[#01E8F7]"
+    },
+    {
+      title: "INSTANT PAYOUTS",
+      description: "Win a match, get paid right away. Cash out to your bank account or crypto wallet instantly.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      ),
+      gradient: "from-[#02F199] to-[#01B874]"
+    },
+    {
+      title: "SECURE PLATFORM",
+      description: "Advanced anti-cheat systems ensure fair play. All transactions and matches are secure and transparent.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+      ),
+      gradient: "from-[#FF5C00] to-[#FF8F00]"
+    },
+    {
+      title: "CROSS-PLATFORM",
+      description: "Play on PC, mobile, or console. Match with players across all supported platforms and devices.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+      ),
+      gradient: "from-[#A855F7] to-[#7E22CE]"
+    }
+  ];
 
-const StatsCards: React.FC = () => {
   return (
-    <div className="w-full py-16 mt-6 mb-12 relative">
-      {/* Section heading */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent">
-          PROVEN PLATFORM
-        </h2>
-        <p className="text-gray-300 mt-2 text-lg">
-          Where gamers stake, play and win
+    <div className="stats-section w-full px-4 py-16">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">PROVEN <span className="gradient-text">PLATFORM</span></h2>
+        <p className="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
+          Built for serious gamers looking for fair competition with real rewards
         </p>
-      </div>
-
-      {/* Stats cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6">
-        {featureCardsData.map((card) => (
-          <div
-            key={card.id}
-            className="stat-card rounded-2xl p-6 bg-gradient-to-br from-gray-800 via-gray-900 to-black border border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-          >
-            <div className="flex items-center mb-4">
-              <Image
-                src={card.icon}
-                alt={card.label}
-                width={40}
-                height={40}
-                className="w-10 h-10 object-contain"
-              />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {cardData.map((card, index) => (
+            <div 
+              key={index} 
+              className="feature-card bg-[#142F4C] rounded-xl overflow-hidden transform transition-all duration-300 hover:-translate-y-2 border border-[#1e4163]"
+            >
+              <div className={`h-2 bg-gradient-to-r ${card.gradient}`}></div>
+              <div className="p-6">
+                <div className={`mb-5 p-3 rounded-lg inline-block bg-gradient-to-r ${card.gradient} bg-opacity-20`}>
+                  <div className="text-white">
+                    {card.icon}
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
+                <p className="text-gray-300">{card.description}</p>
+              </div>
             </div>
-            <h3 className="text-xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent mb-2">
-              {card.title}
-            </h3>
-            <div className="text-gray-400 text-lg mb-4">{card.label}</div>
-            <p className="text-gray-300 text-sm">{card.description}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

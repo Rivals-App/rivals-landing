@@ -1,130 +1,55 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
-import MaskedBackground from "./components/PerlinNoise";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TextPlugin } from "gsap/TextPlugin";
 import StatsCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Image from "next/image";
+import { ReactTyped } from 'react-typed';
 
-// Register GSAP ScrollTrigger and TextPlugin on client side
+// Register GSAP ScrollTrigger on client side
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, TextPlugin);
+  gsap.registerPlugin(ScrollTrigger);
 }
-
-// Game titles for static display
-const popularGames = [
-  "DOTA 2",
-  "FC25",
-  "Valorant",
-  "Chess",
-  "Connect 4",
-  "F1",
-  "Fortnite",
-];
 
 const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const heroTitleRef = useRef<HTMLHeadingElement>(null);
-  const heroSubtitleRef = useRef<HTMLHeadingElement>(null);
-  const gameTextRef = useRef<HTMLSpanElement>(null);
   const featureSectionRef = useRef<HTMLDivElement>(null);
   const tournamentsSectionRef = useRef<HTMLDivElement>(null);
-  const [isMobileView, setIsMobileView] = useState(false);
-  const [currentWord, setCurrentWord] = useState("RIVALS");
+  const textCycleRef = useRef<HTMLDivElement>(null);
+  
+  // Text cycling state for opponents
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const oppositionTexts = ['FRIENDS', 'RIVALS', 'STRANGERS', 'PROS', 'ANYONE'];
 
-  const words = [
-    "FRIENDS",
-    "RIVALS",
-    "STRANGERS",
-    "PROS",
-    "TEAMMATES",
-    "ANYONE",
-  ];
-
-  // Check if the screen is mobile size
+  // Effect for text cycling with fade transition
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobileView(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
-  }, []);
-
-  // Synchronize animations for heroTitleRef and heroSubtitleRef
-  useEffect(() => {
-    if (!heroTitleRef.current || !gameTextRef.current) return;
-
-    const titleSpan = heroTitleRef.current.querySelector("span");
-    const subtitleSpan = gameTextRef.current;
-
-    if (!titleSpan || !subtitleSpan) return;
-
-    // Ensure initial visibility
-    gsap.set([titleSpan, subtitleSpan], { opacity: 1, yPercent: 0 });
-
-    let titleIndex = 0;
-    let subtitleIndex = 0;
-
-    const timeline = gsap.timeline({ repeat: -1, repeatDelay: 2 });
-
-    timeline.to({}, {
-      duration: 3, // Show each word for 3 seconds
-      onComplete: () => {
-        // Update indices
-        const nextTitleIndex = (titleIndex + 1) % words.length;
-        const nextSubtitleIndex = (subtitleIndex + 1) % popularGames.length;
-
-        // Animate out both spans
-        gsap.to([titleSpan, subtitleSpan], {
-          yPercent: -20,
+    const cycleInterval = setInterval(() => {
+      if (textCycleRef.current) {
+        // Fade out current text
+        gsap.to(textCycleRef.current, {
           opacity: 0,
           duration: 0.5,
-          ease: "power2.in",
           onComplete: () => {
-            // Update text content
-            setCurrentWord(words[nextTitleIndex]);
-            subtitleSpan.textContent = popularGames[nextSubtitleIndex];
-
-            // Animate in both spans
-            gsap.fromTo(
-              [titleSpan, subtitleSpan],
-              { yPercent: 20, opacity: 0 },
-              { yPercent: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
+            // Update text index
+            setCurrentTextIndex(prevIndex => 
+              prevIndex >= oppositionTexts.length - 1 ? 0 : prevIndex + 1
             );
-
-            // Update indices
-            titleIndex = nextTitleIndex;
-            subtitleIndex = nextSubtitleIndex;
-          },
+            // Fade in new text
+            gsap.to(textCycleRef.current, {
+              opacity: 1,
+              duration: 0.5
+            });
+          }
         });
-      },
-    });
+      }
+    }, 3000); // Change text every 3 seconds
 
-    return () => {
-      timeline.kill();
-    };
-  }, [words, popularGames]);
-
-  // Remove the typing animation logic
-  useEffect(() => {
-    if (!gameTextRef.current) return;
-
-    // Set the initial text to the first game in the list
-    gameTextRef.current.textContent = popularGames[0];
-  }, [popularGames]);
+    return () => clearInterval(cycleInterval);
+  }, [oppositionTexts.length]);
 
   // Main animations setup
   useEffect(() => {
@@ -246,13 +171,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col text-white">
-      {/* Background */}
-      <MaskedBackground
-        logoPath="/static/svgs/logo.svg"
-        primaryColor={[2, 241, 153]} // [#02F199] in RGB
-      />
-
+    <div className="min-h-screen flex flex-col text-white bg-[#0A1928]">
       <div
         ref={containerRef}
         className="w-full h-full flex flex-col relative z-10"
@@ -260,44 +179,44 @@ const HomePage = () => {
         <Navbar />
 
         <div className="flex-grow flex flex-col items-center justify-start pt-6 md:pt-0">
-          {/* Hero Section */}
+          {/* Hero Section - Updated with fade and typewriter effects */}
           <div
             ref={heroRef}
-            className="cta-section w-full flex flex-col md:flex-row items-start justify-between rounded-lg py-8 relative overflow-hidden"
+            className="cta-section w-full flex flex-col md:flex-row items-start justify-between rounded-lg py-16 relative overflow-hidden"
           >
             {/* Text Content */}
             <div className="text-content md:w-1/2 w-full text-center md:text-left px-6 sm:px-12 mt-8 md:mt-12">
-              <h3
-                ref={heroTitleRef}
-                className="hero-title text-4xl md:text-5xl font-bold text-white mb-4 leading-tight"
-              >
-                WIN MONEY AGAINST{" "}
-                <span
-                  className="text-6xl md:text-7xl inline-block min-w-[180px] overflow-hidden"
-                  style={{
-                    background: "linear-gradient(90deg, #02F199, #00AFFF)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  {currentWord}
-                </span>
-              </h3>
-
-              <h4
-                ref={heroSubtitleRef}
-                className="hero-subtitle text-2xl md:text-3xl font-semibold text-gray-200 mb-6"
-              >
-                On games like{" "}
-                <span className="text-[#02F199]">
-                  <span
-                    ref={gameTextRef}
-                    className="inline-block min-w-[100px]"
+              <div className="hero-title text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
+                <div className="mb-2">WIN MONEY AGAINST</div>
+                
+                {/* Fading text for opponents */}
+                <div className="h-16 md:h-24 flex items-center justify-center md:justify-start">
+                  <div 
+                    ref={textCycleRef}
+                    className="text-6xl md:text-7xl gradient-text"
+                    style={{ 
+                      minWidth: '180px',
+                      display: 'inline-block'
+                    }}
                   >
-                    {popularGames[0]}
+                    {oppositionTexts[currentTextIndex]}
+                  </div>
+                </div>
+                
+                {/* Typewriter for games */}
+                <div className="text-2xl md:text-3xl font-semibold text-gray-200 mt-2">
+                  ON GAMES LIKE{" "}
+                  <span className="gradient-text inline-block" style={{ minWidth: '120px' }}>
+                    <ReactTyped
+                      strings={['DOTA 2', 'FC25', 'VALORANT', 'CONNECT 4', 'CS2']}
+                      typeSpeed={70}
+                      backSpeed={50}
+                      backDelay={1500}
+                      loop
+                    />
                   </span>
-                </span>
-              </h4>
+                </div>
+              </div>
 
               <p className="hero-description text-lg text-gray-300 mb-8">
                 Challenge players in your favorite games, stake your match, and
@@ -306,7 +225,7 @@ const HomePage = () => {
               </p>
               <Link
                 href="/join-us"
-                className="hero-button px-8 py-3 bg-[#02F199] text-black font-thin rounded-full hover:scale-105 transition-all duration-200"
+                className="hero-button px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200"
               >
                 JOIN WAITLIST
               </Link>
@@ -317,23 +236,22 @@ const HomePage = () => {
               <Image
                 src="/static/media/Hero.png"
                 alt="Exciting esports action"
-                width={700}
-                height={700}
-                className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
+                width={600}  /* Reduced from 700 */
+                height={600} /* Reduced from 700 */
+                className="w-[90%] md:w-[70%] max-w-none object-contain hero-image" /* Reduced from 100%/80% */
               />
             </div>
           </div>
 
-          {/* Stats Cards Section */}
+          {/* Rest of the content - unchanged */}
           <StatsCards />
-
-          {/* Feature Section */}
+          
           <div
             ref={featureSectionRef}
             className="feature-cards-wrapper w-full px-4 py-12 sm:pt-24"
           >
             <h2 className="feature-title text-3xl md:text-4xl font-bold mb-3 text-center">
-              JOIN THE <span className="text-[#02F199]">COMPETITIVE</span>{" "}
+              JOIN THE <span className="gradient-text">COMPETITIVE</span>{" "}
               REVOLUTION
             </h2>
             <p className="feature-subtitle text-gray-300 mb-16 text-center text-base md:text-lg">
@@ -342,42 +260,46 @@ const HomePage = () => {
             </p>
           </div>
 
-          {/* Compete in Tournaments Section */}
           <div
             ref={tournamentsSectionRef}
             className="w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 px-12 md:px-28 sm:px-12 my-12"
           >
-            {/* Text Content */}
             <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
               <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
-                <span className="text-[#02F199]">
-                  COMPETE & WIN IN YOUR FAVORITE GAMES
+                <span className="gradient-text">
+                  <ReactTyped
+                    strings={[
+                      "CHALLENGE FRIENDS IN FIFA FOR £10",
+                      "STAKE XP ON A GAME OF DOTA",
+                      "WIN CASH IN CHESS TOURNAMENTS",
+                      "COMPETE IN LEAGUE OF LEGENDS"
+                    ]}
+                    typeSpeed={70}
+                    backSpeed={50}
+                    backDelay={1500}
+                    loop
+                    className="inline-block"
+                  />
                 </span>
               </h3>
               <p className="text-lg text-gray-300 mb-6">
                 Take your skills to the next level with organized competitions.
-                Join daily, weekly, and seasonal tournaments and matches where
-                you can compete against top players and squads. Earn bigger
-                rewards, climb the leaderboards, and prove you&apos;re the best!
+                Join daily, weekly, and seasonal tournaments and matches where you can
+                compete against top players and squads. Earn bigger rewards,
+                climb the leaderboards, and prove you&apos;re the best!
               </p>
               <ul className="tournament-list text-gray-300 space-y-3 mb-6">
                 <li>
-                  <strong>Single Matches</strong> – Go 1v1. Prove your skill.
-                  Win cash, XP, and bragging rights.
+                  <strong>Single Matches</strong> – Go 1v1. Prove your skill. Win cash, XP, and bragging rights.
                 </li>
                 <li>
-                  <strong>Tournaments</strong> – Squad up or go solo in daily
-                  and weekly tournaments. Win bigger, climb leaderboards, and
-                  dominate the bracket.
+                  <strong>Tournaments</strong> – Squad up or go solo in daily and weekly tournaments. Win bigger, climb leaderboards, and dominate the bracket.
                 </li>
                 <li>
-                  <strong>Leagues</strong> – Rise through divisions, unlock
-                  elite events, and earn rewards that matter. The grind pays
-                  off.
+                  <strong>Leagues</strong> – Rise through divisions, unlock elite events, and earn rewards that matter. The grind pays off.
                 </li>
               </ul>
             </div>
-            {/* Image Content */}
             <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
               <Image
                 src="/static/media/Tournaments.png"
