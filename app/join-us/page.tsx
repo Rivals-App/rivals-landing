@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
-import MaskedBackground from "../components/PerlinNoise";
+import PerlinNoiseSketch from "../components/PerlinNoise";
 import RegistrationScreen from "../components/onboarding/RegistrationScreen";
 import BirthdayScreen from "../components/onboarding/BirthdayScreen";
 import ConfirmationScreen from "../components/onboarding/ConfirmationScreen";
@@ -210,13 +210,8 @@ const JoinUsPage: React.FC = () => {
       {/* Navbar */}
       <Navbar goToHomeSection={goToHomeSection} currentStep={currentStep} />
 
-      {/* MaskedBackground */}
-      <MaskedBackground 
-        logoPath="/static/svgs/logo.svg" 
-        primaryColor={[2, 241, 153]} 
-        backgroundColor="#0A1928"
-        logoSize="40%" 
-      />
+      {/* PerlinNoiseSketch */}
+      <PerlinNoiseSketch />
 
       <div className="w-full h-full flex flex-col items-center relative">
         {/* Loading Overlay */}
