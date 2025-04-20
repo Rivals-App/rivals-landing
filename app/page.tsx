@@ -5,11 +5,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
-import MaskedBackground from "./components/PerlinNoise";
+import PerlinNoiseSketch from "./components/PerlinNoise";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
-import StatsCards from "./components/FeatureCards";
+import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Image from "next/image";
 import AnimatedTextCycle from "./components/AnimatedTextCycle";
@@ -29,6 +29,50 @@ const popularGames = [
   "Connect 4",
   "Formula 1",
   "Fortnite",
+];
+
+// Add the feature cards data
+const featureCardsData = [
+  {
+    id: "1",
+    title: "Play for Real Stakes. Win Real Money.",
+    description:
+      "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
+    image: "/static/media/Card2.png",
+    isMain: false,
+  },
+  {
+    id: "2",
+    title: "Every Match, Verified Instantly.",
+    description:
+      "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
+    image: "/static/media/Card5.png",
+    isMain: false,
+  },
+  {
+    id: "3",
+    title: "Compete in Games You Actually Play.",
+    description:
+      "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It’s your battlefield.",
+    image: "/static/media/Card1.png",
+    isMain: true,
+  },
+  {
+    id: "4",
+    title: "Custom Challenges. Your Rules.",
+    description:
+      "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
+    image: "/static/media/Card4.png",
+    isMain: false,
+  },
+  {
+    id: "5",
+    title: "XP-Based Ranking That Actually Matters.",
+    description:
+      "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
+    image: "/static/media/Card3.png",
+    isMain: false,
+  },
 ];
 
 const HomePage = () => {
@@ -230,10 +274,7 @@ const HomePage = () => {
       }`}
     >
       {/* Background */}
-      <MaskedBackground
-        logoPath="/static/svgs/logo.svg"
-        primaryColor={[2, 241, 153]} // [#02F199] in RGB
-      />
+      <PerlinNoiseSketch />
 
       <div
         ref={containerRef}
@@ -248,7 +289,7 @@ const HomePage = () => {
             className="cta-section w-full flex flex-col md:flex-row items-start justify-between rounded-lg py-8 relative overflow-hidden"
           >
             {/* Text Content */}
-            <div className="text-content md:w-1/2 w-full text-center px-6 sm:px-12 mt-8 md:mt-12">
+            <div className="text-content md:w-1/2 w-full text-center px-6 sm:px-12 mb-10 md:mt-12">
               <h3
                 ref={heroTitleRef}
                 className="hero-title text-center md:text-left text-2xl md:text-3xl font-bold text-white mb-4 leading-tight"
@@ -263,6 +304,8 @@ const HomePage = () => {
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                     }}
+                    interval={1}
+                    transitionDuration={0.25}
                   />
                 ) : (
                   staticTitle
@@ -284,6 +327,8 @@ const HomePage = () => {
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}
+                      interval={1.1} 
+                      transitionDuration={0.25}
                     />
                   ) : (
                     staticGameName
@@ -313,7 +358,7 @@ const HomePage = () => {
           </div>
 
           {/* Stats Cards Section */}
-          <StatsCards />
+          <FeatureCards cards={featureCardsData} isMobileView={isMobileView} />
 
           {/* Feature Section */}
           <div

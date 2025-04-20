@@ -1,213 +1,278 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useRef, useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
+import React, { useRef, useEffect, useState, useMemo } from "react";
+import type p5 from "p5";
 
-interface MaskedBackgroundProps {
-  logoPath: string;
-  primaryColor?: [number, number, number]; // RGB values
-  backgroundColor?: string;
-  logoSize?: string; // Size as percentage or pixel value
+interface Config {
+  numberOfParticles: number;
+  scale: number;
+  targetFrameRate: number;
+  frameInterval: number;
+  particleSpeed: {
+    min: number;
+    max: number;
+  };
+  opacity: number;
+  strokeWeight: number;
+  backgroundColor: number[];
+  strokeColor: number[];
 }
 
-const MaskedBackgroundComponent: React.FC<MaskedBackgroundProps> = ({
-  logoPath = "/static/svgs/logo.svg",
-  primaryColor = [2, 241, 153], // Your green color [#02F199]
-  backgroundColor = "#0A1928", // Dark blue background
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const maskRef = useRef<HTMLDivElement>(null);
-  const animationInitialized = useRef<boolean>(false);
+interface Particle {
+  x: number;
+  y: number;
+  speed: number;
+}
+
+const PerlinNoiseSketchComponent: React.FC = () => {
+  const sketchRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const particlesRef = useRef<Particle[] | null>(null);
+  const canvasWidthRef = useRef<number>(0);
+  const canvasHeightRef = useRef<number>(0);
 
-  // Dynamic logo size based on device - 100% for mobile, 40% for desktop
-  const dynamicLogoSize = isMobile ? "100%" : "40%";
-
-  // Radial gradient blobs config
-  const blobConfig = useMemo(
+  const config = useMemo<Config>(
     () => ({
-      count: isMobile ? 4 : 6,
-      colors: [
-        [primaryColor[0], primaryColor[1], primaryColor[2], 0.6],
-        [primaryColor[0], primaryColor[1], primaryColor[2], 0.4],
-      ],
-      minSize: isMobile ? 50 : 25, // Increased for mobile
-      maxSize: isMobile ? 70 : 35, // Increased for mobile
-      animationDuration: {
-        min: 15,
-        max: 25,
-      },
+      numberOfParticles: isMobile ? 300 : 800,
+      scale: 0.005,
+      targetFrameRate: 30,
+      frameInterval: 1000 / 30,
+      particleSpeed: { min: 0.8, max: 1.2 },
+      opacity: 1.0,
+      strokeWeight: isMobile ? 1.0 : 1.5,
+      backgroundColor: [0, 0, 0, 0],
+      strokeColor: [103, 232, 160],
     }),
-    [isMobile, primaryColor]
+    [isMobile]
   );
 
-  // Handle window resize only when needed
   useEffect(() => {
-    const handleResize = () => {
+    const debouncedResize = debounce(() => {
+      const wasMobile = isMobile;
       const newIsMobile = window.innerWidth <= 768;
-      if (isMobile !== newIsMobile) {
+
+      if (wasMobile !== newIsMobile) {
         setIsMobile(newIsMobile);
       }
-    };
+    }, 150);
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
+    window.addEventListener("resize", debouncedResize);
+    debouncedResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", debouncedResize);
   }, [isMobile]);
 
-  // Initialize animations only once or when blobConfig changes significantly
   useEffect(() => {
-    if (!maskRef.current || animationInitialized.current) return;
+    let isActive = true;
+    let p5Instance: p5;
+    const rafId: number | null = null;
 
-    // Set up animation
-    initializeAnimations();
+    const loadP5 = async () => {
+      const p5Module = await import("p5");
+      const p5 = p5Module.default;
 
-    // Mark as initialized
-    animationInitialized.current = true;
+      const sketch = (p: p5) => {
+        const TAU = p.TAU;
+        const noiseScale = config.scale;
+        let lastDrawTime = 0;
 
-    // Clean up function
-    return () => {
-      // We'll leave animations running and just clean up when component unmounts
-      animationInitialized.current = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        const cos = Math.cos;
+        const sin = Math.sin;
+        // Store p.random to use consistently
+        const pRandom = p.random.bind(p);
 
-  // Only re-initialize when blobConfig changes significantly
-  useEffect(() => {
-    if (!maskRef.current || !animationInitialized.current) return;
+        const onScreen = (
+          x: number,
+          y: number,
+          width: number,
+          height: number
+        ): boolean => x >= 0 && x <= width && y >= 0 && y <= height;
 
-    // Re-initialize animations when blobConfig changes
-    initializeAnimations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blobConfig.count, blobConfig.minSize, blobConfig.maxSize]);
+        const initializeParticles = (
+          width: number,
+          height: number
+        ): Particle[] => {
+          const count = config.numberOfParticles;
+          const particles: Particle[] = new Array(count);
+          const minSpeed = config.particleSpeed.min;
+          const maxSpeed = config.particleSpeed.max;
 
-  // Extract animation initialization to a separate function
-  const initializeAnimations = () => {
-    if (!maskRef.current) return;
+          for (let i = 0; i < count; i++) {
+            particles[i] = {
+              x: pRandom(width),
+              y: pRandom(height),
+              speed: pRandom(minSpeed, maxSpeed),
+            };
+          }
+          return particles;
+        };
 
-    const maskElement = maskRef.current;
+        p.setup = () => {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
 
-    // Clear existing content only once
-    if (maskElement.children.length === 0) {
-      maskElement.innerHTML = "";
+          const canvas = p.createCanvas(width, height, p.P2D);
+          canvasWidthRef.current = width;
+          canvasHeightRef.current = height;
 
-      // Generate keyframes styles once and add them to head
-      const stylesHTML = Array(blobConfig.count)
-        .fill(0)
-        .map((_, i) => {
-          const scale1 = 0.8 + Math.random() * 0.4;
-          const scale2 = 0.8 + Math.random() * 0.4;
+          canvas.style("position", "fixed");
+          canvas.style("left", "0");
+          canvas.style("top", "0");
+          canvas.style("z-index", "0");
+          canvas.style("opacity", config.opacity.toString());
 
-          return `
-            @keyframes blob-move-${i} {
-              0% { 
-                top: -10%; 
-                transform: translate(-50%, -50%) scale(${scale1});
-              }
-              100% { 
-                top: 110%; 
-                transform: translate(-50%, -50%) scale(${scale2});
+          canvas.style("background-color", "transparent");
+
+          canvas.style("transform", "translate3d(0,0,0)");
+          canvas.style("backface-visibility", "hidden");
+          canvas.style("perspective", "1000px");
+
+          particlesRef.current = initializeParticles(width, height);
+
+          p.stroke(
+            config.strokeColor[0],
+            config.strokeColor[1],
+            config.strokeColor[2]
+          );
+          p.strokeWeight(config.strokeWeight);
+
+          p.pixelDensity(1);
+          p.noSmooth();
+          p.frameRate(config.targetFrameRate);
+        };
+
+        p.draw = () => {
+          const currentTime = performance.now();
+          if (currentTime - lastDrawTime < config.frameInterval) {
+            return;
+          }
+
+          p.clear();
+
+          const particles = particlesRef.current;
+          if (!particles) return;
+
+          const width = canvasWidthRef.current;
+          const height = canvasHeightRef.current;
+
+          const cosFunc = Math.cos;
+          const sinFunc = Math.sin;
+
+          p.beginShape(p.POINTS);
+
+          for (let i = 0; i < particles.length; i++) {
+            const particle = particles[i];
+            const { x, y, speed } = particle;
+
+            p.vertex(x, y);
+
+            const n = p.noise(x * noiseScale, y * noiseScale);
+            const a = TAU * n;
+
+            particle.x += cosFunc(a) * speed;
+            particle.y += sinFunc(a) * speed;
+
+            if (!onScreen(particle.x, particle.y, width, height)) {
+              particle.x = pRandom(width);
+              particle.y = pRandom(height);
+            }
+          }
+
+          p.endShape();
+          lastDrawTime = currentTime;
+        };
+
+        p.windowResized = () => {
+          if (!isActive) return;
+
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+
+          p.resizeCanvas(width, height);
+          canvasWidthRef.current = width;
+          canvasHeightRef.current = height;
+
+          const particles = particlesRef.current;
+          if (particles) {
+            for (let i = 0; i < particles.length; i++) {
+              const particle = particles[i];
+              if (!onScreen(particle.x, particle.y, width, height)) {
+                // FIX: Use pRandom instead of random
+                particle.x = pRandom(width);
+                particle.y = pRandom(height);
               }
             }
-          `;
-        })
-        .join("");
+          }
+        };
+      };
 
-      const styleElement = document.createElement("style");
-      styleElement.id = "masked-bg-animations";
-      styleElement.innerHTML = stylesHTML;
-
-      // Remove existing animation styles if they exist
-      const existingStyle = document.getElementById("masked-bg-animations");
-      if (existingStyle) {
-        existingStyle.remove();
+      if (isActive && sketchRef.current) {
+        p5Instance = new p5(sketch, sketchRef.current);
       }
+    };
 
-      document.head.appendChild(styleElement);
+    loadP5();
 
-      // Generate animated blob elements
-      for (let i = 0; i < blobConfig.count; i++) {
-        const blob = document.createElement("div");
-        const size =
-          Math.random() * (blobConfig.maxSize - blobConfig.minSize) +
-          blobConfig.minSize;
-        const colorIndex = i % blobConfig.colors.length;
-        const [r, g, b, a] = blobConfig.colors[colorIndex];
-
-        blob.style.position = "absolute";
-        blob.style.width = `${size}%`;
-        blob.style.paddingBottom = `${size}%`;
-        blob.style.borderRadius = "50%";
-        blob.style.background = `radial-gradient(circle, rgba(${r},${g},${b},${a}) 0%, rgba(${r},${g},${b},0) 70%)`;
-
-        // Start position - horizontally distributed
-        const leftPos = Math.random() * 80 + 10; // 10-90% from left
-
-        blob.style.left = `${leftPos}%`;
-        blob.style.transform = "translate(-50%, -50%)";
-
-        // Animation - top to bottom movement
-        const duration =
-          Math.random() *
-            (blobConfig.animationDuration.max -
-              blobConfig.animationDuration.min) +
-          blobConfig.animationDuration.min;
-
-        blob.style.animation = `blob-move-${i} ${duration}s linear infinite`;
-
-        // Add some delay to stagger animations
-        blob.style.animationDelay = `${Math.random() * 5}s`;
-
-        maskElement.appendChild(blob);
+    return () => {
+      isActive = false;
+      if (p5Instance) {
+        p5Instance.remove();
       }
-    }
-  };
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      if (sketchRef.current) {
+        while (sketchRef.current.firstChild) {
+          sketchRef.current.removeChild(sketchRef.current.firstChild);
+        }
+      }
+    };
+  }, [config]);
 
   return (
     <div
-      ref={containerRef}
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
+      ref={sketchRef}
       style={{
-        overflow: "hidden",
-        backgroundColor: backgroundColor,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        pointerEvents: "none",
+        zIndex: -1,
+        transform: "translate3d(0,0,0)",
+        backfaceVisibility: "hidden",
+        perspective: "1000px",
       }}
-    >
-      {/* Logo Mask Container - Now using dynamicLogoSize based on device */}
-      <div
-        className="absolute"
-        style={{
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: dynamicLogoSize, // Use dynamic size based on device
-          aspectRatio: "1/1",
-        }}
-      >
-        <div
-          ref={maskRef}
-          className="absolute top-0 left-0 w-full h-full"
-          style={{
-            maskImage: `url(${logoPath})`,
-            maskSize: "contain",
-            maskPosition: "center",
-            maskRepeat: "no-repeat",
-            WebkitMaskImage: `url(${logoPath})`,
-            WebkitMaskSize: "contain",
-            WebkitMaskPosition: "center",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        />
-      </div>
-    </div>
+    />
   );
 };
 
-// Use React.memo to prevent unnecessary re-renders
-const MemoizedComponent = React.memo(MaskedBackgroundComponent);
+function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout | null = null;
 
-const MaskedBackground = dynamic(() => Promise.resolve(MemoizedComponent), {
-  ssr: false,
-});
+  return function executedFunction(...args: Parameters<T>) {
+    const later = () => {
+      timeout = null;
+      func(...args);
+    };
 
-export default MaskedBackground;
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(later, wait);
+  };
+}
+
+const PerlinNoiseSketch = dynamic(
+  () => Promise.resolve(PerlinNoiseSketchComponent),
+  { ssr: false }
+);
+
+export default PerlinNoiseSketch;

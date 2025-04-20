@@ -1,78 +1,96 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useRef, useEffect } from "react";
+import gsap from "gsap";
 import Image from "next/image";
 
-// Feature cards data
-const featureCardsData = [
-  {
-    id: "1",
-    icon: "/static/svgs/logo.svg",
-    title: "Win Real Money.",
-    description:
-      "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
-  },
-  {
-    id: "2",
-    icon: "/static/svgs/logo.svg",
-    title: "Every Match, Verified Instantly.",
-    description:
-      "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
-  },
-  {
-    id: "3",
-    icon: "/static/svgs/logo.svg",
-    title: "Compete in Games You Actually Play.",
-    description:
-      "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It's your battlefield.",
-  },
-  {
-    id: "4",
-    icon: "/static/svgs/logo.svg",
-    title: "Custom Challenges. Your Rules.",
-    description:
-      "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
-  },
-  {
-    id: "5",
-    icon: "/static/svgs/logo.svg",
-    title: "XP-Based Ranking That Actually Matters.",
-    description:
-      "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
-  },
-];
+interface Card {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  isMain: boolean;
+}
 
-const StatsCards: React.FC = () => {
+interface FeatureCardsProps {
+  cards: Card[];
+  isMobileView: boolean;
+}
+
+const FeatureCards: React.FC<FeatureCardsProps> = ({ cards, isMobileView }) => {
+  const duplicatedCards = [...cards, ...cards, ...cards];
+  const cardWidth = isMobileView ? 300 : 400; // Wider cards
+  const cardGap = 16; // 4rem gap
+  const totalWidth = cards.length * (cardWidth + cardGap);
+
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!marqueeRef.current) return;
+
+    // Set initial position
+    gsap.set(marqueeRef.current, { x: 0 });
+
+    // Create the infinite marquee animation
+    const marqueeAnimation = gsap.to(marqueeRef.current, {
+      x: -totalWidth,
+      duration: 40, // Same duration as before
+      ease: "none", // Linear movement (equivalent to "linear" in framer-motion)
+      repeat: -1, // Infinite repeat
+      onRepeat: () => {
+        // Reset position to create seamless loop
+        gsap.set(marqueeRef.current, { x: 0 });
+      },
+    });
+
+    // Pause animation on hover (optional)
+    const handleMouseEnter = () => marqueeAnimation.pause();
+    const handleMouseLeave = () => marqueeAnimation.play();
+
+    marqueeRef.current.addEventListener("mouseenter", handleMouseEnter);
+    marqueeRef.current.addEventListener("mouseleave", handleMouseLeave);
+
+    // Cleanup
+    return () => {
+      if (marqueeRef.current) {
+        marqueeRef.current.removeEventListener("mouseenter", handleMouseEnter);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        marqueeRef.current.removeEventListener("mouseleave", handleMouseLeave);
+      }
+      marqueeAnimation.kill(); // Stop animation on unmount
+    };
+  }, [totalWidth, cards.length]);
+
   return (
-    <div className="w-full py-16 mt-6 mb-12 relative">
-      {/* Section heading */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent">
-          PROVEN PLATFORM
-        </h2>
-        <p className="text-gray-300 mt-2 text-lg">
-          Where gamers stake, play and win
-        </p>
-      </div>
-
-      {/* Stats cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-6">
-        {featureCardsData.map((card) => (
+    <div className="overflow-hidden w-full">
+      <div ref={marqueeRef} className="flex gap-6 py-4">
+        {duplicatedCards.map((card, index) => (
           <div
-            key={card.id}
-            className="stat-card rounded-2xl p-6 bg-gradient-to-br from-gray-800 via-gray-900 to-black border border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            key={`${card.id}-${index}`}
+            className={`flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900 border border-gray-700 shadow-xl
+              transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-gray-600
+            `}
+            style={{
+              width: card.isMain ? cardWidth + 20 : cardWidth,
+              minWidth: card.isMain ? cardWidth + 20 : cardWidth,
+            }}
           >
-            <div className="flex items-center mb-4">
+            <div className="h-[400px] overflow-hidden">
               <Image
-                src={card.icon}
+                src={card.image}
                 alt={card.title}
-                width={40}
-                height={40}
-                className="w-10 h-10 object-contain"
+                className="w-full h-full object-cover"
+                width={400}
+                height={400}
               />
             </div>
-            <h3 className="text-xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent mb-2">
-              {card.title}
-            </h3>
-            <p className="text-gray-300 text-sm">{card.description}</p>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-3 text-white">
+                {card.title}
+              </h3>
+              <p className="text-gray-300 text-sm md:text-base">
+                {card.description}
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -80,4 +98,4 @@ const StatsCards: React.FC = () => {
   );
 };
 
-export default StatsCards;
+export default FeatureCards;

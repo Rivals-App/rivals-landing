@@ -215,7 +215,7 @@ const Footer = () => {
           </div>
 
           {/* Join Waitlist */}
-          <div className="flex flex-col justify-start">
+          <div className="flex flex-col justify-start items-start">
             <h4 className="font-bold mb-4 text-[#02F199] uppercase text-sm tracking-wider">
               Join our community
             </h4>

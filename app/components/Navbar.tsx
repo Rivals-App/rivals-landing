@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "gsap";
@@ -18,8 +18,10 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
+  const navbarRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const router = useRouter();
+  const scrollTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Handler for navigation actions
   const handleNavigation = (
@@ -64,71 +66,74 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     setIsMobileMenuOpen(false);
   };
 
+  // Set initial sizes immediately with useLayoutEffect to prevent flash of content
+  useLayoutEffect(() => {
+    if (logoRef.current && navbarRef.current) {
+      const scrolled = window.scrollY > 10; // More sensitive threshold
+      setIsScrolled(scrolled);
+
+      // Set initial sizes immediately
+      const initialHeight = scrolled ? "2rem" : "2.5rem"; // Start with slightly smaller logo
+      const initialPadding = scrolled ? "0.5rem 1rem" : "0.75rem 1.25rem"; // Start with slightly smaller padding
+
+      logoRef.current.style.height = initialHeight;
+      navbarRef.current.style.padding = initialPadding;
+    }
+  }, []);
+
   // Detect scroll to add background color on scroll and resize logo and navbar padding
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-
-        // Animate logo to smaller size
-        if (logoRef.current) {
-          gsap.to(logoRef.current, {
-            height: "2rem", // Smaller size
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-
-        // Animate navbar padding when scrolled
-        const navbarElement = document.querySelector(".navbar-container");
-        if (navbarElement) {
-          gsap.to(navbarElement, {
-            padding: "0.5rem 1rem",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-      } else {
-        setIsScrolled(false);
-
-        // Animate logo back to original size
-        if (logoRef.current) {
-          gsap.to(logoRef.current, {
-            height: "3rem", // Larger size
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-
-        // Animate navbar padding back to original
-        const navbarElement = document.querySelector(".navbar-container");
-        if (navbarElement) {
-          gsap.to(navbarElement, {
-            padding: "1rem 1.5rem",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
+      // Clear any pending scroll timer to prevent multiple animations
+      if (scrollTimerRef.current) {
+        clearTimeout(scrollTimerRef.current);
       }
+
+      // Use a very short timeout to debounce without noticeable delay
+      scrollTimerRef.current = setTimeout(() => {
+        const scrolled = window.scrollY > 10; // More sensitive threshold
+
+        // Only trigger animations if the scroll state has changed
+        if (scrolled !== isScrolled) {
+          setIsScrolled(scrolled);
+
+          // Use a single GSAP timeline for smoother, synchronized animations
+          const tl = gsap.timeline({
+            defaults: {
+              duration: 0.15, // Even faster animation for immediate response
+              ease: "power1.out", // Simpler easing for quicker response
+            },
+          });
+
+          if (scrolled) {
+            // Animate to smaller state
+            tl.to(logoRef.current, { height: "2rem" }, 0).to(
+              navbarRef.current,
+              { padding: "0.5rem 1rem" },
+              0
+            );
+          } else {
+            // Animate to larger state
+            tl.to(logoRef.current, { height: "2.5rem" }, 0) // Slightly smaller than original 3rem
+              .to(navbarRef.current, { padding: "0.75rem 1.25rem" }, 0); // Slightly smaller than original
+          }
+        }
+      }, 5); // Just 5ms delay - virtually immediate but allows batching
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Initial check on mount
+    handleScroll();
 
-    // Set initial logo size and navbar padding
-    if (logoRef.current) {
-      logoRef.current.style.height = window.scrollY > 20 ? "2rem" : "3rem";
-    }
+    // Use passive listener for better performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    const navbarElement = document.querySelector(
-      ".navbar-container"
-    ) as HTMLElement;
-    if (navbarElement) {
-      navbarElement.style.padding =
-        window.scrollY > 20 ? "0.5rem 1rem" : "1rem 1.5rem";
-    }
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimerRef.current) {
+        clearTimeout(scrollTimerRef.current);
+      }
+    };
+  }, [isScrolled]);
 
   // Mobile menu animation
   useEffect(() => {
@@ -140,15 +145,15 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         gsap.to(mobileMenuRef.current, {
           opacity: 1,
           y: 0,
-          duration: 0.3,
-          ease: "power2.out",
+          duration: 0.2, // Faster animation
+          ease: "power1.out",
         });
       } else {
         gsap.to(mobileMenuRef.current, {
           opacity: 0,
           y: -10,
-          duration: 0.2,
-          ease: "power2.in",
+          duration: 0.15, // Faster animation
+          ease: "power1.in",
           onComplete: () => {
             if (mobileMenuRef.current) {
               mobileMenuRef.current.style.display = "none";
@@ -190,10 +195,11 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   };
 
   return (
-    <div className="sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-6 mb-12 px-4 md:px-8">
+    <div className="sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-4 mb-8 px-4 md:px-8">
       {/* Navbar */}
       <nav
-        className={`navbar-container max-w-[99vw] w-full rounded-full transition-all duration-300 border border-white/10 ${
+        ref={navbarRef}
+        className={`navbar-container max-w-[99vw] w-full rounded-full transition-all duration-200 border border-white/10 ${
           isScrolled
             ? "bg-[#121212]/20 backdrop-blur-md shadow-xl"
             : "bg-[#121212]/25 backdrop-blur-md"
@@ -214,14 +220,15 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                     alt="RIVALS Logo"
                     width={60}
                     height={60}
-                    className="w-auto ml-4 transition-all duration-300"
+                    className="w-auto ml-4 transition-all duration-200 will-change-auto" // Faster transition
+                    priority={true} // Load image with priority
                   />
                 </div>
               </button>
             </div>
 
             {/* Desktop Navigation and Action Button */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6 pr-4">
               <button
                 onClick={(e) => handleNavigation("home", e)}
                 className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
@@ -292,11 +299,11 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 Try Our Demo
               </Link>
 
-              <JoinWaitlistButton className="inline-flex items-center px-6 py-2 text-md font-thin tracking-tight" />
+              <JoinWaitlistButton className="inline-flex items-center px-5 py-2 text-md font-thin tracking-tight" />
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
+            <div className="md:hidden flex items-center mr-4">
               <button
                 onClick={toggleMobileMenu}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-[#02F199]/20 focus:outline-none"
@@ -345,7 +352,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
       {/* Mobile Menu Dropdown */}
       <div
         ref={mobileMenuRef}
-        className="md:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-300 opacity-0"
+        className="md:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-200 opacity-0"
         style={{ display: "none", transform: "translateY(-10px)" }}
       >
         <div className="px-4 py-4 space-y-2">
