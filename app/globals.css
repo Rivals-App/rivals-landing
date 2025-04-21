@@ -7,13 +7,44 @@
   --foreground: #ededed;
   --accent: #02F199;
   --card-bg: #1a1a1a;
+  --lightness: 75%;
+  --base-chroma: 0.3;
 }
 
 body {
   color: var(--foreground);
-  background-color: var(--background);
+  background-color: #000000 !important;
+  scrollbar-color: oklch(75% var(--chroma) var(--hue)) transparent;
   font-family: 'Inter', Arial, sans-serif;
   
+}
+
+/* Add these styles for the scroll behavior */
+
+@property --hue {
+  initial-value: 0;
+  syntax: '<number>';
+  inherits: false;
+}
+
+@property --chroma {
+  initial-value: 0;
+  syntax: '<number>';
+  inherits: true;
+}
+
+/* Enable smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enable scroll snapping */
+.words-list {
+  scroll-snap-type: y proximity;
+}
+
+.words-list li {
+  scroll-snap-align: center;
 }
 
 .gradient-text {
@@ -36,5 +67,6 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(2, 241, 153, 0.15);
 }
+
 
 

@@ -293,7 +293,7 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
 
               <button
                 onClick={(e) => handleNavigation("join-us", e)}
-                className="inline-flex items-center px-6 py-2 text-md font-thin rounded-full bg-[#02F199] text-[#0c1622] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
+                className="inline-flex items-center px-6 py-2 text-md  rounded-full bg-[#02F199] text-[#FFFFFF] hover:bg-[#02F199]/80 hover:text-[#FFFFFF] transition-all duration-200 ease-in-out tracking-tight"
               >
                 <span>Join Waitlist</span>
               </button>
