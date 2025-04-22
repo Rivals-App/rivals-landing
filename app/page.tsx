@@ -315,9 +315,9 @@ const HomePage = () => {
 
           {/* Feature Section Header - completely separate */}
           <div className="w-full px-4 py-12 relative">
-            <div ref={featureTitleRef} className="text-center mb-20">
-              <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent feature-title">
-                JOIN THE <br /> COMPETITIVE REVOLUTION
+            <div ref={featureTitleRef} className="text-center mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent feature-title">
+                JOIN THE COMPETITIVE REVOLUTION
               </h2>
               <p className="text-gray-300 mt-4 text-lg md:text-xl feature-subtitle">
                 Compete in Matches and earn real rewards. RIVALS is the ultimate
