@@ -1,79 +1,43 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
 import PerlinNoiseSketch from "./components/PerlinNoise";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
-import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";
 import Image from "next/image";
 import AnimatedTextCycle from "./components/AnimatedTextCycle";
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
+import FeatureCards from "./components/FeatureCards";
+import {
+  FaCoins,
+  FaGamepad,
+  FaFileAlt,
+  FaUserCheck,
+  FaMedal,
+} from "react-icons/fa";
+import {
+  setupHeroAnimations,
+  setupFeatureHeaderAnimation,
+  setupFeatureCardsAnimations,
+  setupTournamentsAnimations,
+} from "./utils/gsapAnimations";
 
 // Register GSAP ScrollTrigger and TextPlugin on client side
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, TextPlugin);
 }
 
-// Game titles for static display
-const popularGames = [
-  "DOTA 2",
-  "FC25",
-  "Valorant",
-  "Chess",
-  "Connect 4",
-  "Formula 1",
-  "Fortnite",
-];
-
-// Add the feature cards data
-const featureCardsData = [
-  {
-    id: "1",
-    title: "Play for Real Stakes. Win Real Money.",
-    description:
-      "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
-    image: "/static/media/Card2.png",
-    isMain: false,
-  },
-  {
-    id: "2",
-    title: "Every Match, Verified Instantly.",
-    description:
-      "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
-    image: "/static/media/Card5.png",
-    isMain: false,
-  },
-  {
-    id: "3",
-    title: "Compete in Games You Actually Play.",
-    description:
-      "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It’s your battlefield.",
-    image: "/static/media/Card1.png",
-    isMain: true,
-  },
-  {
-    id: "4",
-    title: "Custom Challenges. Your Rules.",
-    description:
-      "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
-    image: "/static/media/Card4.png",
-    isMain: false,
-  },
-  {
-    id: "5",
-    title: "XP-Based Ranking That Actually Matters.",
-    description:
-      "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
-    image: "/static/media/Card3.png",
-    isMain: false,
-  },
-];
+// Utility function to shuffle an array and prevent consecutive duplicates
+const shuffleArray = <T,>(array: T[]): T[] => {
+  return array
+    .map((value: T) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+};
 
 const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -82,17 +46,84 @@ const HomePage = () => {
   const heroSubtitleRef = useRef<HTMLHeadingElement>(null);
   const featureSectionRef = useRef<HTMLDivElement>(null);
   const tournamentsSectionRef = useRef<HTMLDivElement>(null);
+  const featureTitleRef = useRef<HTMLDivElement>(null);
   const [isMobileView, setIsMobileView] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
-  const words = [
-    "FRIENDS",
-    "RIVALS",
-    "STRANGERS",
-    "PROS",
-    "TEAMMATES",
-    "ANYONE",
+  // Wrap array definitions in useMemo to prevent re-creation on each render
+  const popularGames = useMemo(
+    () => [
+      "DOTA 2",
+      "FC25",
+      "Valorant",
+      "Chess",
+      "Connect 4",
+      "Formula 1",
+      "Fortnite",
+    ],
+    []
+  );
+
+  const words = useMemo(
+    () => ["FRIENDS", "RIVALS", "STRANGERS", "PROS", "TEAMMATES", "ANYONE"],
+    []
+  );
+
+  // Shuffle the arrays once on component mount
+  const shuffledWords = useMemo(() => shuffleArray(words), [words]);
+  const shuffledPopularGames = useMemo(
+    () => shuffleArray(popularGames),
+    [popularGames]
+  );
+
+  const featureCardsData = [
+    {
+      id: "1",
+      icon: FaCoins,
+      title: "Win Real Money.",
+      description:
+        "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
+      image: "/static/media/Card1.png",
+      isMain: true,
+    },
+    {
+      id: "2",
+      icon: FaUserCheck,
+      title: "Every Match, Verified Instantly.",
+      description:
+        "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
+      image: "/static/media/Card2.png",
+      isMain: false,
+    },
+    {
+      id: "3",
+      icon: FaGamepad,
+      title: "Compete in Games You Actually Play.",
+      description:
+        "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It's your battlefield.",
+      image: "/static/media/Card3.png",
+      isMain: false,
+    },
+    {
+      id: "4",
+      icon: FaFileAlt,
+      title: "Custom Challenges. Your Rules.",
+      description:
+        "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
+      image: "/static/media/Card4.png",
+      isMain: false,
+    },
+    {
+      id: "5",
+      icon: FaMedal,
+      title: "XP-Based Ranking That Actually Matters.",
+      description:
+        "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
+      image: "/static/media/Card5.png",
+      isMain: false,
+    },
   ];
 
   // Check if we're in the client-side environment and set initial states
@@ -121,6 +152,17 @@ const HomePage = () => {
     };
   }, []);
 
+  // Synchronize word cycling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex(
+        (prevIndex) => (prevIndex + 1) % shuffledWords.length
+      );
+    }, 1000); // Adjust interval as needed
+
+    return () => clearInterval(interval);
+  }, [shuffledWords.length]);
+
   // Main animations setup - only run after page is loaded
   useEffect(() => {
     if (typeof window === "undefined" || !pageLoaded) return;
@@ -128,115 +170,29 @@ const HomePage = () => {
     // Clear any existing ScrollTriggers
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
-    // Set initial state for hero elements
-    gsap.set(".hero-image, .hero-description, .hero-button", {
-      opacity: 0,
-      y: 30,
-    });
+    // Setup animations
+    const heroTimeline = setupHeroAnimations();
 
-    // Create animation timeline for initial hero section
-    const tl = gsap.timeline();
+    // Setup feature title animation separately
+    setupFeatureHeaderAnimation(featureTitleRef);
 
-    // Animate hero elements
-    tl.to(".hero-description", {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      ease: "power3.out",
-    })
-      .to(
-        ".hero-button",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      )
-      .to(
-        ".hero-image",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.5"
-      );
+    // Feature cards animation - now separate from the header
+    const featureCardsTimeline = setupFeatureCardsAnimations(featureSectionRef);
 
-    // Feature section scroll animations
-    if (featureSectionRef.current) {
-      gsap.from(".feature-title", {
-        scrollTrigger: {
-          trigger: featureSectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        ease: "power3.out",
-      });
+    // Tournaments animations
+    setupTournamentsAnimations(tournamentsSectionRef);
 
-      gsap.from(".feature-subtitle", {
-        scrollTrigger: {
-          trigger: featureSectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        delay: 0.2,
-        ease: "power3.out",
-      });
-    }
-
-    // Tournaments section animations
-    if (tournamentsSectionRef.current) {
-      gsap.from(".tournament-text", {
-        scrollTrigger: {
-          trigger: tournamentsSectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        x: -50,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-
-      gsap.from(".tournament-image", {
-        scrollTrigger: {
-          trigger: tournamentsSectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        x: 50,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-
-      gsap.from(".tournament-list li", {
-        scrollTrigger: {
-          trigger: ".tournament-list",
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        x: -20,
-        stagger: 0.15,
-        duration: 0.5,
-        ease: "power3.out",
-      });
-    }
+    // Force refresh ScrollTrigger after a brief delay to ensure everything works
+    const refreshTimeout = setTimeout(() => {
+      ScrollTrigger.refresh(true);
+    }, 500);
 
     return () => {
       // Clean up
+      clearTimeout(refreshTimeout);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      tl.kill();
+      if (heroTimeline) heroTimeline.kill();
+      if (featureCardsTimeline) featureCardsTimeline.kill();
     };
   }, [pageLoaded]);
 
@@ -297,14 +253,14 @@ const HomePage = () => {
                 WIN MONEY AGAINST <br />
                 {isClient ? (
                   <AnimatedTextCycle
-                    words={words}
+                    words={shuffledWords} // Use shuffled words
+                    currentIndex={currentWordIndex} // Pass shared index
                     className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
                     style={{
                       background: "linear-gradient(90deg, #02F199, #00AFFF)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                     }}
-                    interval={1}
                     transitionDuration={0.25}
                   />
                 ) : (
@@ -314,20 +270,20 @@ const HomePage = () => {
 
               <h4
                 ref={heroSubtitleRef}
-                className="hero-subtitle text-center md:text-left text-xl md:text-2xl font-semibold text-gray-200 mb-6"
+                className="hero-subtitle flex flex-col md:flex-row items-center md:items-start text-center md:text-left text-xl md:text-2xl font-semibold text-gray-200 mb-6"
               >
-                on games like{" "}
-                <span className="text-[#02F199]">
+                <span>on games like</span> <br className="hidden md:block" />
+                <span className="text-[#02F199] md:ml-2">
                   {isClient ? (
                     <AnimatedTextCycle
-                      words={popularGames}
-                      className="inline-block font-bold text-left min-w-[100px]"
+                      words={shuffledPopularGames} // Use shuffled popularGames
+                      currentIndex={currentWordIndex} // Pass shared index
+                      className="inline-block font-bold text-left mx-auto"
                       style={{
                         background: "linear-gradient(90deg, #00AFFF, #02F199)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}
-                      interval={1.1} 
                       transitionDuration={0.25}
                     />
                   ) : (
@@ -341,7 +297,7 @@ const HomePage = () => {
                 market. Stake your match, beat real opponents, and get paid –
                 instantly.
               </p>
-              <JoinWaitlistButton className="mx-auto md:mx-0" />
+              <JoinWaitlistButton className="mx-auto md:mx-0 hero-button" />
             </div>
 
             {/* Image Content */}
@@ -357,23 +313,21 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Stats Cards Section */}
-          <FeatureCards cards={featureCardsData} isMobileView={isMobileView} />
-
-          {/* Feature Section */}
-          <div
-            ref={featureSectionRef}
-            className="feature-cards-wrapper w-full px-4 py-12 sm:pt-24"
-          >
-            <h2 className="feature-title text-3xl md:text-4xl font-bold mb-3 text-center">
-              JOIN THE <span className="text-[#02F199]">COMPETITIVE</span>{" "}
-              REVOLUTION
-            </h2>
-            <p className="feature-subtitle text-gray-300 mb-16 text-center text-base md:text-lg">
-              Compete in Matches and earn real rewards. RIVALS is the ultimate
-              competitive gaming platform built for true gamers.
-            </p>
+          {/* Feature Section Header - completely separate */}
+          <div className="w-full px-4 py-12 relative">
+            <div ref={featureTitleRef} className="text-center mb-20">
+              <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent feature-title">
+                JOIN THE <br /> COMPETITIVE REVOLUTION
+              </h2>
+              <p className="text-gray-300 mt-4 text-lg md:text-xl feature-subtitle">
+                Compete in Matches and earn real rewards. RIVALS is the ultimate
+                competitive gaming platform built for true gamers.
+              </p>
+            </div>
           </div>
+
+          {/* Feature Cards Section */}
+          <FeatureCards cards={featureCardsData} isMobileView={isMobileView} />
 
           {/* Compete in Tournaments Section */}
           <div
@@ -382,7 +336,7 @@ const HomePage = () => {
           >
             {/* Text Content */}
             <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
-              <h3 className="text-4xl font-bold text-white mb-6 leading-tight">
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
                 <span className="text-[#02F199]">
                   COMPETE & WIN IN YOUR FAVORITE GAMES
                 </span>

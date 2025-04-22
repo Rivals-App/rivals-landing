@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { gsap } from "gsap";
 import Image from "next/image";
 import JoinWaitlistButton from "./JoinWaitlistButton";
 
@@ -17,11 +16,8 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLImageElement>(null);
-  const navbarRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const router = useRouter();
-  const scrollTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Handler for navigation actions
   const handleNavigation = (
@@ -66,59 +62,10 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     setIsMobileMenuOpen(false);
   };
 
-  // Set initial sizes immediately with useLayoutEffect to prevent flash of content
-  useLayoutEffect(() => {
-    if (logoRef.current && navbarRef.current) {
-      const scrolled = window.scrollY > 10; // More sensitive threshold
-      setIsScrolled(scrolled);
-
-      // Set initial sizes immediately
-      const initialHeight = scrolled ? "2rem" : "2.5rem"; // Start with slightly smaller logo
-      const initialPadding = scrolled ? "0.5rem 1rem" : "0.75rem 1.25rem"; // Start with slightly smaller padding
-
-      logoRef.current.style.height = initialHeight;
-      navbarRef.current.style.padding = initialPadding;
-    }
-  }, []);
-
-  // Detect scroll to add background color on scroll and resize logo and navbar padding
+  // Simple scroll detection without animations
   useEffect(() => {
     const handleScroll = () => {
-      // Clear any pending scroll timer to prevent multiple animations
-      if (scrollTimerRef.current) {
-        clearTimeout(scrollTimerRef.current);
-      }
-
-      // Use a very short timeout to debounce without noticeable delay
-      scrollTimerRef.current = setTimeout(() => {
-        const scrolled = window.scrollY > 10; // More sensitive threshold
-
-        // Only trigger animations if the scroll state has changed
-        if (scrolled !== isScrolled) {
-          setIsScrolled(scrolled);
-
-          // Use a single GSAP timeline for smoother, synchronized animations
-          const tl = gsap.timeline({
-            defaults: {
-              duration: 0.15, // Even faster animation for immediate response
-              ease: "power1.out", // Simpler easing for quicker response
-            },
-          });
-
-          if (scrolled) {
-            // Animate to smaller state
-            tl.to(logoRef.current, { height: "2rem" }, 0).to(
-              navbarRef.current,
-              { padding: "0.5rem 1rem" },
-              0
-            );
-          } else {
-            // Animate to larger state
-            tl.to(logoRef.current, { height: "2.5rem" }, 0) // Slightly smaller than original 3rem
-              .to(navbarRef.current, { padding: "0.75rem 1.25rem" }, 0); // Slightly smaller than original
-          }
-        }
-      }, 5); // Just 5ms delay - virtually immediate but allows batching
+      setIsScrolled(window.scrollY > 10);
     };
 
     // Initial check on mount
@@ -129,47 +76,8 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (scrollTimerRef.current) {
-        clearTimeout(scrollTimerRef.current);
-      }
     };
-  }, [isScrolled]);
-
-  // Mobile menu animation
-  useEffect(() => {
-    if (!mobileMenuRef.current) return;
-
-    try {
-      if (isMobileMenuOpen) {
-        mobileMenuRef.current.style.display = "block";
-        gsap.to(mobileMenuRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.2, // Faster animation
-          ease: "power1.out",
-        });
-      } else {
-        gsap.to(mobileMenuRef.current, {
-          opacity: 0,
-          y: -10,
-          duration: 0.15, // Faster animation
-          ease: "power1.in",
-          onComplete: () => {
-            if (mobileMenuRef.current) {
-              mobileMenuRef.current.style.display = "none";
-            }
-          },
-        });
-      }
-    } catch (error) {
-      console.error("Error in navbar animation:", error);
-      if (mobileMenuRef.current) {
-        mobileMenuRef.current.style.display = isMobileMenuOpen
-          ? "block"
-          : "none";
-      }
-    }
-  }, [isMobileMenuOpen]);
+  }, []);
 
   // Close mobile menu on screen resize
   useEffect(() => {
@@ -198,8 +106,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     <div className="sticky top-0 left-0 right-0 z-50 flex flex-col items-center pt-4 mb-8 px-4 md:px-8">
       {/* Navbar */}
       <nav
-        ref={navbarRef}
-        className={`navbar-container max-w-[99vw] w-full rounded-full transition-all duration-200 border border-white/10 ${
+        className={`navbar-container max-w-[99vw] w-full py-3 px-4 rounded-full border border-white/10 ${
           isScrolled
             ? "bg-[#121212]/20 backdrop-blur-md shadow-xl"
             : "bg-[#121212]/25 backdrop-blur-md"
@@ -215,12 +122,11 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               >
                 <div className="relative">
                   <Image
-                    ref={logoRef}
                     src="/static/media/Logo1.png"
                     alt="RIVALS Logo"
-                    width={60}
-                    height={60}
-                    className="w-auto ml-4 transition-all duration-200 will-change-auto" // Faster transition
+                    width={40}
+                    height={40}
+                    className="w-auto ml-4"
                     priority={true} // Load image with priority
                   />
                 </div>
@@ -231,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             <div className="hidden md:flex items-center space-x-6 pr-4">
               <button
                 onClick={(e) => handleNavigation("home", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -240,7 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("about", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/about-rivals"
                     ? "text-[#02F199]"
                     : "text-gray-300"
@@ -251,7 +157,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("blog", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -260,7 +166,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("arcade", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/arcade" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -269,7 +175,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("legal", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -278,7 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("contact-us", e)}
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 bg-transparent border-none focus:outline-none ${
+                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/contact-us"
                     ? "text-[#02F199]"
                     : "text-gray-300"
@@ -290,7 +196,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               <Link
                 href="https://getrivals.com"
                 target="_blank"
-                className={`text-md font-medium hover:text-[#02F199] transition-colors duration-200 ${
+                className={`text-md font-medium hover:text-[#02F199] ${
                   pathname === "https://getrivals.com"
                     ? "text-[#02F199]"
                     : "text-gray-300"
@@ -350,79 +256,82 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
       </nav>
 
       {/* Mobile Menu Dropdown */}
-      <div
-        ref={mobileMenuRef}
-        className="md:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl transition-all duration-200 opacity-0"
-        style={{ display: "none", transform: "translateY(-10px)" }}
-      >
-        <div className="px-4 py-4 space-y-2">
-          <button
-            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-              pathname === "/" ? "text-[#02F199]" : "text-gray-300"
-            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
-            onClick={(e) => handleNavigation("home", e)}
-          >
-            Home
-          </button>
+      {isMobileMenuOpen && (
+        <div
+          ref={mobileMenuRef}
+          className="md:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl"
+        >
+          <div className="px-4 py-4 space-y-2">
+            <button
+              className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                pathname === "/" ? "text-[#02F199]" : "text-gray-300"
+              } hover:text-[#02F199] hover:bg-[#02F199]/10`}
+              onClick={(e) => handleNavigation("home", e)}
+            >
+              Home
+            </button>
 
-          <button
-            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-              pathname === "/about-rivals" ? "text-[#02F199]" : "text-gray-300"
-            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
-            onClick={(e) => handleNavigation("about", e)}
-          >
-            About
-          </button>
+            <button
+              className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                pathname === "/about-rivals"
+                  ? "text-[#02F199]"
+                  : "text-gray-300"
+              } hover:text-[#02F199] hover:bg-[#02F199]/10`}
+              onClick={(e) => handleNavigation("about", e)}
+            >
+              About
+            </button>
 
-          <button
-            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-              pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
-            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
-            onClick={(e) => handleNavigation("blog", e)}
-          >
-            Blog
-          </button>
+            <button
+              className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
+              } hover:text-[#02F199] hover:bg-[#02F199]/10`}
+              onClick={(e) => handleNavigation("blog", e)}
+            >
+              Blog
+            </button>
 
-          <button
-            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-              pathname === "/arcade" ? "text-[#02F199]" : "text-gray-300"
-            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
-            onClick={(e) => handleNavigation("arcade", e)}
-          >
-            Arcade
-          </button>
+            <button
+              className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                pathname === "/arcade" ? "text-[#02F199]" : "text-gray-300"
+              } hover:text-[#02F199] hover:bg-[#02F199]/10`}
+              onClick={(e) => handleNavigation("arcade", e)}
+            >
+              Arcade
+            </button>
 
-          <button
-            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-              pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
-            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
-            onClick={(e) => handleNavigation("legal", e)}
-          >
-            Legal
-          </button>
+            <button
+              className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
+              } hover:text-[#02F199] hover:bg-[#02F199]/10`}
+              onClick={(e) => handleNavigation("legal", e)}
+            >
+              Legal
+            </button>
 
-          <button
-            className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-              pathname === "/contact-us" ? "text-[#02F199]" : "text-gray-300"
-            } hover:text-[#02F199] hover:bg-[#02F199]/10`}
-            onClick={(e) => handleNavigation("contact-us", e)}
-          >
-            Contact Us
-          </button>
+            <button
+              className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                pathname === "/contact-us" ? "text-[#02F199]" : "text-gray-300"
+              } hover:text-[#02F199] hover:bg-[#02F199]/10`}
+              onClick={(e) => handleNavigation("contact-us", e)}
+            >
+              Contact Us
+            </button>
 
-          <Link
-            href="https://getrivals.com"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Try Our Demo
-          </Link>
+            <Link
+              href="https://getrivals.com"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Try Our Demo
+            </Link>
 
-          <div className="px-3 py-2 mt-4">
-            <JoinWaitlistButton />
+            <div className="px-3 py-2 mt-4">
+              <JoinWaitlistButton />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
