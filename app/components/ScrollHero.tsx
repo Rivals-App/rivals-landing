@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 
 const WORDS = [
   "FRIENDS.",
-  "FAMILY.",
+  "TEAMMATES.",
   "ENEMIES.",
   "FOES.",
   "RIVALS."

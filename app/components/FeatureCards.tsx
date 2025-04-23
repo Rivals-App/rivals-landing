@@ -1,173 +1,436 @@
-// StatsCards.tsx
+// FeatureCards.tsx
+"use client"
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 
-interface CardInfo {
+// Define feature card data
+interface FeatureCard {
+  id: string;
   title: string;
   description: string;
-  icon?: React.ReactNode;
+  color1: string;
+  color2: string;
+  image: string;
+  buttonText: string;
+  buttonColor: string;
 }
 
-const cardData: CardInfo[] = [
+const featureCards: FeatureCard[] = [
   {
-    title: "SKILL-BASED",
-    description: "100% skill-determined outcomes. No luck, just pure skill.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="16" y1="13" x2="8" y2="13"></line>
-        <line x1="16" y1="17" x2="8" y2="17"></line>
-      </svg>
-    )
+    id: "skill-based",
+    title: "SKILL-BASED MATCHMAKING",
+    description: "Our advanced algorithm pairs you with players of similar skill level for fair and competitive matches every time.",
+    color1: "#7dd4b0",
+    color2: "#acd6f8",
+    image: "/static/media/SkillBased.png",
+    buttonText: "Learn More",
+    buttonColor: "#7dd4b0"
   },
   {
-    title: "INSTANT PAYOUTS",
-    description: "Win a match, get paid immediately with no waiting.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" y1="1" x2="12" y2="23"></line>
-        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-      </svg>
-    )
-  },
-  {
+    id: "secure",
     title: "SECURE PLATFORM",
-    description: "Advanced anti-cheat ensures fair play for all matches.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-      </svg>
-    )
+    description: "State-of-the-art security ensures your data and transactions are protected at all times.",
+    color1: "#e4ee55",
+    color2: "#e4a42d",
+    image: "/static/media/SecurePlatform.png",
+    buttonText: "Explore",
+    buttonColor: "#e4a42d"
   },
   {
-    title: "CROSS-PLATFORM",
-    description: "Play and compete across PC, mobile, and console devices.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-        <line x1="8" y1="21" x2="16" y2="21"></line>
-        <line x1="12" y1="17" x2="12" y2="21"></line>
-      </svg>
-    )
-  },
+    id: "rewards",
+    title: "REAL REWARDS",
+    description: "Earn actual prizes, not just virtual points. Win tournaments to claim cash, merchandise, and more.",
+    color1: "#c93939",
+    color2: "#dd81e6",
+    image: "/static/media/Rewards.png",
+    buttonText: "View Rewards",
+    buttonColor: "#c93939"
+  }
 ];
 
-export default function StatsCards() {
-  const containerRef = useRef<HTMLDivElement>(null);
+const FeatureCards: React.FC = () => {
   const styleRef = useRef<HTMLStyleElement>(null);
-  let resetTimer: any;
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
-    const cards = containerRef.current!.querySelectorAll<HTMLElement>(".card");
-    const styleTag = styleRef.current!;
-    cards.forEach((card) => {
-      const onMove = (e: MouseEvent | TouchEvent) => {
+    if (!containerRef.current) return;
+
+    const cards = containerRef.current.querySelectorAll('.card');
+    const style = styleRef.current;
+    
+    if (!style || cards.length === 0) return;
+    
+    let resetTimers: { [key: string]: NodeJS.Timeout } = {};
+    
+    cards.forEach(card => {
+      // Mouse move handling
+      const handleMouseMove = (e: MouseEvent | TouchEvent) => {
         e.preventDefault();
-        // calculate pointer pos
+        
+        // Get card position
         const rect = card.getBoundingClientRect();
-        const x =
-          e instanceof MouseEvent
-            ? e.clientX - rect.left
-            : e.touches[0].clientX - rect.left;
-        const y =
-          e instanceof MouseEvent
-            ? e.clientY - rect.top
-            : e.touches[0].clientY - rect.top;
-        const w = rect.width,
-          h = rect.height;
-        const px = Math.abs(Math.floor((100 / w) * x) - 100);
-        const py = Math.abs(Math.floor((100 / h) * y) - 100);
-        const lp = 50 + (px - 50) / 1.5;
-        const tp = 50 + (py - 50) / 1.5;
-        const sparkX = 50 + (px - 50) / 7;
-        const sparkY = 50 + (py - 50) / 7;
-        const opacity = 0.2 + (Math.abs((50 - px) + (50 - py)) * 1.5) / 100;
-        const rotY = ((lp - 50) / 1.5) * 0.5;
-        const rotX = -((tp - 50) / 2);
-
-        // apply 3D tilt
-        card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-
-        // inject dynamic gradient & sparkle positions
-        styleTag.innerHTML = `
-          .card:hover:before { background-position: ${lp}% ${tp}% }
-          .card:hover:after {
-            background-position: ${sparkX}% ${sparkY}%;
-            opacity: ${opacity};
-          }
+        
+        // Calculate mouse position relative to card
+        let l, t;
+        if ('touches' in e) {
+          l = e.touches[0].clientX - rect.left;
+          t = e.touches[0].clientY - rect.top;
+        } else {
+          l = e.clientX - rect.left;
+          t = e.clientY - rect.top;
+        }
+        
+        const h = rect.height;
+        const w = rect.width;
+        
+        // Calculate percentages
+        const px = Math.abs(Math.floor(100 / w * l) - 100);
+        const py = Math.abs(Math.floor(100 / h * t) - 100);
+        
+        // Calculate gradient and sparkle positions
+        const lp = (50 + (px - 50) / 1.5);
+        const tp = (50 + (py - 50) / 1.5);
+        const px_spark = (50 + (px - 50) / 7);
+        const py_spark = (50 + (py - 50) / 7);
+        const p_opc = 20 + (Math.abs((50 - px) + (50 - py)) * 1.5);
+        const ty = ((tp - 50) / 2) * -1;
+        const tx = ((lp - 50) / 1.5) * 0.5;
+        
+        // Apply transform
+        card.setAttribute('style', `transform: rotateX(${ty}deg) rotateY(${tx}deg)`);
+        
+        // Set dynamic styles for pseudo-elements
+        const id = card.getAttribute('data-id') || '';
+        style.innerHTML = `
+          #${id}:before { background-position: ${lp}% ${tp}%; }
+          #${id}:after { background-position: ${px_spark}% ${py_spark}%; opacity: ${p_opc / 100}; }
         `;
-
-        clearTimeout(resetTimer);
+        
+        // Clear any existing reset timer
+        if (resetTimers[id]) {
+          clearTimeout(resetTimers[id]);
+        }
       };
-
-      const onOut = () => {
-        // reset
-        styleTag.innerHTML = "";
-        card.style.transform = "";
-        resetTimer = setTimeout(() => card.classList.add("animated"), 2_500);
+      
+      // Mouse out handling
+      const handleMouseOut = () => {
+        const id = card.getAttribute('data-id') || '';
+        
+        // Reset styles
+        style.innerHTML = style.innerHTML.replace(new RegExp(`#${id}:before.*?}`, 's'), '');
+        style.innerHTML = style.innerHTML.replace(new RegExp(`#${id}:after.*?}`, 's'), '');
+        card.removeAttribute('style');
+        
+        // Add animation class after delay
+        resetTimers[id] = setTimeout(() => {
+          card.classList.add('animated');
+        }, 2500);
       };
-
-      card.addEventListener("mousemove", onMove);
-      card.addEventListener("touchmove", onMove);
-      card.addEventListener("mouseout", onOut);
-      card.addEventListener("touchend", onOut);
-      card.addEventListener("touchcancel", onOut);
+      
+      // Add event listeners
+      card.addEventListener('mousemove', (e) => handleMouseMove(e as MouseEvent));
+      card.addEventListener('touchmove', (e) => handleMouseMove(e as TouchEvent));
+      card.addEventListener('mouseout', handleMouseOut);
+      card.addEventListener('touchend', handleMouseOut);
+      card.addEventListener('touchcancel', handleMouseOut);
     });
-
+    
+    // Cleanup
     return () => {
-      clearTimeout(resetTimer);
-      cards.forEach((card) => {
-        card.replaceWith(card.cloneNode(true)); // crude cleanup
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', () => {});
+        card.removeEventListener('touchmove', () => {});
+        card.removeEventListener('mouseout', () => {});
+        card.removeEventListener('touchend', () => {});
+        card.removeEventListener('touchcancel', () => {});
       });
+      
+      Object.values(resetTimers).forEach(timer => clearTimeout(timer));
     };
   }, []);
-
+  
   return (
-    <div className="stats-section w-full px-4 py-12">
+    <div className="feature-cards-section w-full px-4 py-12 sm:py-16">
       <style ref={styleRef} />
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-          PROVEN <span className="gradient-text">PLATFORM</span>
-        </h2>
-        <p className="text-center text-gray-300 mb-8 max-w-2xl mx-auto">
-          Built for serious gamers looking for fair competition
-        </p>
-
-        <div
-          ref={containerRef}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 justify-items-center"
-        >
-          {cardData.map((c, i) => (
-            <div
-              key={i}
-              className="card animated bg-[#142F4C] rounded-xl shadow-lg relative overflow-hidden cursor-pointer w-full"
-              style={
-                {
-                  "--color1": "#02F199", 
-                  "--color2": "#01E8F7",
-                  height: "230px",
-                } as React.CSSProperties
-              }
+      
+      {/* Heading uses same sizing as game carousel */}
+      <h2 className="text-3xl md:text-5xl font-bold text-center mb-6 md:mb-12">
+        JOIN THE <span className="gradient-text">COMPETITIVE</span> REVOLUTION
+      </h2>
+      
+      <div className="text-center text-gray-300 mb-12 max-w-2xl mx-auto px-4">
+        <p>Compete in Matches and earn real rewards. RIVALS is the ultimate competitive gaming platform built for true gamers.</p>
+      </div>
+      
+      <div 
+        ref={containerRef} 
+        className="cards flex flex-col md:flex-row gap-8 justify-center items-center max-w-7xl mx-auto"
+      >
+        {featureCards.map((card) => (
+          <div key={card.id} className="card-wrapper w-full md:w-[350px]">
+            <div 
+              id={card.id}
+              data-id={card.id}
+              className={`card ${card.id} animated relative w-full h-[500px] overflow-hidden rounded-xl cursor-pointer z-10 touch-none transform transition-transform`}
+              style={{
+                '--color1': card.color1,
+                '--color2': card.color2,
+                '--front': `url(${card.image})`,
+                backgroundColor: '#040712',
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center',
+              } as React.CSSProperties}
             >
-              {/* Top accent line */}
-              <div className="h-1 w-full bg-[#02F199]"></div>
+              {/* Card background image */}
+              <div 
+                className="absolute inset-0 z-0" 
+                style={{
+                  backgroundImage: `url(${card.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: '50% 50%',
+                }}
+              />
               
-              <div className="p-4 h-[calc(100%-4px)] flex flex-col">
-                {/* Icon at top */}
-                <div className="text-[#02F199]">
-                  {c.icon}
+              {/* Center content with flex column */}
+              <div className="absolute inset-0 z-10 flex flex-col items-center">
+                {/* Transparent image - bigger and centered */}
+                <div className="flex-grow flex items-center justify-center py-8 px-4 mt-4">
+                  <Image 
+                    src="/static/media/card1transparent.png"
+                    alt="Card decoration"
+                    width={200}
+                    height={200}
+                    className="w-auto h-auto max-w-[90%] max-h-[90%]"
+                    priority
+                  />
                 </div>
                 
-                {/* Text at bottom with auto margin pushing it down */}
-                <div className="mt-16  ">
-                  <h3 className="text-base text-xl font-bold text-white mb-1">{c.title}</h3>
-                  <p className="text-gray-300 text-s">{c.description}</p>
+                {/* Card content at the bottom */}
+                <div className="w-full p-6 bg-gradient-to-t from-black/80 via-black/60 to-transparent">
+                  <h3 className="text-white text-xl font-bold mb-3 text-center">
+                    {card.title}
+                  </h3>
+                  
+                  <p className="text-gray-200 text-sm text-center mx-auto max-w-[90%]">
+                    {card.description}
+                  </p>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
+      
+      <style jsx>{`
+        .gradient-text {
+          background: linear-gradient(90deg, #02F199 0%, #01E8F7 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        
+        .card {
+          box-shadow: -5px -5px 5px -5px var(--color1), 
+                      5px 5px 5px -5px var(--color2), 
+                      -7px -7px 10px -5px transparent, 
+                      7px 7px 10px -5px transparent, 
+                      0 0 5px 0px rgba(255, 255, 255, 0), 
+                      0 55px 35px -20px rgba(0, 0, 0, 0.5);
+          transition: transform 0.5s ease, box-shadow 0.2s ease;
+          will-change: transform, filter;
+          transform-origin: center;
+        }
+        
+        .card:hover {
+          box-shadow: -20px -20px 30px -25px var(--color1), 
+                      20px 20px 30px -25px var(--color2), 
+                      -7px -7px 10px -5px var(--color1), 
+                      7px 7px 10px -5px var(--color2), 
+                      0 0 13px 4px rgba(255, 255, 255, 0.3), 
+                      0 55px 35px -20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card:before,
+        .card:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          background-repeat: no-repeat;
+          opacity: 0.5;
+          mix-blend-mode: color-dodge;
+          transition: all 0.33s ease;
+        }
+        
+        .card:before {
+          background-position: 50% 50%;
+          background-size: 300% 300%;
+          background-image: linear-gradient(
+            115deg,
+            transparent 0%,
+            var(--color1) 25%,
+            transparent 47%,
+            transparent 53%,
+            var(--color2) 75%,
+            transparent 100%
+          );
+          opacity: 0.5;
+          filter: brightness(0.7) contrast(1);
+          z-index: 1;
+        }
+        
+        .card:after {
+          opacity: 1;
+          background-image: url("https://assets.codepen.io/13471/sparkles.gif"),
+                          url("https://assets.codepen.io/13471/holo.png"),
+                          linear-gradient(
+                            125deg,
+                            #ff008450 15%,
+                            #fca40040 30%,
+                            #ffff0030 40%,
+                            #00ff8a20 60%,
+                            #00cfff40 70%,
+                            #cc4cfa50 85%
+                          );
+          background-position: 50% 50%;
+          background-size: 160%;
+          background-blend-mode: overlay;
+          z-index: 2;
+          filter: brightness(1) contrast(1);
+          transition: all 0.33s ease;
+          mix-blend-mode: color-dodge;
+          opacity: 0.75;
+        }
+        
+        .card.active:after,
+        .card:hover:after {
+          filter: brightness(1) contrast(1);
+          opacity: 1;
+        }
+        
+        .card.active,
+        .card:hover {
+          animation: none;
+          transition: box-shadow 0.1s ease-out;
+        }
+        
+        .card.active:before,
+        .card:hover:before {
+          animation: none;
+          background-image: linear-gradient(
+            110deg,
+            transparent 25%,
+            var(--color1) 48%,
+            var(--color2) 52%,
+            transparent 75%
+          );
+          background-position: 50% 50%;
+          background-size: 250% 250%;
+          opacity: 0.88;
+          filter: brightness(0.66) contrast(1.33);
+          transition: none;
+        }
+        
+        .card.active:before,
+        .card:hover:before,
+        .card.active:after,
+        .card:hover:after {
+          animation: none;
+          transition: none;
+        }
+        
+        .card.animated {
+          transition: none;
+          animation: holoCard 12s ease 0s 1;
+        }
+        
+        .card.animated:before {
+          transition: none;
+          animation: holoGradient 12s ease 0s 1;
+        }
+        
+        .card.animated:after {
+          transition: none;
+          animation: holoSparkle 12s ease 0s 1;
+        }
+        
+        @keyframes holoSparkle {
+          0%, 100% {
+            opacity: 0.75;
+            background-position: 50% 50%;
+            filter: brightness(1.2) contrast(1.25);
+          }
+          5%, 8% {
+            opacity: 1;
+            background-position: 40% 40%;
+            filter: brightness(0.8) contrast(1.2);
+          }
+          13%, 16% {
+            opacity: 0.5;
+            background-position: 50% 50%;
+            filter: brightness(1.2) contrast(0.8);
+          }
+          35%, 38% {
+            opacity: 1;
+            background-position: 60% 60%;
+            filter: brightness(1) contrast(1);
+          }
+          55% {
+            opacity: 0.33;
+            background-position: 45% 45%;
+            filter: brightness(1.2) contrast(1.25);
+          }
+        }
+        
+        @keyframes holoGradient {
+          0%, 100% {
+            opacity: 0.5;
+            background-position: 50% 50%;
+            filter: brightness(0.5) contrast(1);
+          }
+          5%, 9% {
+            background-position: 100% 100%;
+            opacity: 1;
+            filter: brightness(0.75) contrast(1.25);
+          }
+          13%, 17% {
+            background-position: 0% 0%;
+            opacity: 0.88;
+          }
+          35%, 39% {
+            background-position: 100% 100%;
+            opacity: 1;
+            filter: brightness(0.5) contrast(1);
+          }
+          55% {
+            background-position: 0% 0%;
+            opacity: 1;
+            filter: brightness(0.75) contrast(1.25);
+          }
+        }
+        
+        @keyframes holoCard {
+          0%, 100% {
+            transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+          }
+          5%, 8% {
+            transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+          }
+          13%, 16% {
+            transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+          }
+          35%, 38% {
+            transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+          }
+          55% {
+            transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+          }
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default FeatureCards;
+

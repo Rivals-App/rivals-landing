@@ -68,5 +68,23 @@ html {
   box-shadow: 0 10px 25px rgba(2, 241, 153, 0.15);
 }
 
+/* Add to global.css or in a style tag */
+.scroll-hero-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20vh; /* Add space after the scroll hero */
+}
+
+section {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Create clear visual separation between sections */
+section + section {
+  margin-top: 2rem;
+}
+
 
 

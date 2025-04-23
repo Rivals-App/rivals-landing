@@ -28,102 +28,59 @@ const getImageWithFallback = (src: string) => {
 
 const GameCarousel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
-
+  const marqueeRef = useRef<HTMLDivElement>(null)
+  
+  // Create duplicated array for seamless looping
+  const duplicatedGames = [...GAMES, ...GAMES, ...GAMES]
+  
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || !marqueeRef.current) return
     
-    const setupCarousel = () => {
-      if (!trackRef.current) return
-
-      // Get all carousel items
-      const boxes = gsap.utils.toArray<HTMLElement>('.carousel-box')
-      if (boxes.length === 0) return
-
-      // Set initial positions
-      const spacing = 260 // box width + gap
-      const totalWidth = spacing * boxes.length
-      const startX = window.innerWidth * 0.1
-      
-      // Position boxes with even spacing
-      boxes.forEach((box, i) => {
-        const x = startX + (i * spacing) % totalWidth
-        gsap.set(box, {
-          x,
-          opacity: 0.8,
-          scale: 0.9,
-          zIndex: 1
-        })
-      })
-
-      // Create a MUCH slower timeline
-      const tl = gsap.timeline({
-        repeat: -1,
-        paused: false
-      })
-
-      // Animate each box individually
-      boxes.forEach((box) => {
-        tl.to(box, {
-          duration: 40, // Much slower animation (was 20)
-          ease: "none",
-          x: `-=${totalWidth}`, // Move the full width
-          onUpdate: function() {
-            // When a box goes off left edge, wrap to the right
-            const boxRect = box.getBoundingClientRect()
-            if (boxRect.right < 0) {
-              const currentX = gsap.getProperty(box, "x") as number
-              gsap.set(box, { x: currentX + totalWidth })
-            }
-          }
-        }, 0) // Start all animations at the same time
-      })
-
-      // Parallax effect based on scroll (even slower now)
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        onUpdate: (self) => {
-          // Slower speed overall with minimal difference on scroll direction
-          const speed = self.direction === 1 ? 0.8 : 0.5
-          tl.timeScale(speed)
-        }
-      })
-
-      // Hover effects
-      boxes.forEach((box) => {
-        box.addEventListener('mouseenter', () => {
-          gsap.to(box, {
-            scale: 1.1,
-            opacity: 1,
-            duration: 0.3,
-            zIndex: 10
-          })
-        })
-        
-        box.addEventListener('mouseleave', () => {
-          gsap.to(box, {
-            scale: 0.9,
-            opacity: 0.8,
-            duration: 0.3,
-            zIndex: 1
-          })
-        })
-      })
-
-      return () => {
-        tl.kill()
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    const cardWidth = 300 // Same as carousel-box width
+    const cardGap = 40 // Gap between cards
+    const totalWidth = GAMES.length * (cardWidth + cardGap)
+    
+    // Set initial position
+    gsap.set(marqueeRef.current, { x: 0 })
+    
+    // Create the infinite marquee animation
+    const marqueeAnimation = gsap.to(marqueeRef.current, {
+      x: -totalWidth,
+      duration: 40, // Slower animation for smoother movement
+      ease: "none", // Linear movement
+      repeat: -1, // Infinite repeat
+      onRepeat: () => {
+        // Reset position to create seamless loop
+        gsap.set(marqueeRef.current, { x: 0 })
+      },
+    })
+    
+    // Set up ScrollTrigger to control speed based on scroll
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate: (self) => {
+        // Adjust speed based on scroll direction
+        const speed = self.direction === 1 ? 1.2 : 0.7
+        marqueeAnimation.timeScale(speed)
       }
-    }
-
-    const timeoutId = setTimeout(() => {
-      setupCarousel()
-    }, 200)
-
+    })
+    
+    // Pause animation on hover (optional)
+    const handleMouseEnter = () => marqueeAnimation.pause()
+    const handleMouseLeave = () => marqueeAnimation.play()
+    
+    marqueeRef.current.addEventListener("mouseenter", handleMouseEnter)
+    marqueeRef.current.addEventListener("mouseleave", handleMouseLeave)
+    
+    // Cleanup
     return () => {
-      clearTimeout(timeoutId)
+      if (marqueeRef.current) {
+        marqueeRef.current.removeEventListener("mouseenter", handleMouseEnter)
+        marqueeRef.current.removeEventListener("mouseleave", handleMouseLeave)
+      }
+      marqueeAnimation.kill()
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
   }, [])
@@ -133,25 +90,26 @@ const GameCarousel: React.FC = () => {
       <div className="carousel-inner">
         <h2 className="carousel-title">PLAY YOUR FAVOURITE GAMES</h2>
         
-        <div ref={trackRef} className="carousel-track">
-          {/* Use the GAMES array to display different images */}
-          {GAMES.map((game, i) => (
-            <div key={i} className="carousel-box">
-              <div className="image-container">
-                <Image 
-                  src={getImageWithFallback(game.src)}
-                  alt={`${game.title} Game`}
-                  fill
-                  sizes="(max-width: 768px) 220px, 300px"
-                  className="carousel-image"
-                  style={{ objectFit: 'cover', objectPosition: 'center' }}
-                />
+        <div className="carousel-overflow">
+          <div ref={marqueeRef} className="carousel-track">
+            {duplicatedGames.map((game, i) => (
+              <div key={`${game.title}-${i}`} className="carousel-box">
+                <div className="image-container">
+                  <Image 
+                    src={getImageWithFallback(game.src)}
+                    alt={`${game.title} Game`}
+                    fill
+                    sizes="(max-width: 768px) 220px, 300px"
+                    className="carousel-image"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                </div>
+                <div className="carousel-overlay">
+                  <span className="carousel-label">{game.title}</span>
+                </div>
               </div>
-              <div className="carousel-overlay">
-                <span className="carousel-label">{game.title}</span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
       
@@ -181,26 +139,33 @@ const GameCarousel: React.FC = () => {
           }
         }
         
-        .carousel-track {
-          position: relative;
+        .carousel-overflow {
+          overflow: hidden;
           width: 100%;
-          height: 350px; /* Increased height for larger cards */
+        }
+        
+        .carousel-track {
           display: flex;
-          align-items: center;
-          overflow: visible;
+          gap: 40px; /* Consistent gap between items */
+          padding: 2rem 0;
         }
         
         .carousel-box {
-          position: absolute;
-          width: 300px; /* Increased width */
-          height: 300px; /* Increased height */
+          width: 300px; /* Fixed width */
+          height: 300px; /* Fixed height */
           border-radius: 12px;
           overflow: hidden;
           cursor: pointer;
           transition: transform 0.3s, opacity 0.3s;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-          will-change: transform, opacity;
+          will-change: transform;
+          flex-shrink: 0; /* Prevent shrinking */
           background-color: #181818; /* Background color for images with transparent areas */
+        }
+        
+        .carousel-box:hover {
+          transform: scale(1.05);
+          z-index: 10;
         }
 
         .image-container {
@@ -209,14 +174,12 @@ const GameCarousel: React.FC = () => {
           height: 100%;
         }
         
-        /* We're not setting object-fit in CSS anymore, it's in the style prop */
-        
         .carousel-overlay {
           position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
-          padding: 1.5rem; /* Increased padding */
+          padding: 1.5rem;
           background: linear-gradient(transparent, rgba(0,0,0,0.8));
           display: flex;
           align-items: flex-end;
@@ -227,7 +190,7 @@ const GameCarousel: React.FC = () => {
         .carousel-label {
           color: white;
           font-weight: bold;
-          font-size: 1.5rem; /* Larger text */
+          font-size: 1.5rem;
         }
       `}</style>
     </div>
