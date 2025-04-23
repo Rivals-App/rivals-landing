@@ -138,7 +138,7 @@ const TournamentSection: React.FC = () => {
           </div>
           
           <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#02F199]/20 to-[#01E8F7]/20 rounded-lg opacity-30 blur-xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#02F199]/30 to-[#01E8F7]/30 opacity-50 blur-xl"></div>
             <Image
               src="/static/media/Tournaments.png"
               alt="Compete in Rivals Tournaments"

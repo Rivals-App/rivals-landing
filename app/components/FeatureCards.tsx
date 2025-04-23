@@ -22,7 +22,7 @@ const featureCards: FeatureCard[] = [
     description: "Our advanced algorithm pairs you with players of similar skill level for fair and competitive matches every time.",
     color1: "#7dd4b0",
     color2: "#acd6f8",
-    image: "/static/media/SkillBased.png",
+    image: "/static/media/card1transparent.png",
     buttonText: "Learn More",
     buttonColor: "#7dd4b0"
   },
@@ -32,7 +32,7 @@ const featureCards: FeatureCard[] = [
     description: "State-of-the-art security ensures your data and transactions are protected at all times.",
     color1: "#e4ee55",
     color2: "#e4a42d",
-    image: "/static/media/SecurePlatform.png",
+    image: "/static/media/card2transparent.png",
     buttonText: "Explore",
     buttonColor: "#e4a42d"
   },
@@ -42,7 +42,7 @@ const featureCards: FeatureCard[] = [
     description: "Earn actual prizes, not just virtual points. Win tournaments to claim cash, merchandise, and more.",
     color1: "#c93939",
     color2: "#dd81e6",
-    image: "/static/media/Rewards.png",
+    image: "/static/media/card3transparent.png",
     buttonText: "View Rewards",
     buttonColor: "#c93939"
   }
@@ -186,8 +186,9 @@ const FeatureCards: React.FC = () => {
                 className="absolute inset-0 z-0" 
                 style={{
                   backgroundImage: `url(${card.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: '50% 50%',
+                  backgroundSize: card.id === 'rewards' ? '60% auto' : 'cover',  // Make the rewards image smaller
+                  backgroundPosition: card.id === 'rewards' ? 'center 40%' : '50% 50%',
+                  backgroundRepeat: 'no-repeat',
                 }}
               />
               
@@ -195,14 +196,10 @@ const FeatureCards: React.FC = () => {
               <div className="absolute inset-0 z-10 flex flex-col items-center">
                 {/* Transparent image - bigger and centered */}
                 <div className="flex-grow flex items-center justify-center py-8 px-4 mt-4">
-                  <Image 
-                    src="/static/media/card1transparent.png"
-                    alt="Card decoration"
-                    width={200}
-                    height={200}
-                    className="w-auto h-auto max-w-[90%] max-h-[90%]"
-                    priority
-                  />
+                  {/* You can add additional scaling for the specific card if needed */}
+                  {card.id === 'rewards' && (
+                    <div className="transform scale-90"></div>
+                  )}
                 </div>
                 
                 {/* Card content at the bottom */}
