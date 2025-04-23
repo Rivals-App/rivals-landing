@@ -215,20 +215,27 @@ const LegalPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
-      <Head>
-        <title>{currentDoc.title} | Rivals Legal</title>
-        <meta
-          name="description"
-          content={`Rivals ${currentDoc.title} - Effective date: ${currentDoc.effectiveDate}`}
-        />
-        <link
-          rel="canonical"
-          href={`https://getrivals.com/legal/${activeDocument}`}
-        />
-      </Head>
+    <div className="min-h-screen flex flex-col text-white relative">
+      {/* Grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: "linear-gradient(-20deg, transparent 50%, black)",
+          zIndex: 0,
+        }}
+      ></div>
 
-      <div className="w-full min-h-screen flex flex-col bg-transparent">
+      <div className="w-full min-h-screen flex flex-col bg-transparent relative z-10">
         <Navbar />
 
         {/* Header Section */}

@@ -12,11 +12,10 @@
 }
 
 body {
-  color: var(--foreground);
-  background-color: #000000 !important;
+  color: white;
+  background-color: black;
   scrollbar-color: oklch(75% var(--chroma) var(--hue)) transparent;
   font-family: 'Inter', Arial, sans-serif;
-  
 }
 
 /* Add these styles for the scroll behavior */
@@ -84,6 +83,31 @@ section {
 /* Create clear visual separation between sections */
 section + section {
   margin-top: 2rem;
+}
+
+/* Add this to your existing CSS */
+.grid-background {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.1) 1px,
+        transparent 1px 45px
+      )
+      50% 50% / 45px 45px,
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+      50% 50% / 45px 45px;
+  mask: linear-gradient(-20deg, transparent 50%, black);
+  top: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content stays above the grid */
+#__next, .app-container {
+  position: relative;
+  z-index: 1;
 }
 
 

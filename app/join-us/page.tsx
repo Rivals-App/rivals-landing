@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
-import MaskedBackground from "../components/PerlinNoise";
 import RegistrationScreen from "../components/onboarding/RegistrationScreen";
 import BirthdayScreen from "../components/onboarding/BirthdayScreen";
 import ConfirmationScreen from "../components/onboarding/ConfirmationScreen";
@@ -206,19 +205,30 @@ const JoinUsPage: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col text-white relative">
+      {/* Grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: '100vh',
+          width: '100vw',
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: 'linear-gradient(-20deg, transparent 50%, black)',
+          zIndex: 0
+        }}
+      ></div>
+
       {/* Navbar */}
       <Navbar goToHomeSection={goToHomeSection} currentStep={currentStep} />
 
-      {/* MaskedBackground */}
-      <MaskedBackground 
-        logoPath="/static/svgs/logo.svg" 
-        primaryColor={[2, 241, 153]} 
-        backgroundColor="#0A1928"
-        logoSize="40%" 
-      />
-
-      <div className="w-full h-full flex flex-col items-center relative">
+      <div className="w-full min-h-screen flex flex-col items-center bg-transparent relative z-10 pt-16">
         {/* Loading Overlay */}
         {isLoading && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

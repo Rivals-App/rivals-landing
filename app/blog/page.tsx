@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRouter } from "next/navigation"; // Add this import
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import blogPosts from "./data/blog.data";
 import Footer from "../components/Footer";
@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
 }
 
 export default function BlogPage() {
-  const router = useRouter(); // Add router
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const blogContainerRef = useRef<HTMLDivElement>(null);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
@@ -64,10 +64,29 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
+    <div className="min-h-screen flex flex-col text-white relative">
+      {/* Grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: '100vh',
+          width: '100vw',
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: 'linear-gradient(-20deg, transparent 50%, black)',
+          zIndex: 0
+        }}
+      ></div>
+
       {/* Main content */}
       <div
-        className="w-full min-h-screen flex flex-col bg-transparent"
+        className="w-full min-h-screen flex flex-col bg-transparent relative z-10"
         ref={containerRef}
       >
         <Navbar />
@@ -82,7 +101,7 @@ export default function BlogPage() {
         </div>
 
         {/* Blog posts listing */}
-        <div className="w-full pb-16 px-14" ref={blogContainerRef}>
+        <div className="w-full pb-16 px-4 md:px-14" ref={blogContainerRef}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {blogPosts.map((post) => (
               <div
