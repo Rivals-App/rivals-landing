@@ -134,10 +134,29 @@ const AboutSection: React.FC<AboutSectionProps> = ({
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
+    <div className="min-h-screen flex flex-col text-white relative">
+      {/* Grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: '100vh',
+          width: '100vw',
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: 'linear-gradient(-20deg, transparent 50%, black)',
+          zIndex: 0
+        }}
+      ></div>
+
       {/* Main content */}
       <div
-        className="w-full min-h-screen flex flex-col bg-transparent"
+        className="w-full min-h-screen flex flex-col bg-transparent relative z-10"
         ref={containerRef}
       >
         <Navbar

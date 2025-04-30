@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -136,6 +136,8 @@ const legalDocuments = {
 const LegalPage = () => {
   // Default to terms if no slug is provided
   const [activeDocument, setActiveDocument] = useState("terms");
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const contentRef = useRef(null);
 
   // Extract the slug from the URL path on client-side
   useEffect(() => {
@@ -179,25 +181,53 @@ const LegalPage = () => {
     { id: "companies", label: "Rivals Companies", path: "/legal/companies" },
   ];
 
-  // Animation setup
+  // Animation setup - ONLY RUN ONCE when component mounts
   useEffect(() => {
+    if (animationComplete) return;
+
     const ctx = gsap.context(() => {
-      gsap.from(".legal-hero", { opacity: 0, y: 50, duration: 1 });
-      gsap.from(".legal-sidebar", {
-        opacity: 0,
-        x: -30,
-        duration: 0.8,
-        delay: 0.3,
+      // Create a timeline for better control
+      const tl = gsap.timeline({
+        onComplete: () => setAnimationComplete(true), // Mark animations as complete
       });
-      gsap.from(".legal-content", {
-        opacity: 0,
-        x: 30,
-        duration: 0.8,
-        delay: 0.3,
-      });
+
+      tl.from(".legal-hero", { opacity: 0, y: 50, duration: 1 })
+        .from(
+          ".legal-sidebar",
+          {
+            opacity: 0,
+            x: -30,
+            duration: 0.8,
+          },
+          "-=0.5"
+        )
+        .from(
+          ".legal-content",
+          {
+            opacity: 0,
+            x: 30,
+            duration: 0.8,
+          },
+          "-=0.6"
+        );
     });
+
     return () => ctx.revert();
-  }, [activeDocument]);
+  }, []); // Empty dependency array ensures this only runs once
+
+  // When document changes, smoothly fade in the new content
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    // Only run content transition if initial animations are complete
+    if (animationComplete) {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: "power1.out" }
+      );
+    }
+  }, [activeDocument, animationComplete]);
 
   // Get the current document data
   const currentDoc =
@@ -215,20 +245,27 @@ const LegalPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
-      <Head>
-        <title>{currentDoc.title} | Rivals Legal</title>
-        <meta
-          name="description"
-          content={`Rivals ${currentDoc.title} - Effective date: ${currentDoc.effectiveDate}`}
-        />
-        <link
-          rel="canonical"
-          href={`https://getrivals.com/legal/${activeDocument}`}
-        />
-      </Head>
+    <div className="min-h-screen flex flex-col text-white relative">
+      {/* Grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: "linear-gradient(-20deg, transparent 50%, black)",
+          zIndex: 0,
+        }}
+      ></div>
 
-      <div className="w-full min-h-screen flex flex-col bg-transparent">
+      <div className="w-full min-h-screen flex flex-col bg-transparent relative z-10">
         <Navbar />
 
         {/* Header Section */}
@@ -288,9 +325,12 @@ const LegalPage = () => {
               </div>
             </div>
 
-            {/* Content Panel */}
+            {/* Content Panel with subtle transition effect */}
             <div className="legal-content flex-grow">
-              <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl p-6 md:p-8">
+              <div 
+                ref={contentRef}
+                className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl p-6 md:p-8"
+              >
                 {currentDoc ? (
                   <article>
                     <h2 className="text-3xl font-bold text-white mb-2">

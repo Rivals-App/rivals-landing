@@ -48,7 +48,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#0a192f]/90 backdrop-blur-lg border-t border-t-[#02F199]/20 text-white py-12 rounded-t-3xl">
+    <footer className="bg-[#1D1D1D]/90 backdrop-blur-lg border-t border-t-[#02F199]/20 text-white py-12 rounded-t-3xl">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Top Row: Logo and Links */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -56,6 +56,7 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <div className="flex items-center">
               <Image
+                draggable={false}
                 src="/static/media/Logo2.png"
                 alt="RIVALS Logo"
                 width={48}
@@ -223,7 +224,7 @@ const Footer = () => {
               Sign up to be among the first to experience competitive gaming
               redefined.
             </p>
-            <JoinWaitlistButton />
+            <JoinWaitlistButton className="w-fit" />
           </div>
         </div>
 

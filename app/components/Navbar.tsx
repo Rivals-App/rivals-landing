@@ -118,16 +118,15 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             <div className="flex-shrink-0">
               <button
                 onClick={handleLogoClick}
-                className="flex items-center cursor-pointer focus:outline-none"
+                className="flex items-center p-2 ml-4 cursor-pointer focus:outline-none"
               >
                 <div className="relative">
                   <Image
                     src="/static/media/Logo1.png"
                     alt="RIVALS Logo"
-                    width={40}
-                    height={40}
-                    className="w-auto ml-4"
-                    priority={true} // Load image with priority
+                    width={50}
+                    height={50}
+                    draggable={false}
                   />
                 </div>
               </button>
@@ -137,7 +136,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             <div className="hidden md:flex items-center space-x-6 pr-4">
               <button
                 onClick={(e) => handleNavigation("home", e)}
-                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
+                className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -146,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("about", e)}
-                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
+                className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/about-rivals"
                     ? "text-[#02F199]"
                     : "text-gray-300"
@@ -157,7 +156,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("blog", e)}
-                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
+                className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/blog" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -166,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("arcade", e)}
-                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
+                className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/arcade" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -175,7 +174,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("legal", e)}
-                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
+                className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
@@ -184,7 +183,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
               <button
                 onClick={(e) => handleNavigation("contact-us", e)}
-                className={`text-md font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
+                className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/contact-us"
                     ? "text-[#02F199]"
                     : "text-gray-300"
@@ -196,7 +195,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               <Link
                 href="https://getrivals.com"
                 target="_blank"
-                className={`text-md font-medium hover:text-[#02F199] ${
+                className={`text-lg font-medium hover:text-[#02F199] ${
                   pathname === "https://getrivals.com"
                     ? "text-[#02F199]"
                     : "text-gray-300"

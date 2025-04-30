@@ -83,6 +83,18 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
   return (
     <div className="h-full w-full px-4 md:px-12 flex flex-col items-center justify-center">
       <div className="max-w-md w-full mx-auto relative" ref={containerRef}>
+        {/* Logo */}
+        <div className="flex justify-center mb-8">
+          <Image
+            draggable={false}
+            width={80}
+            height={80}
+            src="/static/svgs/Asset-2.svg"
+            alt="logo"
+            className="form-logo"
+          />
+        </div>
+
         <h2 className="conf-title text-3xl font-bold mb-6 text-center">
           You're All Set!
         </h2>

@@ -3,19 +3,112 @@
 @tailwind utilities;
 
 :root {
-  --background: #0F2841;
+  --background: #1a1a1a;
   --foreground: #ededed;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0F2841;
-    --foreground: #ededed;
-  }
+  --accent: #02F199;
+  --card-bg: #1a1a1a;
+  --lightness: 75%;
+  --base-chroma: 0.3;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: black;
+  scrollbar-color: oklch(75% var(--chroma) var(--hue)) transparent;
+  font-family: 'Inter', Arial, sans-serif;
 }
+
+/* Add these styles for the scroll behavior */
+
+@property --hue {
+  initial-value: 0;
+  syntax: '<number>';
+  inherits: false;
+}
+
+@property --chroma {
+  initial-value: 0;
+  syntax: '<number>';
+  inherits: true;
+}
+
+/* Enable smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enable scroll snapping */
+.words-list {
+  scroll-snap-type: y proximity;
+}
+
+.words-list li {
+  scroll-snap-align: center;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--accent), #00AFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Clean slate for cards - removing all previous effects */
+.feature-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(2, 241, 153, 0.15);
+}
+
+/* Add to global.css or in a style tag */
+.scroll-hero-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20vh; /* Add space after the scroll hero */
+}
+
+section {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Create clear visual separation between sections */
+section + section {
+  margin-top: 2rem;
+}
+
+/* Add this to your existing CSS */
+.grid-background {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.1) 1px,
+        transparent 1px 45px
+      )
+      50% 50% / 45px 45px,
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+      50% 50% / 45px 45px;
+  mask: linear-gradient(-20deg, transparent 50%, black);
+  top: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content stays above the grid */
+#__next, .app-container {
+  position: relative;
+  z-index: 1;
+}
+
+
+

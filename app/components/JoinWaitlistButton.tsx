@@ -5,7 +5,9 @@ interface JoinWaitlistButtonProps {
   className?: string;
 }
 
-const JoinWaitlistButton: React.FC<JoinWaitlistButtonProps> = ({ className }) => {
+const JoinWaitlistButton: React.FC<JoinWaitlistButtonProps> = ({
+  className,
+}) => {
   const router = useRouter();
 
   const handleClick = (e: React.MouseEvent) => {

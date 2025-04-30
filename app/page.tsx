@@ -1,381 +1,199 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
-import PerlinNoiseSketch from "./components/PerlinNoise";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TextPlugin } from "gsap/TextPlugin";
-import Footer from "./components/Footer";
-import Image from "next/image";
-import AnimatedTextCycle from "./components/AnimatedTextCycle";
-import JoinWaitlistButton from "./components/JoinWaitlistButton";
 import FeatureCards from "./components/FeatureCards";
-import {
-  FaCoins,
-  FaGamepad,
-  FaFileAlt,
-  FaUserCheck,
-  FaMedal,
-} from "react-icons/fa";
-import {
-  setupHeroAnimations,
-  setupFeatureHeaderAnimation,
-  setupFeatureCardsAnimations,
-  setupTournamentsAnimations,
-} from "./utils/gsapAnimations";
+import Footer from "./components/Footer";
+import ScrollHero from "./components/ScrollHero";
+import GameCarousel from "./components/GameCarousel";
+import TournamentSection from "./components/TournamentSection";
+import Image from "next/image";
+import JoinWaitlistButton from "./components/JoinWaitlistButton";
 
-// Register GSAP ScrollTrigger and TextPlugin on client side
+// Register ScrollTrigger plugin safely
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, TextPlugin);
+  gsap.registerPlugin(ScrollTrigger);
 }
-
-// Utility function to shuffle an array and prevent consecutive duplicates
-const shuffleArray = <T,>(array: T[]): T[] => {
-  return array
-    .map((value: T) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-};
 
 const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const heroTitleRef = useRef<HTMLHeadingElement>(null);
-  const heroSubtitleRef = useRef<HTMLHeadingElement>(null);
-  const featureSectionRef = useRef<HTMLDivElement>(null);
-  const tournamentsSectionRef = useRef<HTMLDivElement>(null);
-  const featureTitleRef = useRef<HTMLDivElement>(null);
-  const [isMobileView, setIsMobileView] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const [pageLoaded, setPageLoaded] = useState(false);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isHeroImageLoaded, setIsHeroImageLoaded] = useState(false);
 
-  // Wrap array definitions in useMemo to prevent re-creation on each render
-  const popularGames = useMemo(
-    () => [
-      "DOTA 2",
-      "FC25",
-      "Valorant",
-      "Chess",
-      "Connect 4",
-      "Formula 1",
-      "Fortnite",
-    ],
-    []
-  );
-
-  const words = useMemo(
-    () => ["FRIENDS", "RIVALS", "STRANGERS", "PROS", "TEAMMATES", "ANYONE"],
-    []
-  );
-
-  // Shuffle the arrays once on component mount
-  const shuffledWords = useMemo(() => shuffleArray(words), [words]);
-  const shuffledPopularGames = useMemo(
-    () => shuffleArray(popularGames),
-    [popularGames]
-  );
-
-  const featureCardsData = [
-    {
-      id: "1",
-      icon: FaCoins,
-      title: "Win Real Money.",
-      description:
-        "Join 1v1 matches or tournaments. Stake your entry, compete with rivals, and instantly cash out your winnings. No delays, no disputes.",
-      image: "/static/media/Card1.png",
-      isMain: true,
-    },
-    {
-      id: "2",
-      icon: FaUserCheck,
-      title: "Every Match, Verified Instantly.",
-      description:
-        "Our API-driven system locks in scores from your match the moment it ends. No screenshots, no arguments — just trusted, automated validation.",
-      image: "/static/media/Card2.png",
-      isMain: false,
-    },
-    {
-      id: "3",
-      icon: FaGamepad,
-      title: "Compete in Games You Actually Play.",
-      description:
-        "From arcade-style quick matches to Dota 2 leagues, Rivals gives you the tools to game your way. Solo, with friends, or in full squads. It's your battlefield.",
-      image: "/static/media/Card3.png",
-      isMain: false,
-    },
-    {
-      id: "4",
-      icon: FaFileAlt,
-      title: "Custom Challenges. Your Rules.",
-      description:
-        "Create personalised matchups with custom stakes, formats, and win conditions. Set the terms. Send the invites. Let the games begin.",
-      image: "/static/media/Card4.png",
-      isMain: false,
-    },
-    {
-      id: "5",
-      icon: FaMedal,
-      title: "XP-Based Ranking That Actually Matters.",
-      description:
-        "Earn XP and level up with every match. Our dynamic ladder puts your wins to work — unlocking events, opponents, and real-world rewards.",
-      image: "/static/media/Card5.png",
-      isMain: false,
-    },
-  ];
-
-  // Check if we're in the client-side environment and set initial states
+  // Set page as loaded after initial render with a slightly longer delay
   useEffect(() => {
-    setIsClient(true);
-
-    // Short delay to ensure DOM is fully ready before revealing content
+    // Use a longer timeout to ensure DOM is fully ready
     const timer = setTimeout(() => {
-      setPageLoaded(true);
-    }, 100);
+      setIsLoaded(true);
+    }, 300); // Increased from 100ms to 300ms
 
     return () => clearTimeout(timer);
   }, []);
 
-  // Check if the screen is mobile size
+  // Initialize animations after page is loaded
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobileView(window.innerWidth < 768);
-    };
+    if (
+      !isLoaded ||
+      !containerRef.current ||
+      typeof window === "undefined" ||
+      !isHeroImageLoaded
+    )
+      return;
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    // Create a timeline for better control and cleanup
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "power3.out",
+        force3D: true, // Enable hardware acceleration for all animations
+      },
+    });
 
+    // Create a context to keep animations scoped to component
+    const ctx = gsap.context(() => {
+      // Add animations to the timeline instead of creating separate tweens
+      tl.from(".hero-heading", {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+      })
+        .from(
+          ".hero-subheading",
+          {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+          },
+          "-=0.7"
+        ) // Overlap with previous animation
+        .from(
+          ".hero-cta",
+          {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+          },
+          "-=0.7"
+        )
+        .from(
+          ".hero-image-container",
+          {
+            opacity: 0,
+            scale: 0.95,
+            duration: 1.2,
+          },
+          "-=0.9"
+        );
+    }, containerRef);
+
+    // Cleanup function
     return () => {
-      window.removeEventListener("resize", checkMobile);
+      // Kill timeline and clear context
+      tl.kill();
+      ctx.revert();
+
+      // Only kill ScrollTrigger instances that belong to this component
+      // This prevents issues with child components that may have their own ScrollTrigger instances
+      ScrollTrigger.getAll().forEach((trigger) => {
+        // Check if the trigger is related to elements in this component
+        if (
+          containerRef.current &&
+          containerRef.current.contains(trigger.trigger as Node)
+        ) {
+          trigger.kill();
+        }
+      });
     };
-  }, []);
-
-  // Synchronize word cycling
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex(
-        (prevIndex) => (prevIndex + 1) % shuffledWords.length
-      );
-    }, 1000); // Adjust interval as needed
-
-    return () => clearInterval(interval);
-  }, [shuffledWords.length]);
-
-  // Main animations setup - only run after page is loaded
-  useEffect(() => {
-    if (typeof window === "undefined" || !pageLoaded) return;
-
-    // Clear any existing ScrollTriggers
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-
-    // Setup animations
-    const heroTimeline = setupHeroAnimations();
-
-    // Setup feature title animation separately
-    setupFeatureHeaderAnimation(featureTitleRef);
-
-    // Feature cards animation - now separate from the header
-    const featureCardsTimeline = setupFeatureCardsAnimations(featureSectionRef);
-
-    // Tournaments animations
-    setupTournamentsAnimations(tournamentsSectionRef);
-
-    // Force refresh ScrollTrigger after a brief delay to ensure everything works
-    const refreshTimeout = setTimeout(() => {
-      ScrollTrigger.refresh(true);
-    }, 500);
-
-    return () => {
-      // Clean up
-      clearTimeout(refreshTimeout);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      if (heroTimeline) heroTimeline.kill();
-      if (featureCardsTimeline) featureCardsTimeline.kill();
-    };
-  }, [pageLoaded]);
-
-  // Static placeholders for pre-hydration
-  const staticTitle = (
-    <span
-      className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
-      style={{
-        background: "linear-gradient(90deg, #02F199, #00AFFF)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-      }}
-    >
-      RIVALS
-    </span>
-  );
-
-  const staticGameName = (
-    <span
-      className="inline-block font-bold text-left min-w-[100px]"
-      style={{
-        background: "linear-gradient(90deg, #00AFFF, #02F199)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-      }}
-    >
-      FC25
-    </span>
-  );
+  }, [isLoaded, isHeroImageLoaded]);
 
   return (
-    <div
-      className={`min-h-screen flex flex-col text-white transition-opacity duration-500 ${
-        pageLoaded ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {/* Background */}
-      <PerlinNoiseSketch />
-
+    <div className="min-h-screen flex flex-col text-white">
+      {/* Add grid background */}
       <div
-        ref={containerRef}
-        className="w-full h-full flex flex-col relative z-10"
-      >
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: "linear-gradient(-20deg, transparent 50%, black)",
+          zIndex: 0,
+        }}
+      ></div>
+
+      <div ref={containerRef} className="w-full flex flex-col relative z-10">
         <Navbar />
 
-        <div className="flex-grow flex flex-col items-center justify-start pt-6 md:pt-0">
-          {/* Hero Section */}
-          <div
-            ref={heroRef}
-            className="cta-section w-full flex flex-col md:flex-row items-start justify-between rounded-lg py-8 relative overflow-hidden"
-          >
-            {/* Text Content */}
-            <div className="text-content md:w-1/2 w-full text-center px-6 sm:px-12 mb-10 md:mt-12">
-              <h3
-                ref={heroTitleRef}
-                className="hero-title text-center md:text-left text-2xl md:text-3xl font-bold text-white mb-4 leading-tight"
-              >
-                WIN MONEY AGAINST <br />
-                {isClient ? (
-                  <AnimatedTextCycle
-                    words={shuffledWords} // Use shuffled words
-                    currentIndex={currentWordIndex} // Pass shared index
-                    className="text-5xl md:text-6xl inline-block min-w-[180px] mt-4 overflow-hidden"
-                    style={{
-                      background: "linear-gradient(90deg, #02F199, #00AFFF)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                    transitionDuration={0.25}
-                  />
-                ) : (
-                  staticTitle
-                )}
-              </h3>
+        {/* Hero Section with new heading */}
+        <div className="w-full px-4 md:px-8 py-12 md:py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between md:gap-20">
+              {/* Hero Text - pulled more to the left with more space */}
+              <div className="w-full md:w-3/5 lg:w-3/4 text-center md:text-left md:pr-0">
+                <h1 className="hero-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
+                  <span className="block whitespace-nowrap">
+                    TURN YOUR GAMING SKILLS
+                  </span>
+                  <span className="block">
+                    INTO <span className="text-[#02F199]">REAL REWARDS</span>
+                  </span>
+                </h1>
+                <h2 className="hero-subheading text-2xl md:text-3xl text-white mt-6 mb-8 tracking-wide">
+                  <span className="font-bold">Stake.</span>{" "}
+                  <span className="font-bold">Play.</span>{" "}
+                  <span className="font-bold text-[#02F199]">Win.</span>
+                </h2>
+                <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                  <JoinWaitlistButton className="px-8 py-3" />
+                  <a
+                    href="about-rivals"
+                    className="px-8 py-3 border border-white/30 text-white font-semibold rounded-full hover:border-[#02F199] hover:text-[#02F199] transition-all"
+                  >
+                    Learn More
+                  </a>
+                </div>
+              </div>
 
-              <h4
-                ref={heroSubtitleRef}
-                className="hero-subtitle flex flex-col md:flex-row items-center md:items-start text-center md:text-left text-xl md:text-2xl font-semibold text-gray-200 mb-6"
-              >
-                <span>on games like</span> <br className="hidden md:block" />
-                <span className="text-[#02F199] md:ml-2">
-                  {isClient ? (
-                    <AnimatedTextCycle
-                      words={shuffledPopularGames} // Use shuffled popularGames
-                      currentIndex={currentWordIndex} // Pass shared index
-                      className="inline-block font-bold text-left mx-auto"
-                      style={{
-                        background: "linear-gradient(90deg, #00AFFF, #02F199)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                      }}
-                      transitionDuration={0.25}
-                    />
-                  ) : (
-                    staticGameName
-                  )}
-                </span>
-              </h4>
-
-              <p className="hero-description text-center md:text-left text-md text-gray-300 mb-8">
-                From arcade games to esports, Rivals turns every match into a
-                market. Stake your match, beat real opponents, and get paid –
-                instantly.
-              </p>
-              <JoinWaitlistButton className="mx-auto md:mx-0 hero-button" />
-            </div>
-
-            {/* Image Content */}
-            <div className="image-content md:w-1/2 w-full mt-8 md:mt-0 justify-end relative hidden md:flex">
-              <Image
-                src="/static/media/Hero.png"
-                alt="Exciting esports action"
-                width={700}
-                height={700}
-                className="w-[100%] md:w-[70%] max-w-none object-contain hero-image"
-                priority={true}
-              />
+              {/* Hero Image - made even narrower */}
+              <div className="hero-image-container w-full md:w-2/5 lg:w-1/4 relative flex justify-center md:justify-end mt-12 md:mt-0">
+                {/* Fixed glow effect that follows the image */}
+                <div className="absolute w-[300px] h-[600px] right-0 mx-auto md:mx-0 bg-gradient-to-r from-[#02F199]/10 to-[#01E8F7]/10 rounded-lg opacity-40 blur-2xl transform scale-105"></div>
+                <Image
+                  draggable={false}
+                  src="/static/media/Iphone.png"
+                  alt="Rivals Gaming Platform"
+                  width={300}
+                  height={600}
+                  priority // Only set priority on this main hero image
+                  onLoad={() => setIsHeroImageLoaded(true)} // Track when hero image loads
+                  className="relative z-10 w-auto h-auto max-h-[600px]"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
+                />
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Feature Section Header - completely separate */}
-          <div className="w-full px-4 py-12 relative">
-            <div ref={featureTitleRef} className="text-center mb-2">
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#02F199] to-[#00AFFF] bg-clip-text text-transparent feature-title">
-                JOIN THE COMPETITIVE REVOLUTION
-              </h2>
-              <p className="text-gray-300 mt-4 text-lg md:text-xl feature-subtitle">
-                Compete in Matches and earn real rewards. RIVALS is the ultimate
-                competitive gaming platform built for true gamers.
-              </p>
-            </div>
-          </div>
-
-          {/* Feature Cards Section */}
-          <FeatureCards cards={featureCardsData} isMobileView={isMobileView} />
-
-          {/* Compete in Tournaments Section */}
-          <div
-            ref={tournamentsSectionRef}
-            className="w-full flex flex-col md:flex-row items-center justify-between rounded-lg py-12 px-12 md:px-28 sm:px-12 my-12"
-          >
-            {/* Text Content */}
-            <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-                <span className="text-[#02F199]">
-                  COMPETE & WIN IN YOUR FAVORITE GAMES
-                </span>
-              </h3>
-              <p className="text-lg text-gray-300 mb-6">
-                Take your skills to the next level with organized competitions.
-                Join daily, weekly, and seasonal tournaments and matches where
-                you can compete against top players and squads. Earn bigger
-                rewards, climb the leaderboards, and prove you&apos;re the best!
-              </p>
-              <ul className="tournament-list text-gray-300 space-y-3 mb-6">
-                <li>
-                  <strong>Single Matches</strong> – Go 1v1. Prove your skill.
-                  Win cash, XP, and bragging rights.
-                </li>
-                <li>
-                  <strong>Tournaments</strong> – Squad up or go solo in daily
-                  and weekly tournaments. Win bigger, climb leaderboards, and
-                  dominate the bracket.
-                </li>
-                <li>
-                  <strong>Leagues</strong> – Rise through divisions, unlock
-                  elite events, and earn rewards that matter. The grind pays
-                  off.
-                </li>
-              </ul>
-            </div>
-            {/* Image Content */}
-            <div className="tournament-image md:w-1/2 w-full mt-8 md:mt-0 flex justify-center md:justify-end">
-              <Image
-                src="/static/media/Tournaments.png"
-                alt="Compete in Rivals Tournaments"
-                width={800}
-                height={800}
-                className="w-[100%] md:w-[80%] max-w-none object-contain"
-                priority={true}
-              />
-            </div>
-          </div>
+        {/* Child components - these should manage their own animations */}
+        <div className="pt-[200px]">
+          <ScrollHero />
+        </div>
+        <div className="pt-8">
+          <GameCarousel />
+        </div>
+        <div className="pt-8">
+          <FeatureCards />
+        </div>
+        <div className="pt-8">
+          <TournamentSection />
         </div>
       </div>
       <Footer />

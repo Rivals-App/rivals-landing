@@ -29,7 +29,10 @@ export default function ClientBlogPostPage({
   React.useEffect(() => {
     if (!post) {
       console.error(`Post not found: ${slug}`);
-      console.log("Available posts:", blogPosts.map((p) => p.slug));
+      console.log(
+        "Available posts:",
+        blogPosts.map((p) => p.slug)
+      );
     }
   }, [post, slug]);
 
@@ -43,7 +46,8 @@ export default function ClientBlogPostPage({
             <div className="max-w-xl mx-auto text-center px-4">
               <h1 className="text-3xl font-bold mb-4">Post Not Found</h1>
               <p className="text-gray-300 mb-8">
-                The blog post you're looking for doesn't exist or has been removed.
+                The blog post you're looking for doesn't exist or has been
+                removed.
               </p>
               <button
                 onClick={() => router.push("/blog")}
@@ -80,8 +84,27 @@ export default function ClientBlogPostPage({
   };
 
   return (
-    <div className="min-h-screen bg-[#0F2841] flex flex-col text-white">
-      <div className="w-full min-h-screen flex flex-col bg-transparent">
+    <div className="min-h-screen flex flex-col text-white relative">
+      {/* Grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          background: `linear-gradient(
+            90deg,
+            rgba(255,255,255,0.1) 1px,
+            transparent 1px 45px
+          )
+          50% 50% / 45px 45px,
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+          50% 50% / 45px 45px`,
+          mask: "linear-gradient(-20deg, transparent 50%, black)",
+          zIndex: 0,
+        }}
+      ></div>
+
+      <div className="w-full min-h-screen flex flex-col bg-transparent relative z-10">
         <Navbar />
         <div className="flex-grow flex flex-col items-start pt-16 md:pt-12 px-4 md:px-8 max-w-7xl mx-auto w-full">
           <div className="w-full max-w-7xl pb-16 mx-auto" ref={postDetailRef}>
@@ -109,6 +132,7 @@ export default function ClientBlogPostPage({
             <div className="bg-[#121212]/80 border border-white/10 rounded-xl overflow-hidden shadow-xl">
               <div className="h-64 md:h-96 overflow-hidden">
                 <Image
+                  draggable={false}
                   src={post.image}
                   alt={post.title}
                   width={1024}
