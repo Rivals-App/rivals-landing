@@ -52,13 +52,13 @@ const PageLoader: React.FC<PageLoaderProps> = ({ onLoadComplete }) => {
     <div className="loader-container fixed inset-0 bg-[#101c2b] flex flex-col items-center justify-center z-50">
       <div className="mb-8">
         <Image
+          draggable={false}
           width={100}
           height={100}
           src="/static/svgs/Asset-2.svg"
           alt="logo"
           className="loader-logo-image"
           style={{ opacity: 0 }}
-          draggable={false}
         />
       </div>
       <div className="w-80 h-[0.1rem] bg-[#0F2841] rounded-full overflow-hidden">

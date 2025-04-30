@@ -1,163 +1,223 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import Link from "next/link"
-import Image from "next/image"
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const WORDS = [
-  "FRIENDS.",
-  "TEAMMATES.",
-  "ENEMIES.",
-  "FOES.",
-  "RIVALS."
-]
+const WORDS = ["FRIENDS.", "TEAMMATES.", "ENEMIES.", "FOES.", "RIVALS."];
 
 const ScrollHero: React.FC = () => {
-  const rootRef = useRef<HTMLDivElement>(null)
-  const listRef = useRef<HTMLUListElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-    
-    // Set up GSAP animations
+    if (typeof window === "undefined" || !rootRef.current || !listRef.current)
+      return;
+
+    // Set up GSAP animations with a delay to ensure DOM is ready
     const setupScroll = () => {
-      // Clear any existing ScrollTriggers
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-      
-      // Set CSS variables
-      document.documentElement.style.setProperty('--start', '0')
-      document.documentElement.style.setProperty('--end', '360')
-      document.documentElement.style.setProperty('--lightness', '75%')
-      document.documentElement.style.setProperty('--base-chroma', '0.3')
-      
-      // Get the list and items
-      const list = listRef.current
-      if (!list) return
-      
-      // Get all list items
-      const items = gsap.utils.toArray<HTMLLIElement>("li", list)
-      if (items.length === 0) return
-      
-      // Set initial styles on items
-      gsap.set(items, { 
-        opacity: (i) => (i === 0 ? 1 : 0.2),
-      })
-      
-      // Create dimming animation
-      const dimmer = gsap
-        .timeline()
-        .to(items.slice(1), {
-          opacity: 1,
-          stagger: 0.5,
-        })
-        .to(
-          items.slice(0, items.length - 1),
-          {
-            opacity: 0.2,
+      // Check if component is still mounted
+      if (!rootRef.current || !listRef.current) return;
+
+      try {
+        // Clear any existing ScrollTriggers related to this component
+        ScrollTrigger.getAll().forEach((trigger) => {
+          if (
+            trigger.vars &&
+            trigger.vars.id &&
+            trigger.vars.id.includes("scrollHero")
+          ) {
+            trigger.kill();
+          }
+        });
+
+        // Set CSS variables
+        document.documentElement.style.setProperty("--start", "0");
+        document.documentElement.style.setProperty("--end", "360");
+        document.documentElement.style.setProperty("--lightness", "75%");
+        document.documentElement.style.setProperty("--base-chroma", "0.3");
+
+        // Get the list and items
+        const list = listRef.current;
+        if (!list) return;
+
+        // Get all list items
+        const items = gsap.utils.toArray<HTMLLIElement>("li", list);
+        if (items.length === 0) return;
+
+        // Set initial styles on items
+        gsap.set(items, {
+          opacity: (i) => (i === 0 ? 1 : 0.2),
+        });
+
+        // Create dimming animation with optimized performance
+        const dimmer = gsap
+          .timeline({
+            id: "scrollHeroDimmer",
+            overwrite: "auto"
+          })
+          .to(items.slice(1), {
+            opacity: 1,
             stagger: 0.5,
+            willChange: "opacity", // Hint to browser for optimization
+          })
+          .to(
+            items.slice(0, items.length - 1),
+            {
+              opacity: 0.2,
+              stagger: 0.5,
+              willChange: "opacity", // Hint to browser for optimization
+            },
+            0
+          );
+
+        // Create dimmer scroll trigger with optimized performance
+        ScrollTrigger.create({
+          id: "scrollHeroDimmerTrigger",
+          trigger: items[0],
+          endTrigger: items[items.length - 1],
+          start: "center center",
+          end: "center center",
+          animation: dimmer,
+          scrub: 0.4, // Increased value for smoother scrolling
+          fastScrollEnd: true, // Optimize for fast scrolling
+          invalidateOnRefresh: true, // Better handling of window resizing
+        });
+
+        // Create color changing animation
+        const scroller = gsap.timeline({
+          id: "scrollHeroColor",
+          overwrite: "auto"
+        }).fromTo(
+          document.documentElement,
+          {
+            "--hue": 0,
           },
-          0
-        )
+          {
+            "--hue": 360,
+            ease: "none",
+            // CSS variables are less expensive to animate than other properties
+          }
+        );
 
-      // Create dimmer scroll trigger
-      ScrollTrigger.create({
-        trigger: items[0],
-        endTrigger: items[items.length - 1],
-        start: 'center center',
-        end: 'center center',
-        animation: dimmer,
-        scrub: 0.2,
-      })
+        // Create color scroll trigger with optimized performance
+        ScrollTrigger.create({
+          id: "scrollHeroColorTrigger",
+          trigger: items[0],
+          endTrigger: items[items.length - 1],
+          start: "center center",
+          end: "center center",
+          animation: scroller,
+          scrub: 0.4, // Increased value for smoother scrolling
+          fastScrollEnd: true, // Optimize for fast scrolling
+          invalidateOnRefresh: true, // Better handling of window resizing
+        });
 
-      // Create color changing animation
-      const scroller = gsap.timeline().fromTo(
-        document.documentElement,
-        {
-          '--hue': 0,
-        },
-        {
-          '--hue': 360,
-          ease: 'none',
-        }
-      )
-
-      // Create color scroll trigger
-      ScrollTrigger.create({
-        trigger: items[0],
-        endTrigger: items[items.length - 1],
-        start: 'center center',
-        end: 'center center',
-        animation: scroller,
-        scrub: 0.2,
-      })
-
-      // Create chroma entry animation
-      gsap.fromTo(
-        document.documentElement,
-        {
-          '--chroma': 0,
-        },
-        {
-          '--chroma': 0.3,
-          ease: 'none',
-          scrollTrigger: {
-            scrub: 0.2,
-            trigger: items[0],
-            start: 'center center+=40',
-            end: 'center center',
+        // Create chroma entry animation with optimized performance
+        gsap.fromTo(
+          document.documentElement,
+          {
+            "--chroma": 0,
           },
-        }
-      )
-      
-      // Create chroma exit animation
-      gsap.fromTo(
-        document.documentElement,
-        {
-          '--chroma': 0.3,
-        },
-        {
-          '--chroma': 0,
-          ease: 'none',
-          scrollTrigger: {
-            scrub: 0.2,
-            trigger: items[items.length - 2],
-            start: 'center center',
-            end: 'center center-=40',
+          {
+            "--chroma": 0.3,
+            ease: "none",
+            scrollTrigger: {
+              id: "scrollHeroChromaEntry",
+              scrub: 0.4, // Increased value for smoother scrolling
+              trigger: items[0],
+              start: "center center+=40",
+              end: "center center",
+              fastScrollEnd: true, // Optimize for fast scrolling
+              invalidateOnRefresh: true, // Better handling of window resizing
+            },
+          }
+        );
+
+        // Create chroma exit animation with optimized performance
+        gsap.fromTo(
+          document.documentElement,
+          {
+            "--chroma": 0.3,
           },
-        }
-      )
+          {
+            "--chroma": 0,
+            ease: "none",
+            scrollTrigger: {
+              id: "scrollHeroChromaExit",
+              scrub: 0.4, // Increased value for smoother scrolling
+              trigger: items[items.length - 2],
+              start: "center center",
+              end: "center center-=40",
+              fastScrollEnd: true, // Optimize for fast scrolling
+              invalidateOnRefresh: true, // Better handling of window resizing
+            },
+          }
+        );
 
-      // Create snap points
-      ScrollTrigger.create({
-        snap: {
-          snapTo: "labels",
-          duration: { min: 0.2, max: 0.3 },
-          delay: 0,
-          ease: "power1.inOut",
-        },
-        trigger: list,
-        start: "top center",
-        end: "bottom center",
-      })
-    }
+        // Create snap points - FIX: This is where the error occurs - we need to add labels first
+        const snapTimeline = gsap.timeline({
+          id: "scrollHeroSnap",
+          overwrite: "auto"
+        });
 
-    // Run setup after the component is mounted
+        // Add labels to the timeline for each word
+        items.forEach((item, index) => {
+          snapTimeline.addLabel(`word${index}`, index * 0.5);
+        });
+
+        // Now create the ScrollTrigger with labels properly defined and optimized performance
+        ScrollTrigger.create({
+          id: "scrollHeroSnapTrigger",
+          snap: {
+            snapTo: (value, self) => {
+              // Calculate which label to snap to based on scroll progress
+              const progress = self?.progress ?? 0;
+              const labelCount = items.length;
+              const snapIndex = Math.round(progress * (labelCount - 1));
+              return snapIndex / (labelCount - 1);
+            },
+            duration: { min: 0.2, max: 0.3 },
+            delay: 0.05, // Small delay for smoother snapping
+            ease: "power2.out", // Smoother easing
+          },
+          trigger: list,
+          start: "top center",
+          end: "bottom center",
+          invalidateOnRefresh: true, // Better handling of window resizing
+        });
+      } catch (error) {
+        console.error("Error setting up ScrollHero animations:", error);
+      }
+    };
+
+    // Run setup after the component is mounted with a longer delay
     const timeoutId = setTimeout(() => {
-      setupScroll()
-    }, 100)
+      setupScroll();
+    }, 300); // Increased delay for DOM to be fully ready
 
     return () => {
-      clearTimeout(timeoutId)
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    }
-  }, [])
+      clearTimeout(timeoutId);
+      // Clean up all ScrollTrigger instances related to this component
+      if (typeof window !== "undefined") {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          if (
+            trigger.vars &&
+            trigger.vars.id &&
+            trigger.vars.id.includes("scrollHero")
+          ) {
+            trigger.kill();
+          }
+        });
+      }
+    };
+  }, []);
 
   return (
     <div ref={rootRef} className="scroll-hero-container">
@@ -166,25 +226,28 @@ const ScrollHero: React.FC = () => {
         <div className="relative w-full mx-auto">
           <div className="flex flex-col items-start">
             <div className="w-full mb-6 md:mb-0 z-10 pl-10 md:pl-12 lg:pl-[10rem] mt-[-5vh]">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold leading-tight">
-                WIN MONEY<br />AGAINST
+              <h1 className="text-6xl md:text-[6.8rem] -left-10 font-extrabold leading-tight">
+                WIN MONEY
+                <br />
+                AGAINST
               </h1>
             </div>
-            
+
             <div className="hero-image-container absolute right-0 top-[45%] -translate-y-1/2 hidden md:block">
-              <Image 
-                src="/static/media/hero.png" 
-                alt="Rivals Gaming" 
-                width={500} 
+              <Image
+                src="/static/media/hero.png"
+                alt="Rivals Gaming"
+                width={500}
                 height={500}
-                className="object-contain w-full h-auto"
                 priority
+                draggable={false}
+                loading="eager"
               />
             </div>
           </div>
         </div>
       </header>
-      
+
       {/* Words scrolling section */}
       <main className="scroll-content-main">
         <section className="content fluid">
@@ -192,16 +255,16 @@ const ScrollHero: React.FC = () => {
             <span aria-hidden="true">YOUR&nbsp;</span>
             <span className="sr-only">YOUR things.</span>
           </h2>
-          
-          <ul 
-            ref={listRef} 
-            aria-hidden="true" 
-            className="words-list" 
+
+          <ul
+            ref={listRef}
+            aria-hidden="true"
+            className="words-list"
             style={{ "--count": WORDS.length } as React.CSSProperties}
           >
             {WORDS.map((word, i) => (
-              <li 
-                key={i} 
+              <li
+                key={i}
                 style={{ "--i": i } as React.CSSProperties}
                 className={i === WORDS.length - 1 ? "text-white" : ""}
               >
@@ -210,7 +273,7 @@ const ScrollHero: React.FC = () => {
             ))}
           </ul>
         </section>
-        
+
         {/* <section className="final-section">
           <Link
             href="/join-us"
@@ -220,34 +283,34 @@ const ScrollHero: React.FC = () => {
           </Link>
         </section> */}
       </main>
-      
+
       <style jsx>{`
         .scroll-hero-container {
           position: relative;
           width: 100%;
           color: white;
         }
-        
+
         /* Add background grid lines similar to codepen */
         .scroll-hero-container::before {
-          content: '';
+          content: "";
           height: 100vh;
           width: 100vw;
           position: fixed;
           background: linear-gradient(
                 90deg,
-                rgba(255,255,255,0.1) 1px,
+                rgba(255, 255, 255, 0.1) 1px,
                 transparent 1px 45px
               )
               50% 50% / 45px 45px,
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
+            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px 45px)
               50% 50% / 45px 45px;
           mask: linear-gradient(-20deg, transparent 50%, black);
           top: 0;
           pointer-events: none;
           z-index: -1;
         }
-        
+
         .hero-scroll {
           min-height: 90vh;
           display: flex;
@@ -257,13 +320,13 @@ const ScrollHero: React.FC = () => {
           position: relative;
           padding-top: 0;
         }
-        
+
         .hero-image-container {
           width: 50%;
           max-width: 600px;
           display: none;
         }
-        
+
         @media (min-width: 768px) {
           .hero-image-container {
             display: block;
@@ -274,11 +337,11 @@ const ScrollHero: React.FC = () => {
             z-index: 1;
           }
         }
-        
+
         .scroll-content-main {
           width: 100%;
         }
-        
+
         .content {
           --font-level: 6;
           display: flex;
@@ -287,7 +350,7 @@ const ScrollHero: React.FC = () => {
           padding-left: 10rem; /* Increased padding to align with text above */
           margin-top: -15vh; /* Pull up more to better connect with heading */
         }
-        
+
         .your-heading {
           position: sticky;
           top: calc(50% - 0.5em);
@@ -298,7 +361,7 @@ const ScrollHero: React.FC = () => {
           font-weight: 600;
           font-size: 5rem; /* Increased font size */
         }
-        
+
         .words-list {
           font-weight: 600;
           padding-inline: 0;
@@ -307,21 +370,21 @@ const ScrollHero: React.FC = () => {
           list-style-type: none;
           --step: calc((var(--end) - var(--start)) / (var(--count) - 1));
         }
-        
+
         .words-list li {
           font-size: 5rem; /* Increased font size */
           padding: 0.5rem 0;
           scroll-snap-align: center;
           color: oklch(
             var(--lightness) var(--base-chroma)
-            calc(var(--start) + (var(--step) * var(--i)))
+              calc(var(--start) + (var(--step) * var(--i)))
           );
         }
-        
+
         .words-list li.text-white {
           color: white;
         }
-        
+
         .final-section {
           min-height: 100vh;
           display: flex;
@@ -329,13 +392,13 @@ const ScrollHero: React.FC = () => {
           width: 100%;
           justify-content: center;
         }
-        
+
         @media (max-width: 768px) {
           .content {
             padding-left: 2rem;
             margin-top: -10vh;
           }
-          
+
           .your-heading,
           .words-list li {
             font-size: 3rem;
@@ -346,7 +409,7 @@ const ScrollHero: React.FC = () => {
           .content {
             padding-left: 7rem;
           }
-          
+
           .your-heading,
           .words-list li {
             font-size: 4.5rem;
@@ -360,7 +423,7 @@ const ScrollHero: React.FC = () => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default ScrollHero
+export default ScrollHero;

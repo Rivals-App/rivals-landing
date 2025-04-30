@@ -55,6 +55,12 @@ export const animationUtils = {
     gsap.defaults({
       ease: "power2.out",
       duration: 0.8,
+      overwrite: "auto", // Prevent conflicting animations
+    });
+    
+    // Default force3D to true for better GPU acceleration
+    gsap.config({
+      force3D: true,
     });
   },
 
@@ -128,8 +134,10 @@ export const animationUtils = {
           trigger: element.parentElement || element,
           start: "top bottom",
           end: "bottom top",
-          scrub: true,
+          scrub: 0.5, // Add a small delay for smoother parallax
+          invalidateOnRefresh: true, // Recalculate on window resize
         },
+        willChange: "transform", // Hint to browser for optimization
       });
     });
   },
@@ -188,17 +196,24 @@ export const animationUtils = {
 
     const settings = { ...defaults, ...options };
 
-    // Create the animation
+    // Create the animation with optimized properties
     return gsap.from(selector, {
       y: settings.y,
       opacity: settings.opacity,
       duration: settings.duration,
       stagger: settings.stagger,
+      willChange: "transform, opacity", // Hint to browser for optimization
       scrollTrigger: {
         trigger: options.trigger || selector,
         start: settings.start,
         markers: settings.markers,
+        toggleActions: "play none none reverse", // Optimize playback behavior
+        fastScrollEnd: true, // Optimize for fast scrolling
       },
+      onComplete: () => {
+        // Clean up properties after animation completes
+        gsap.set(selector, { clearProps: "willChange" });
+      }
     });
   },
 

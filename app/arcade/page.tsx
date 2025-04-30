@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useEffect } from "react";
-import { gsap } from "gsap";
+import { gsap, Power3 } from "gsap";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -10,21 +11,53 @@ import Image from "next/image";
 const ArcadePage: React.FC = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-section", { opacity: 0, y: 50, duration: 1 });
-      gsap.from(".game-showcase", {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        delay: 0.5,
-      });
-      gsap.from(".how-to-compete", {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        delay: 1,
-      });
-      gsap.from(".cta-banner", { opacity: 0, y: 50, duration: 1, delay: 1.5 });
+      const timeline = gsap.timeline();
+      timeline
+        .from(".hero-section", {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: "power3.out",
+          force3D: true,
+        })
+        .from(
+          ".game-showcase",
+          {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: 0.5,
+            ease: "power3.out",
+            force3D: true,
+          },
+          "-=0.5"
+        )
+        .from(
+          ".how-to-compete",
+          {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: 1,
+            ease: "power3.out",
+            force3D: true,
+          },
+          "-=0.5"
+        )
+        .from(
+          ".cta-banner",
+          {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: 1.5,
+            ease: "power3.out",
+            force3D: true,
+          },
+          "-=0.5"
+        );
     });
+
     return () => ctx.revert();
   }, []);
 
@@ -81,6 +114,7 @@ const ArcadePage: React.FC = () => {
             <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
               <div className="relative h-48 overflow-hidden">
                 <Image
+                  draggable={false}
                   src="/static/media/tictactoe.png"
                   alt="Tic Tac Toe"
                   width={400}
@@ -111,6 +145,7 @@ const ArcadePage: React.FC = () => {
             <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
               <div className="relative h-48 overflow-hidden">
                 <Image
+                  draggable={false}
                   src="/static/media/wordgrid.png"
                   alt="Word Grid"
                   width={400}
@@ -139,6 +174,7 @@ const ArcadePage: React.FC = () => {
             <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
               <div className="relative h-48 overflow-hidden">
                 <Image
+                  draggable={false}
                   src="/static/media/rockpaperscissors.png"
                   alt="Rock Paper Scissors"
                   width={400}
@@ -191,6 +227,7 @@ const ArcadePage: React.FC = () => {
                 {/* Image with border */}
                 <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
                   <Image
+                    draggable={false}
                     src="/static/media/HowItWorks1.png"
                     alt="Choose a game"
                     width={130}
@@ -216,6 +253,7 @@ const ArcadePage: React.FC = () => {
                 {/* Image with border */}
                 <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
                   <Image
+                    draggable={false}
                     src="/static/media/HowItWorks2.png"
                     alt="Stake XP or money"
                     width={130}
@@ -241,6 +279,7 @@ const ArcadePage: React.FC = () => {
                 {/* Image with border */}
                 <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
                   <Image
+                    draggable={false}
                     src="/static/media/HowItWorks3.png"
                     alt="Match with a rival"
                     width={130}
@@ -266,6 +305,7 @@ const ArcadePage: React.FC = () => {
                 {/* Image with border */}
                 <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
                   <Image
+                    draggable={false}
                     src="/static/media/HowItWorks4.png"
                     alt="Win and withdraw"
                     width={130}

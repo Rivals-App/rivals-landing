@@ -65,12 +65,12 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onProceed }) => {
         <div className="text-center max-w-xl">
           <div className="flex justify-center mb-8">
             <Image
+              draggable={false}
               width={80}
               height={80}
               src="/static/svgs/Asset-2.svg"
               alt="logo"
               className="form-logo"
-              draggable={false}
             />
           </div>
           <h2 className="welcome-title uppercase text-5xl font-bold mb-2 text-center">

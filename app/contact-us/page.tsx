@@ -3,7 +3,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { gsap } from "gsap";
+import { gsap, Power3 } from "gsap";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -23,21 +23,14 @@ const ContactUs = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".contact-hero", { opacity: 0, y: 50, duration: 1 });
-      gsap.from(".contact-info", {
-        opacity: 0,
-        x: -50,
-        duration: 1,
-        delay: 0.5,
-      });
-      gsap.from(".contact-form", {
-        opacity: 0,
-        x: 50,
-        duration: 1,
-        delay: 0.5,
-      });
-      gsap.from(".faq-section", { opacity: 0, y: 50, duration: 1, delay: 1 });
+      const timeline = gsap.timeline();
+      timeline
+        .from(".contact-hero", { opacity: 0, y: 50, duration: 1, ease: "power3.out", force3D: true })
+        .from(".contact-info", { opacity: 0, x: -50, duration: 1, delay: 0.5, ease: "power3.out", force3D: true }, "-=0.5")
+        .from(".contact-form", { opacity: 0, x: 50, duration: 1, delay: 0.5, ease: "power3.out", force3D: true }, "-=0.5")
+        .from(".faq-section", { opacity: 0, y: 50, duration: 1, delay: 1, ease: "power3.out", force3D: true }, "-=0.5");
     });
+
     return () => ctx.revert();
   }, []);
 

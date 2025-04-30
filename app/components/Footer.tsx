@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import JoinWaitlistButton from "./JoinWaitlistButton";
 
 const Footer = () => {
   const router = useRouter();
@@ -55,6 +56,7 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <div className="flex items-center">
               <Image
+                draggable={false}
                 src="/static/media/Logo2.png"
                 alt="RIVALS Logo"
                 width={48}
@@ -222,26 +224,7 @@ const Footer = () => {
               Sign up to be among the first to experience competitive gaming
               redefined.
             </p>
-            <button
-              onClick={(e) => handleNavigation("join-us", e)}
-              className="px-6 py-3 bg-[#02F199] text-[#0a192f] font-semibold rounded-full hover:opacity-90 transition-all duration-200 w-fit flex items-center space-x-2 shadow-glow"
-            >
-              <span>JOIN WAITLIST</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14"></path>
-                <path d="M12 5l7 7-7 7"></path>
-              </svg>
-            </button>
+            <JoinWaitlistButton className="w-fit" />
           </div>
         </div>
 

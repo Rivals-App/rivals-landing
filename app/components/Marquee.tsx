@@ -19,6 +19,7 @@ const SponsorMarquee = ({ sponsorLogos }: SponsorMarqueeProps) => {
           {duplicatedLogos.map((logo, index) => (
             <div key={`${logo.id}-${index}`} className="flex-shrink-0 px-8">
               <Image
+                draggable={false}
                 src={logo.src}
                 alt={logo.name}
                 width={128}

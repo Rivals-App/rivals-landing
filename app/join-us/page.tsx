@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState, useEffect } from "react";
-import { gsap } from "gsap";
+import { gsap, Power2 } from "gsap";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import RegistrationScreen from "../components/onboarding/RegistrationScreen";
@@ -41,13 +42,14 @@ const JoinUsPage: React.FC = () => {
       x: -30,
       duration: 0.4,
       ease: "power2.in",
+      force3D: true,
       onComplete: () => {
         gsap.set(currentStepEl, { display: "none" });
       },
     });
 
     tl.add(() => {
-      gsap.set(nextStepEl, { display: "block", opacity: 0, x: 30 });
+      gsap.set(nextStepEl, { display: "block", opacity: 0, x: 30, force3D: true });
     });
 
     // Animate next step in
@@ -56,6 +58,7 @@ const JoinUsPage: React.FC = () => {
       x: 0,
       duration: 0.4,
       ease: "power2.out",
+      force3D: true,
     });
   };
 
@@ -77,6 +80,7 @@ const JoinUsPage: React.FC = () => {
       x: 30,
       duration: 0.4,
       ease: "power2.in",
+      force3D: true,
       onComplete: () => {
         gsap.set(currentStepEl, { display: "none" });
       },
@@ -84,7 +88,7 @@ const JoinUsPage: React.FC = () => {
 
     // Set up previous step and animate it in (from the left)
     tl.add(() => {
-      gsap.set(prevStepEl, { display: "block", opacity: 0, x: -30 });
+      gsap.set(prevStepEl, { display: "block", opacity: 0, x: -30, force3D: true });
     });
 
     // Animate previous step in
@@ -93,6 +97,7 @@ const JoinUsPage: React.FC = () => {
       x: 0,
       duration: 0.4,
       ease: "power2.out",
+      force3D: true,
     });
   };
 
@@ -200,8 +205,9 @@ const JoinUsPage: React.FC = () => {
       opacity: 0,
       x: 30,
       display: "none",
+      force3D: true,
     });
-    gsap.set(".step-1", { opacity: 1, x: 0, display: "block" });
+    gsap.set(".step-1", { opacity: 1, x: 0, display: "block", force3D: true });
   }, []);
 
   return (

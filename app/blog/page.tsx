@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+import { gsap, Power3 } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
@@ -33,29 +33,24 @@ export default function BlogPage() {
   useEffect(() => {
     if (!isPageLoaded) return;
 
-    const container = containerRef.current;
-    if (!container) return;
+    const ctx = gsap.context(() => {
+      gsap.set(".blog-post", {
+        opacity: 0,
+        y: 30,
+        force3D: true,
+      });
 
-    // Set initial states for blog posts only
-    gsap.set(".blog-post", {
-      opacity: 0,
-      y: 30,
+      gsap.to(".blog-post", {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        stagger: 0.1,
+        force3D: true,
+      });
     });
 
-    // Create animation timeline
-    const tl = gsap.timeline();
-
-    // Animate all blog posts simultaneously
-    tl.to(".blog-post", {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "power3.out",
-    });
-
-    return () => {
-      tl.kill();
-    };
+    return () => ctx.revert();
   }, [isPageLoaded]);
 
   // Function to navigate to blog post using slug
@@ -69,8 +64,8 @@ export default function BlogPage() {
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          height: '100vh',
-          width: '100vw',
+          height: "100vh",
+          width: "100vw",
           background: `linear-gradient(
             90deg,
             rgba(255,255,255,0.1) 1px,
@@ -79,8 +74,8 @@ export default function BlogPage() {
           50% 50% / 45px 45px,
           linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px 45px)
           50% 50% / 45px 45px`,
-          mask: 'linear-gradient(-20deg, transparent 50%, black)',
-          zIndex: 0
+          mask: "linear-gradient(-20deg, transparent 50%, black)",
+          zIndex: 0,
         }}
       ></div>
 
@@ -111,6 +106,7 @@ export default function BlogPage() {
               >
                 <div className="h-60 w-full overflow-hidden border-b border-white/10">
                   <Image
+                    draggable={false}
                     src={post.image}
                     alt={post.title}
                     width={600}

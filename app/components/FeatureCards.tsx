@@ -1,7 +1,7 @@
 // FeatureCards.tsx
 "use client"
 import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+// No Image components are used in this file
 
 // Define feature card data
 interface FeatureCard {
@@ -60,11 +60,23 @@ const FeatureCards: React.FC = () => {
     
     if (!style || cards.length === 0) return;
     
-    let resetTimers: { [key: string]: NodeJS.Timeout } = {};
+    const resetTimers: { [key: string]: NodeJS.Timeout } = {};
     
+    // Throttle function to limit the rate of execution for mouse/touch events
+    const throttle = (func: (e: MouseEvent | TouchEvent) => void, limit: number) => {
+      let inThrottle: boolean;
+      return function(this: unknown, e: MouseEvent | TouchEvent) {
+        if (!inThrottle) {
+          func.call(this, e);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    };
+
     cards.forEach(card => {
-      // Mouse move handling
-      const handleMouseMove = (e: MouseEvent | TouchEvent) => {
+      // Mouse move handling - throttled for better performance
+      const handleMouseMove = throttle((e: MouseEvent | TouchEvent) => {
         e.preventDefault();
         
         // Get card position
@@ -96,8 +108,8 @@ const FeatureCards: React.FC = () => {
         const ty = ((tp - 50) / 2) * -1;
         const tx = ((lp - 50) / 1.5) * 0.5;
         
-        // Apply transform
-        card.setAttribute('style', `transform: rotateX(${ty}deg) rotateY(${tx}deg)`);
+        // Apply transform with GPU acceleration hints
+        card.setAttribute('style', `transform: rotateX(${ty}deg) rotateY(${tx}deg); will-change: transform; backface-visibility: hidden;`);
         
         // Set dynamic styles for pseudo-elements
         const id = card.getAttribute('data-id') || '';
@@ -110,7 +122,7 @@ const FeatureCards: React.FC = () => {
         if (resetTimers[id]) {
           clearTimeout(resetTimers[id]);
         }
-      };
+      }, 16); // Throttle to approximately 60fps
       
       // Mouse out handling
       const handleMouseOut = () => {
@@ -172,6 +184,7 @@ const FeatureCards: React.FC = () => {
               id={card.id}
               data-id={card.id}
               className={`card ${card.id} animated relative w-full h-[500px] overflow-hidden rounded-xl cursor-pointer z-10 touch-none transform transition-transform`}
+              aria-label={`${card.title} feature card`}
               style={{
                 '--color1': card.color1,
                 '--color2': card.color2,
@@ -226,15 +239,17 @@ const FeatureCards: React.FC = () => {
         }
         
         .card {
-          box-shadow: -5px -5px 5px -5px var(--color1), 
-                      5px 5px 5px -5px var(--color2), 
-                      -7px -7px 10px -5px transparent, 
-                      7px 7px 10px -5px transparent, 
-                      0 0 5px 0px rgba(255, 255, 255, 0), 
+          box-shadow: -5px -5px 5px -5px var(--color1),
+                      5px 5px 5px -5px var(--color2),
+                      -7px -7px 10px -5px transparent,
+                      7px 7px 10px -5px transparent,
+                      0 0 5px 0px rgba(255, 255, 255, 0),
                       0 55px 35px -20px rgba(0, 0, 0, 0.5);
           transition: transform 0.5s ease, box-shadow 0.2s ease;
-          will-change: transform, filter;
+          will-change: transform, filter, box-shadow; /* Specify all properties that will change */
           transform-origin: center;
+          backface-visibility: hidden; /* Reduce visual artifacts during animation */
+          transform: translateZ(0); /* Force GPU acceleration */
         }
         
         .card:hover {
@@ -258,6 +273,7 @@ const FeatureCards: React.FC = () => {
           opacity: 0.5;
           mix-blend-mode: color-dodge;
           transition: all 0.33s ease;
+          will-change: opacity, background-position; /* Performance optimization */
         }
         
         .card:before {
@@ -275,6 +291,7 @@ const FeatureCards: React.FC = () => {
           opacity: 0.5;
           filter: brightness(0.7) contrast(1);
           z-index: 1;
+          backface-visibility: hidden; /* Reduce visual artifacts */
         }
         
         .card:after {
@@ -298,6 +315,8 @@ const FeatureCards: React.FC = () => {
           transition: all 0.33s ease;
           mix-blend-mode: color-dodge;
           opacity: 0.75;
+          will-change: opacity, filter; /* Performance optimization */
+          backface-visibility: hidden; /* Reduce visual artifacts */
         }
         
         .card.active:after,
@@ -340,16 +359,19 @@ const FeatureCards: React.FC = () => {
         .card.animated {
           transition: none;
           animation: holoCard 12s ease 0s 1;
+          will-change: transform; /* Performance optimization */
         }
         
         .card.animated:before {
           transition: none;
           animation: holoGradient 12s ease 0s 1;
+          will-change: opacity, background-position, filter; /* Performance optimization */
         }
         
         .card.animated:after {
           transition: none;
           animation: holoSparkle 12s ease 0s 1;
+          will-change: opacity, background-position, filter; /* Performance optimization */
         }
         
         @keyframes holoSparkle {
