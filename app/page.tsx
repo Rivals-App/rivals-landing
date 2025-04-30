@@ -21,7 +21,6 @@ const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHeroImageLoaded, setIsHeroImageLoaded] = useState(false);
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
 
   // Initial setup - set loading after small delay
@@ -61,9 +60,6 @@ const HomePage = () => {
       defaults: {
         ease: "power3.out",
         force3D: true, // Enable hardware acceleration for all animations
-      },
-      onComplete: () => {
-        setIsAnimationComplete(true);
       },
     });
 
