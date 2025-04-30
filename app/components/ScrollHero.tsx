@@ -233,7 +233,7 @@ const ScrollHero: React.FC = () => {
               </h1>
             </div>
 
-            <div className="hero-image-container absolute right-0 top-[45%] -translate-y-1/2 hidden md:block">
+            <div className="hero-image-container absolute border-r-4 border-white right-0 top-[45%] -translate-y-1/2 hidden md:block">
               <Image
                 src="/static/media/hero.png"
                 alt="Rivals Gaming"
