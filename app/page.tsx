@@ -21,16 +21,30 @@ const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHeroImageLoaded, setIsHeroImageLoaded] = useState(false);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
 
-  // Set page as loaded after initial render with a slightly longer delay
+  // Initial setup - set loading after small delay
   useEffect(() => {
-    // Use a longer timeout to ensure DOM is fully ready
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 300); // Increased from 100ms to 300ms
+    }, 300);
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Control content visibility
+  useEffect(() => {
+    // Only reveal content once image is loaded
+    if (isHeroImageLoaded) {
+      // Small delay to ensure smooth transition
+      const timer = setTimeout(() => {
+        setContentVisible(true);
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isHeroImageLoaded]);
 
   // Initialize animations after page is loaded
   useEffect(() => {
@@ -47,6 +61,9 @@ const HomePage = () => {
       defaults: {
         ease: "power3.out",
         force3D: true, // Enable hardware acceleration for all animations
+      },
+      onComplete: () => {
+        setIsAnimationComplete(true);
       },
     });
 
@@ -94,9 +111,7 @@ const HomePage = () => {
       ctx.revert();
 
       // Only kill ScrollTrigger instances that belong to this component
-      // This prevents issues with child components that may have their own ScrollTrigger instances
       ScrollTrigger.getAll().forEach((trigger) => {
-        // Check if the trigger is related to elements in this component
         if (
           containerRef.current &&
           containerRef.current.contains(trigger.trigger as Node)
@@ -109,6 +124,13 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col text-white">
+      {/* Page loading overlay */}
+      {!contentVisible && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <div className="w-16 h-16 border-t-4 border-[#02F199] border-solid rounded-full animate-spin"></div>
+        </div>
+      )}
+
       {/* Add grid background */}
       <div
         className="fixed inset-0 pointer-events-none"
@@ -128,7 +150,12 @@ const HomePage = () => {
         }}
       ></div>
 
-      <div ref={containerRef} className="w-full flex flex-col relative z-10">
+      <div
+        ref={containerRef}
+        className={`w-full flex flex-col relative z-10 transition-opacity duration-500 ${
+          contentVisible ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <Navbar />
 
         {/* Hero Section with new heading */}
@@ -182,21 +209,26 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Child components - these should manage their own animations */}
-        <div className="pt-[200px]">
-          <ScrollHero />
-        </div>
-        <div className="pt-8">
-          <GameCarousel />
-        </div>
-        <div className="pt-8">
-          <FeatureCards />
-        </div>
-        <div className="pt-8">
-          <TournamentSection />
-        </div>
+        {/* Child components - only render when main content is visible */}
+        {contentVisible && (
+          <>
+            <div className="pt-[200px]">
+              <ScrollHero />
+            </div>
+            <div className="pt-8">
+              <GameCarousel />
+            </div>
+            <div className="pt-8">
+              <FeatureCards />
+            </div>
+            <div className="pt-8">
+              <TournamentSection />
+            </div>
+          </>
+        )}
       </div>
-      <Footer />
+
+      {contentVisible && <Footer />}
     </div>
   );
 };
