@@ -60,7 +60,7 @@ const ScrollHero: React.FC = () => {
         const dimmer = gsap
           .timeline({
             id: "scrollHeroDimmer",
-            overwrite: "auto"
+            overwrite: "auto",
           })
           .to(items.slice(1), {
             opacity: 1,
@@ -91,20 +91,22 @@ const ScrollHero: React.FC = () => {
         });
 
         // Create color changing animation
-        const scroller = gsap.timeline({
-          id: "scrollHeroColor",
-          overwrite: "auto"
-        }).fromTo(
-          document.documentElement,
-          {
-            "--hue": 0,
-          },
-          {
-            "--hue": 360,
-            ease: "none",
-            // CSS variables are less expensive to animate than other properties
-          }
-        );
+        const scroller = gsap
+          .timeline({
+            id: "scrollHeroColor",
+            overwrite: "auto",
+          })
+          .fromTo(
+            document.documentElement,
+            {
+              "--hue": 0,
+            },
+            {
+              "--hue": 360,
+              ease: "none",
+              // CSS variables are less expensive to animate than other properties
+            }
+          );
 
         // Create color scroll trigger with optimized performance
         ScrollTrigger.create({
@@ -164,7 +166,7 @@ const ScrollHero: React.FC = () => {
         // Create snap points - FIX: This is where the error occurs - we need to add labels first
         const snapTimeline = gsap.timeline({
           id: "scrollHeroSnap",
-          overwrite: "auto"
+          overwrite: "auto",
         });
 
         // Add labels to the timeline for each word
@@ -225,7 +227,7 @@ const ScrollHero: React.FC = () => {
       <header className="hero-scroll">
         <div className="relative w-full mx-auto">
           <div className="flex flex-col items-start">
-            <div className="w-full mb-6 md:mb-0 z-10 pl-10 md:pl-12 lg:pl-[10rem] mt-[-5vh]">
+            <div className="w-full mb-6 md:mb-0 z-10 pl-10 md:pl-12 lg:pl-[10rem] mt-[-40vh] md:mt-[-5vh]">
               <h1 className="text-6xl md:text-[6.8rem] -left-10 font-extrabold leading-tight">
                 WIN MONEY
                 <br />
@@ -249,7 +251,7 @@ const ScrollHero: React.FC = () => {
       </header>
 
       {/* Words scrolling section */}
-      <main className="scroll-content-main">
+      <main className="scroll-content-main -mt-[64vh] md:mt-0">
         <section className="content fluid">
           <h2 className="your-heading text-white font-bold">
             <span aria-hidden="true">YOUR&nbsp;</span>
@@ -295,7 +297,7 @@ const ScrollHero: React.FC = () => {
         .scroll-hero-container::before {
           content: "";
           height: 100vh;
-          width: 100vw;
+          width: 100%;
           position: fixed;
           background: linear-gradient(
                 90deg,
@@ -400,8 +402,10 @@ const ScrollHero: React.FC = () => {
           }
 
           .your-heading,
+          .words-list,
           .words-list li {
-            font-size: 3rem;
+            font-size: 2.3rem;
+            margin-top: -2px;
           }
         }
 

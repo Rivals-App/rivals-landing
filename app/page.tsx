@@ -132,7 +132,7 @@ const HomePage = () => {
         className="fixed inset-0 pointer-events-none"
         style={{
           height: "100vh",
-          width: "100vw",
+          width: "100%",
           background: `linear-gradient(
             90deg,
             rgba(255,255,255,0.1) 1px,
@@ -159,9 +159,9 @@ const HomePage = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between md:gap-20">
               {/* Hero Text - pulled more to the left with more space */}
-              <div className="w-full md:w-3/5 lg:w-3/4 text-center md:text-left md:pr-0">
-                <h1 className="hero-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
-                  <span className="block whitespace-nowrap">
+              <div className="w-full md:-mt-32 md:w-3/5 lg:w-3/4 text-center md:text-left md:pr-0">
+                <h1 className="hero-heading text-[2.8rem] md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+                  <span className="block">
                     TURN YOUR GAMING SKILLS
                   </span>
                   <span className="block">
@@ -211,7 +211,7 @@ const HomePage = () => {
             <div className="pt-[100px]">
               <ScrollHero />
             </div>
-            <div className="pt-8">
+            <div className="pt-2">
               <GameCarousel />
             </div>
             <div className="pt-8">
