@@ -18,7 +18,7 @@ const JoinWaitlistButton: React.FC<JoinWaitlistButtonProps> = ({
   return (
     <button
       onClick={handleClick}
-      className={`px-6 py-3 text-sm bg-[#02F199] text-[#0a192f] font-thin rounded-full hover:opacity-90 transition-all duration-200 flex items-center space-x-2 shadow-glow ${className}`}
+      className={`px-6 py-3 text-sm bg-[#02F199] text-[#FFFFFF] rounded-full hover:opacity-90 transition-all duration-200 flex items-center space-x-2 shadow-glow ${className}`}
     >
       <span>JOIN WAITLIST</span>
       <svg
