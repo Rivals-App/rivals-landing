@@ -173,7 +173,7 @@ const HomePage = () => {
                   <span className="font-bold">Play.</span>{" "}
                   <span className="font-bold text-[#02F199]">Win.</span>
                 </h2>
-                <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center sm:items-stretch">
                   <JoinWaitlistButton className="px-8 py-3" />
                   <a
                     href="about-rivals"
@@ -208,7 +208,7 @@ const HomePage = () => {
         {/* Child components - only render when main content is visible */}
         {contentVisible && (
           <>
-            <div className="pt-[200px]">
+            <div className="pt-[100px]">
               <ScrollHero />
             </div>
             <div className="pt-8">
