@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import ScrollHero from "./components/ScrollHero";
 import GameCarousel from "./components/GameCarousel";
 import TournamentSection from "./components/TournamentSection";
-import Image from "next/image";
+// Removed unused import
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
 import ScrollImage from "./components/ScrollImage";
 
@@ -28,6 +28,8 @@ const HomePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
+      // Since the Image component is commented out, we need to manually set isHeroImageLoaded to true
+      setIsHeroImageLoaded(true);
     }, 300);
 
     return () => clearTimeout(timer);
@@ -213,7 +215,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="pt-[200px]">
+        <div className="pt-12 md:pt-[200px]">
           <ScrollImage 
             images={[
               "/static/media/Home - Matchmaking.png",
