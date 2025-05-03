@@ -11,7 +11,7 @@ interface ScrollImageProps {
 
 const ScrollImage: React.FC<ScrollImageProps> = ({
   images,
-  height = "auto",
+  // height = "auto",
   alt = "Rivals feature image",
   onSequenceComplete,
 }) => {
