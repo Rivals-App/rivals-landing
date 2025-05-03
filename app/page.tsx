@@ -158,7 +158,7 @@ const HomePage = () => {
         <Navbar />
 
         {/* Hero Section with new heading */}
-        <div className="mt-[150px] w-full px-4 md:px-8 py-12 md:py-16">
+        <div className="mt-12 md:mt-[150px] w-full px-4 md:px-8 py-12 md:py-16">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between md:gap-20">
               {/* Hero Text - pulled more to the left with more space */}
