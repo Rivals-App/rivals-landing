@@ -11,6 +11,7 @@ import GameCarousel from "./components/GameCarousel";
 import TournamentSection from "./components/TournamentSection";
 import Image from "next/image";
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
+import ScrollImage from "./components/ScrollImage";
 
 // Register ScrollTrigger plugin safely
 if (typeof window !== "undefined") {
@@ -155,7 +156,7 @@ const HomePage = () => {
         <Navbar />
 
         {/* Hero Section with new heading */}
-        <div className="w-full px-4 md:px-8 py-12 md:py-16">
+        <div className="mt-[150px] w-full px-4 md:px-8 py-12 md:py-16">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between md:gap-20">
               {/* Hero Text - pulled more to the left with more space */}
@@ -165,7 +166,15 @@ const HomePage = () => {
                     TURN YOUR GAMING SKILLS
                   </span>
                   <span className="block">
-                    INTO <span className="text-[#02F199]">REAL REWARDS</span>
+                    INTO <span
+                      className="
+                        bg-[linear-gradient(135deg,_#02F199_0%,_#30E3CA_50%,_#01E8F7_100%)]
+                        bg-clip-text
+                        text-transparent
+                      "
+                      >
+                      REAL REWARDS
+                    </span>
                   </span>
                 </h1>
                 <h2 className="hero-subheading text-2xl md:text-3xl text-white mt-6 mb-8 tracking-wide">
@@ -188,21 +197,34 @@ const HomePage = () => {
               <div className="hero-image-container w-full md:w-2/5 lg:w-1/4 relative flex justify-center md:justify-end mt-12 md:mt-0">
                 {/* Fixed glow effect that follows the image */}
                 <div className="absolute w-[300px] h-[600px] right-0 mx-auto md:mx-0 bg-gradient-to-r from-[#02F199]/10 to-[#01E8F7]/10 rounded-lg opacity-40 blur-2xl transform scale-105"></div>
-                <Image
+                {/* <Image
                   draggable={false}
-                  src="/static/media/Iphone.png"
+                  src="/static/media/DesktopHome.png"
                   alt="Rivals Gaming Platform"
-                  width={300}
-                  height={600}
+                  width={600}
+                  height={900}
                   priority // Only set priority on this main hero image
                   onLoad={() => setIsHeroImageLoaded(true)} // Track when hero image loads
                   className="relative z-10 w-auto h-auto max-h-[600px]"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
-                />
+                /> */}
               </div>
             </div>
           </div>
+        </div>
+        <div className="pt-[200px]">
+          <ScrollImage 
+            images={[
+              "/static/media/Home - Matchmaking.png",
+              "/static/media/Home - Opponent Found(Both users ready).png",
+              "/static/media/Home - Opponent Found(Post Game).png",
+            ]}
+            onSequenceComplete={() => {
+              // Optionally scroll to the next section when sequence completes
+              // Or trigger some animation
+            }}
+          />
         </div>
 
         {/* Child components - only render when main content is visible */}

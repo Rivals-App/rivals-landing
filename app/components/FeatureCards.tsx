@@ -233,7 +233,7 @@ const FeatureCards: React.FC = () => {
       
       <style jsx>{`
         .gradient-text {
-          background: linear-gradient(90deg, #02F199 0%, #01E8F7 100%);
+          bg-[linear-gradient(135deg,_#02F199_0%,_#30E3CA_50%,_#01E8F7_100%)]
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }

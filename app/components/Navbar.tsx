@@ -172,14 +172,14 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 Arcade
               </button>
 
-              <button
+              {/* <button
                 onClick={(e) => handleNavigation("legal", e)}
                 className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
                   pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
                 }`}
               >
                 Legal
-              </button>
+              </button> */}
 
               <button
                 onClick={(e) => handleNavigation("contact-us", e)}
@@ -204,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 Try Our Demo
               </Link>
 
-              <JoinWaitlistButton className="inline-flex items-center px-5 py-2 text-md font-thin tracking-tight" />
+              <JoinWaitlistButton className="inline-flex items-center px-5 py-2 text-md tracking-tight" />
             </div>
 
             {/* Mobile menu button */}
@@ -299,14 +299,14 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               Arcade
             </button>
 
-            <button
+            {/* <button
               className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
                 pathname === "/legal" ? "text-[#02F199]" : "text-gray-300"
               } hover:text-[#02F199] hover:bg-[#02F199]/10`}
               onClick={(e) => handleNavigation("legal", e)}
             >
               Legal
-            </button>
+            </button> */}
 
             <button
               className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${

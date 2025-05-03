@@ -117,7 +117,7 @@ const TournamentSection: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
           <div className="tournament-text md:w-1/2 w-full text-center md:text-left">
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-8 leading-tight whitespace-nowrap overflow-hidden">
-              <span className="gradient-text">
+              <span className="text-[#02F199]">
                 <ReactTyped
                   strings={[
                     "PLAY FRIENDS IN EAFC FOR £10",
@@ -191,7 +191,7 @@ const TournamentSection: React.FC = () => {
 
       <style jsx>{`
         .gradient-text {
-          background: linear-gradient(90deg, #02f199 0%, #01e8f7 100%);
+          bg-[linear-gradient(135deg,_#02F199_0%,_#30E3CA_50%,_#01E8F7_100%)]
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
