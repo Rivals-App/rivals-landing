@@ -58,7 +58,7 @@ const ScrollImage: React.FC<ScrollImageProps> = ({
         {/* Heading - Matched exactly with GameCarousel */}
         <div className="mb-12 text-center">
           <h2 className="carousel-title text-3xl md:text-7xl font-bold text-white mb-4">
-            THE RIVALS EXPERIENCE
+            THE <span className="text-[#02F199]">RIVALS</span> EXPERIENCE
           </h2>
           <p className="text-gray-300 text-lg max-w-3xl mx-auto">
             {currentImageIndex === 0 && "Join matches and compete with gamers at your skill level"}

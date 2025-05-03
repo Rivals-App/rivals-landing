@@ -143,7 +143,15 @@ const HomePage = () => {
                     TURN YOUR GAMING SKILLS
                   </span>
                   <span className="block">
-                    INTO <span className="text-[#02F199]">REAL REWARDS</span>
+                    INTO <span
+                      className="
+                        bg-[linear-gradient(135deg,_#02F199_0%,_#30E3CA_50%,_#01E8F7_100%)]
+                        bg-clip-text
+                        text-transparent
+                      "
+                      >
+                      REAL REWARDS
+                    </span>
                   </span>
                 </h1>
                 <h2 className="hero-subheading text-2xl md:text-3xl text-white mt-6 mb-8 tracking-wide">
@@ -188,8 +196,6 @@ const HomePage = () => {
               "/static/media/Home - Matchmaking.png",
               "/static/media/Home - Opponent Found(Both users ready).png",
               "/static/media/Home - Opponent Found(Post Game).png",
-              
-              
             ]}
             onSequenceComplete={() => {
               // Optionally scroll to the next section when sequence completes
