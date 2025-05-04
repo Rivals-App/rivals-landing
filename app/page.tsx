@@ -28,7 +28,6 @@ const HomePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-      // Since the Image component is commented out, we need to manually set isHeroImageLoaded to true
       setIsHeroImageLoaded(true);
     }, 300);
 
