@@ -199,7 +199,9 @@ const FeatureCards: React.FC = () => {
                 className="absolute inset-0 z-0" 
                 style={{
                   backgroundImage: `url(${card.image})`,
-                  backgroundSize: card.id === 'rewards' ? '60% auto' : 'cover',  // Make the rewards image smaller
+                  backgroundSize: 
+                    card.id === 'rewards' ? '100% auto':
+                    card.id === 'secure' ? '110% auto' : 'cover',  
                   backgroundPosition: card.id === 'rewards' ? 'center 40%' : '50% 50%',
                   backgroundRepeat: 'no-repeat',
                 }}

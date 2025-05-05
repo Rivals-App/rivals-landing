@@ -11,7 +11,6 @@ interface ScrollImageProps {
 
 const ScrollImage: React.FC<ScrollImageProps> = ({
   images,
-  // height = "auto",
   alt = "Rivals feature image",
   onSequenceComplete,
 }) => {
@@ -21,7 +20,7 @@ const ScrollImage: React.FC<ScrollImageProps> = ({
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex(prev => {
-        const newIndex = prev < Math.min(images.length, 3) - 1 ? prev + 1 : 0;
+        const newIndex = prev < Math.min(images.length, 4) - 1 ? prev + 1 : 0;
         return newIndex;
       });
     }, 5000);
@@ -29,28 +28,36 @@ const ScrollImage: React.FC<ScrollImageProps> = ({
     return () => clearInterval(timer);
   }, [images.length]);
 
-  // Navigation functions
-  const nextImage = () => {
-    const newIndex = currentImageIndex < Math.min(images.length, 3) - 1 ? currentImageIndex + 1 : 0;
-    setCurrentImageIndex(newIndex);
-    if (newIndex === Math.min(images.length, 3) - 1 && onSequenceComplete) {
-      onSequenceComplete();
-    }
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex(currentImageIndex > 0 ? currentImageIndex - 1 : Math.min(images.length, 3) - 1);
-  };
-
   const goToImage = (index: number) => {
     setCurrentImageIndex(index);
-    if (index === Math.min(images.length, 3) - 1 && onSequenceComplete) {
+    if (index === Math.min(images.length, 4) - 1 && onSequenceComplete) {
       onSequenceComplete();
     }
   };
 
-  // Only use the first 3 images
-  const displayImages = images.slice(0, 3);
+  // Only use the first 4 images
+  const displayImages = images.slice(0, 4);
+
+  // New heading and description texts based on current image
+  const getHeadingText = () => {
+    switch(currentImageIndex) {
+      case 0: return "Choose a Game";
+      case 1: return "Stake XP or Money";
+      case 2: return "Matchmake with a Rival";
+      case 3: return "Win and Withdraw";
+      default: return "Choose a Game";
+    }
+  };
+
+  const getDescriptionText = () => {
+    switch(currentImageIndex) {
+      case 0: return "Select from our growing library of supported games";
+      case 1: return "Decide how much you want to risk for the chance to win";
+      case 2: return "Get matched with players of similar skill level";
+      case 3: return "Claim your winnings and cash out instantly";
+      default: return "Select from our growing library of supported games";
+    }
+  };
 
   return (
     <div className="w-full py-16 md:py-24 relative">
@@ -60,65 +67,47 @@ const ScrollImage: React.FC<ScrollImageProps> = ({
           <h2 className="carousel-title text-3xl md:text-7xl font-bold text-white mb-4">
             THE <span className="text-[#02F199]">RIVALS</span> EXPERIENCE
           </h2>
-          <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-            {currentImageIndex === 0 && "Join matches and compete with gamers at your skill level"}
-            {currentImageIndex === 1 && "Find opponents instantly with our smart matchmaking"}
-            {currentImageIndex === 2 && "Win matches and earn real rewards for your victories"}
+          <h3 className="text-white text-xl md:text-3xl font-bold mb-3">
+            {getHeadingText()}
+          </h3>
+          <p className="text-gray-300 text-lg md:text-2xl max-w-3xl mx-auto">
+            {getDescriptionText()}
           </p>
         </div>
         
-        {/* Image container with navigation arrows - ADJUSTED FOR LANDSCAPE */}
+        {/* Image container - ADJUSTED FOR LANDSCAPE WITH DIRECT BORDER */}
         <div className="relative w-full max-w-4xl mx-auto">
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#02F199]/20 to-[#04D9FF]/20 rounded-xl opacity-50 blur-xl transform scale-105"></div>
           
-          {/* Landscape frame */}
-          <div className="relative rounded-xl overflow-hidden border-4 border-[#02F199]/10 shadow-2xl shadow-[#02F199]/20 aspect-video">
+          {/* Direct border on images */}
+          <div className="relative aspect-video">
             {/* Transition group */}
-            <div className="relative w-full h-full">
-              {displayImages.map((src, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-500 ${
-                    index === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-                  }`}
-                >
+            <div className="relative w-full h-full rounded-xl  shadow-2xl">
+            {displayImages.map((src, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
+                  index === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+              >
+                <div className="inline-flex border-4 border-[#02F199]/30 rounded-3xl overflow-hidden">
                   <Image
                     src={src}
                     alt={`${alt} ${index + 1}`}
-                    fill
-                    className="object-cover"
+                    width={1972}
+                    height={1268}
+                    className="max-h-[70vh] w-auto object-contain"
                     priority={index === currentImageIndex}
                   />
                 </div>
-              ))}
+              </div>
+            ))}
             </div>
           </div>
           
-          {/* Navigation arrows */}
-          <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2">
-            <button 
-              onClick={prevImage}
-              className="bg-black/50 hover:bg-black/70 w-10 h-10 rounded-full text-white flex items-center justify-center transition-colors shadow-lg z-20"
-              aria-label="Previous image"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-            <button 
-              onClick={nextImage}
-              className="bg-black/50 hover:bg-black/70 w-10 h-10 rounded-full text-white flex items-center justify-center transition-colors shadow-lg z-20"
-              aria-label="Next image"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Progress indicator dots - only show 3 */}
-          <div className="absolute -bottom-12 left-0 right-0 flex justify-center gap-3">
+          {/* Progress indicator dots - updated for 4 steps */}
+          <div className="absolute -bottom-16 left-0 right-0 flex justify-center gap-3">
             {displayImages.map((_, index) => (
               <button 
                 key={index}

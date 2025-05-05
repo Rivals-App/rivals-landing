@@ -204,19 +204,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="pt-6 md:pt-[70px]">
-          <ScrollImage
-            images={[
-              "/static/media/Home - Matchmaking.png",
-              "/static/media/Home - Opponent Found(Both users ready).png",
-              "/static/media/Home - Opponent Found(Post Game).png",
-            ]}
-            onSequenceComplete={() => {
-              // Optionally scroll to the next section when sequence completes
-              // Or trigger some animation
-            }}
-          />
-        </div>
 
         {/* Child components - only render when main content is visible */}
         {contentVisible && (
@@ -229,6 +216,20 @@ const HomePage = () => {
             </div>
             <div className="pt-6">
               <FeatureCards />
+            </div>
+            <div className="pt-6 md:pt-[70px]">
+              <ScrollImage
+                images={[
+                  "/static/media/HowItWorks1.png",
+                  "/static/media/HowItWorks2.png",
+                  "/static/media/HowItWorks3.png",
+                  "/static/media/HowItWorks4.png",
+                ]}
+                onSequenceComplete={() => {
+                  // Optionally scroll to the next section when sequence completes
+                  // Or trigger some animation
+                }}
+              />
             </div>
             <div className="pt-6">
               <TournamentSection />

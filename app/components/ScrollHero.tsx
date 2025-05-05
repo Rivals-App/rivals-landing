@@ -225,7 +225,7 @@ const ScrollHero: React.FC = () => {
     <div ref={rootRef} className="scroll-hero-container">
       {/* Hero section with heading and image */}
       <header className="hero-scroll">
-        <div className="relative w-full mx-auto">
+        <div className="relative w-full mx-auto px-0"> {/* Remove any padding here */}
           <div className="flex flex-col items-start">
             <div className="w-full mb-6 md:mb-0 z-10 pl-10 md:pl-12 lg:pl-[10rem] mt-[-40vh] md:mt-[-5vh]">
               <h1 className="text-6xl md:text-[6.8rem] -left-10 font-extrabold leading-tight">
@@ -234,19 +234,19 @@ const ScrollHero: React.FC = () => {
                 AGAINST
               </h1>
             </div>
-
-            <div className="hero-image-container absolute border-r-4 border-white right-0 top-[45%] -translate-y-1/2 hidden md:block">
-              <Image
-                src="/static/media/hero.png"
-                alt="Rivals Gaming"
-                width={500}
-                height={500}
-                priority
-                draggable={false}
-                loading="eager"
-              />
-            </div>
           </div>
+        </div>
+        <div className="absolute right-0 border-r-4 border-white top-[45%] -translate-y-1/2 hidden md:block">
+          <Image
+            src="/static/media/hero.png"
+            alt="Rivals Gaming"
+            width={500}
+            height={500}
+            priority
+            draggable={false}
+            loading="eager"
+            className="object-contain" /* Added to ensure image fits properly */
+          />
         </div>
       </header>
 
@@ -327,16 +327,17 @@ const ScrollHero: React.FC = () => {
           width: 50%;
           max-width: 600px;
           display: none;
+          position: absolute;
+          right: 0;
+          top: 45%;
+          transform: translateY(-50%);
+          z-index: 1;
         }
 
         @media (min-width: 768px) {
           .hero-image-container {
             display: block;
-            position: absolute;
-            right: 0;
-            top: 45%;
-            transform: translateY(-50%);
-            z-index: 1;
+            right: 0; /* Ensure it's flush with the right edge */
           }
         }
 

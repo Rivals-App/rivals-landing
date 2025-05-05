@@ -230,7 +230,7 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs">
-          <div>© 2025 Rivals. All rights reserved.</div>
+          <div>© 2025 Rivals. All rights reserved. Rivals is not endorsed by, directly affiliated with, maintained or sponsored by Apple Inc, Electronic Arts, Activision Blizzard, Take-Two Interactive, Microsoft, Xbox, Sony, Playstation, Epic Games, NetEase Games, Marvel Games, Supercell, or any game development company unless specifically stated otherwise. All content, games titles, trade names and/or trade dress, trademarks, artwork and associated imagery are trademarks and/or copyright material of their respective owners.</div>
           <div className="mt-4 md:mt-0 flex space-x-6">
             <a
               href="/legal"
