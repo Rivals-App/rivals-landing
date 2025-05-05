@@ -12,6 +12,7 @@ import TournamentSection from "./components/TournamentSection";
 // Removed unused import
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
 import ScrollImage from "./components/ScrollImage";
+import DeviceTransition from "./components/DeviceTransition";
 
 // Register ScrollTrigger plugin safely
 if (typeof window !== "undefined") {
@@ -157,23 +158,22 @@ const HomePage = () => {
         <Navbar />
 
         {/* Hero Section with new heading */}
-        <div className="mt-12 md:mt-[150px] w-full px-4 md:px-8 py-12 md:py-16">
+        <div className="mt-6 md:mt-[100px] w-full px-4 md:px-8 py-8 md:py-12">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between md:gap-20">
+            <div className="flex flex-col md:flex-row items-center justify-between md:gap-20 md:-mt-20">
               {/* Hero Text - pulled more to the left with more space */}
-              <div className="w-full md:-mt-32 md:w-3/5 lg:w-3/4 text-center md:text-left md:pr-0">
-                <h1 className="hero-heading text-[2.8rem] md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+              <div className="w-full md:-mt-48 md:w-3/5 lg:w-3/4 text-center md:text-left md:pr-0">
+                <h1 className="hero-heading text-[2.8rem] md:text-5xl font-bold text-white leading-tight tracking-tight">
+                  <span className="block">TURN YOUR GAMING SKILLS</span>
                   <span className="block">
-                    TURN YOUR GAMING SKILLS
-                  </span>
-                  <span className="block">
-                    INTO <span
+                    INTO{" "}
+                    <span
                       className="
                         bg-[linear-gradient(135deg,_#02F199_0%,_#30E3CA_50%,_#01E8F7_100%)]
                         bg-clip-text
                         text-transparent
                       "
-                      >
+                    >
                       REAL REWARDS
                     </span>
                   </span>
@@ -195,27 +195,17 @@ const HomePage = () => {
               </div>
 
               {/* Hero Image - made even narrower */}
-              <div className="hero-image-container w-full md:w-2/5 lg:w-1/4 relative flex justify-center md:justify-end mt-12 md:mt-0">
+              <div className="hero-image-container w-full md:w-2/5 lg:w-2/4 relative flex justify-center md:justify-end mt-12 md:mt-0">
                 {/* Fixed glow effect that follows the image */}
-                <div className="absolute w-[300px] h-[600px] right-0 mx-auto md:mx-0 bg-gradient-to-r from-[#02F199]/10 to-[#01E8F7]/10 rounded-lg opacity-40 blur-2xl transform scale-105"></div>
-                {/* <Image
-                  draggable={false}
-                  src="/static/media/DesktopHome.png"
-                  alt="Rivals Gaming Platform"
-                  width={600}
-                  height={900}
-                  priority // Only set priority on this main hero image
-                  onLoad={() => setIsHeroImageLoaded(true)} // Track when hero image loads
-                  className="relative z-10 w-auto h-auto max-h-[600px]"
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
-                /> */}
+                <div className="w-full h-[600px]">
+                  <DeviceTransition />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="pt-12 md:pt-[200px]">
-          <ScrollImage 
+        <div className="pt-6 md:pt-[70px]">
+          <ScrollImage
             images={[
               "/static/media/Home - Matchmaking.png",
               "/static/media/Home - Opponent Found(Both users ready).png",
@@ -231,16 +221,16 @@ const HomePage = () => {
         {/* Child components - only render when main content is visible */}
         {contentVisible && (
           <>
-            <div className="pt-[100px]">
+            <div className="pt-[60px]">
               <ScrollHero />
             </div>
             <div className="pt-2">
               <GameCarousel />
             </div>
-            <div className="pt-8">
+            <div className="pt-6">
               <FeatureCards />
             </div>
-            <div className="pt-8">
+            <div className="pt-6">
               <TournamentSection />
             </div>
           </>
