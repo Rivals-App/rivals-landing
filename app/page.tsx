@@ -12,7 +12,7 @@ import GameCarousel from "./components/GameCarousel";
 import TournamentSection from "./components/TournamentSection";
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
 import ScrollImage from "./components/ScrollImage";
-// import DeviceTransition from "./components/DeviceTransition";
+import DeviceTransition from "./components/DeviceTransition";
 
 // Register ScrollTrigger plugin safely
 if (typeof window !== "undefined") {
@@ -238,8 +238,8 @@ const HomePage = () => {
               </div>
 
               {/* Hero Image - now above in mobile, but still right in desktop */}
-              {/* <div
-                className="hero-image-container w-full md:w-2/5 lg:w-2/4 relative flex justify-center md:justify-end"
+              <div
+                className="hidden md:flex hero-image-container w-full md:w-2/5 lg:w-2/4 relative justify-center md:justify-end"
                 style={{ transform: "translateY(-32px)" }}
               >
                 <div
@@ -248,7 +248,7 @@ const HomePage = () => {
                 >
                   <DeviceTransition />
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
