@@ -30,6 +30,9 @@ const getImageWithFallback = (src: string) => {
   return src || "/static/games/CS2.png";
 };
 
+// Add a helper function to check game availability
+const isGameAvailable = (title: string) => title === "Dota 2";
+
 const GameCarousel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const topRowRef = useRef<HTMLDivElement>(null);
@@ -185,7 +188,15 @@ const GameCarousel: React.FC = () => {
         <div className="carousel-row">
           <div ref={topRowRef} className="carousel-track">
             {visibleTopGames.map((game, i) => (
-              <div key={`top-${game.title}-${i}`} className="carousel-box">
+              <div
+                key={`top-${game.title}-${i}`}
+                className={`carousel-box ${!isGameAvailable(game.title) ? "game-unavailable" : ""}`}
+                onClick={() => {
+                  if (!isGameAvailable(game.title)) {
+                    window.location.href = "/join-us";
+                  }
+                }}
+              >
                 <div className="image-container">
                   <Image
                     src={getImageWithFallback(game.src)}
@@ -195,6 +206,8 @@ const GameCarousel: React.FC = () => {
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
+                      filter: !isGameAvailable(game.title) ? "grayscale(100%)" : "none",
+                      opacity: !isGameAvailable(game.title) ? 0.5 : 1,
                     }}
                     draggable={false}
                     priority={
@@ -205,6 +218,11 @@ const GameCarousel: React.FC = () => {
                     blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
                   />
                 </div>
+                {!isGameAvailable(game.title) && (
+                  <div className="coming-soon-overlay">
+                    <span className="coming-soon-text">COMING SOON</span>
+                  </div>
+                )}
                 <div className="carousel-overlay">
                   <span className="carousel-label">{game.title}</span>
                 </div>
@@ -217,7 +235,15 @@ const GameCarousel: React.FC = () => {
         <div className="carousel-row bottom-row">
           <div ref={bottomRowRef} className="carousel-track">
             {visibleBottomGames.map((game, i) => (
-              <div key={`bottom-${game.title}-${i}`} className="carousel-box">
+              <div
+                key={`bottom-${game.title}-${i}`}
+                className={`carousel-box ${!isGameAvailable(game.title) ? "game-unavailable" : ""}`}
+                onClick={() => {
+                  if (!isGameAvailable(game.title)) {
+                    window.location.href = "/join-us";
+                  }
+                }}
+              >
                 <div className="image-container">
                   <Image
                     src={getImageWithFallback(game.src)}
@@ -227,6 +253,8 @@ const GameCarousel: React.FC = () => {
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
+                      filter: !isGameAvailable(game.title) ? "grayscale(100%)" : "none",
+                      opacity: !isGameAvailable(game.title) ? 0.5 : 1,
                     }}
                     draggable={false}
                     priority={
@@ -238,6 +266,11 @@ const GameCarousel: React.FC = () => {
                     blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
                   />
                 </div>
+                {!isGameAvailable(game.title) && (
+                  <div className="coming-soon-overlay">
+                    <span className="coming-soon-text">COMING SOON</span>
+                  </div>
+                )}
                 <div className="carousel-overlay">
                   <span className="carousel-label">{game.title}</span>
                 </div>
@@ -313,6 +346,45 @@ const GameCarousel: React.FC = () => {
         .carousel-box:hover {
           transform: scale(1.05);
           z-index: 10;
+        }
+
+        .carousel-box:hover .carousel-label {
+          text-decoration: none;
+        }
+
+        .carousel-box:hover {
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-box:not(.game-unavailable):hover {
+          outline: 2px solid #00ff00; /* Subtle highlight for available games */
+        }
+
+        .game-unavailable {
+          cursor: pointer;
+          position: relative;
+        }
+
+        .game-unavailable:hover .coming-soon-overlay {
+          opacity: 1;
+        }
+
+        .coming-soon-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: rgba(0, 0, 0, 0.6);
+          color: white;
+          font-size: 1.5rem;
+          font-weight: bold;
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+          z-index: 2;
         }
 
         .image-container {

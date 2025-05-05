@@ -369,14 +369,14 @@ const ScrollHero: React.FC = () => {
           font-weight: 600;
           padding-inline: 0;
           margin: 0;
-          margin-top: 93px;
+          margin-top: 100px;
           list-style-type: none;
           --step: calc((var(--end) - var(--start)) / (var(--count) - 1));
         }
 
         .words-list li {
           font-size: 5rem; /* Increased font size */
-          padding: 0rem 0;
+          padding: 0;
           scroll-snap-align: center;
           color: oklch(
             var(--lightness) var(--base-chroma)
