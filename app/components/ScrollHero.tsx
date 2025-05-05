@@ -376,7 +376,7 @@ const ScrollHero: React.FC = () => {
 
         .words-list li {
           font-size: 5rem; /* Increased font size */
-          padding: 0.5rem 0;
+          padding: 0rem 0;
           scroll-snap-align: center;
           color: oklch(
             var(--lightness) var(--base-chroma)
