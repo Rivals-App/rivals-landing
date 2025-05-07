@@ -192,7 +192,9 @@ const GameCarousel: React.FC = () => {
                 key={`top-${game.title}-${i}`}
                 className={`carousel-box ${!isGameAvailable(game.title) ? "game-unavailable" : ""}`}
                 onClick={() => {
-                  if (!isGameAvailable(game.title)) {
+                  if (isGameAvailable(game.title)) {
+                    window.location.href = "https://getrivals.com";
+                  } else {
                     window.location.href = "/join-us";
                   }
                 }}
@@ -223,6 +225,18 @@ const GameCarousel: React.FC = () => {
                     <span className="coming-soon-text">COMING SOON</span>
                   </div>
                 )}
+                {!isGameAvailable(game.title) && (
+                  <div className="request-game-button" onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = "/join-us";
+                  }}>
+                    <span>Request Game</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                  </div>
+                )}
                 <div className="carousel-overlay">
                   <span className="carousel-label">{game.title}</span>
                 </div>
@@ -241,7 +255,10 @@ const GameCarousel: React.FC = () => {
                 onClick={() => {
                   if (!isGameAvailable(game.title)) {
                     window.location.href = "/join-us";
+                  } else if (isGameAvailable(game.title)) {
+                    window.location.href = "https://getrivals.com";
                   }
+                
                 }}
               >
                 <div className="image-container">
@@ -269,6 +286,18 @@ const GameCarousel: React.FC = () => {
                 {!isGameAvailable(game.title) && (
                   <div className="coming-soon-overlay">
                     <span className="coming-soon-text">COMING SOON</span>
+                  </div>
+                )}
+                {!isGameAvailable(game.title) && (
+                  <div className="request-game-button" onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = "/join-us";
+                  }}>
+                    <span>Request Game</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5l7 7-7 7"></path>
+                    </svg>
                   </div>
                 )}
                 <div className="carousel-overlay">
@@ -380,7 +409,7 @@ const GameCarousel: React.FC = () => {
           align-items: center;
           background: rgba(0, 0, 0, 0.6);
           color: white;
-          font-size: 1.5rem;
+          font-size: 1.2rem;
           font-weight: bold;
           opacity: 0;
           transition: opacity 0.3s ease-in-out;
@@ -414,6 +443,44 @@ const GameCarousel: React.FC = () => {
           font-size: 0.875rem;
         }
 
+        .request-game-button {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: rgba(2, 241, 153, 0.8);
+          color: black;
+          font-size: 0.75rem;
+          font-weight: bold;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          z-index: 3;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+          opacity: 0; /* Hidden by default */
+        }
+
+        .game-unavailable:hover .request-game-button {
+          opacity: 1; /* Show on hover */
+        }
+
+        .request-game-button:hover {
+          background: rgba(2, 241, 153, 1);
+          transform: translateY(-1px);
+        }
+
+        .request-game-button svg {
+          width: 12px;
+          height: 12px;
+          transition: transform 0.2s ease-in-out;
+        }
+
+        .request-game-button:hover svg {
+          transform: translateX(2px);
+        }
+
         /* Responsive styles */
         @media (min-width: 640px) {
           .carousel-box {
@@ -427,6 +494,16 @@ const GameCarousel: React.FC = () => {
 
           .carousel-overlay {
             padding: 1rem;
+          }
+
+          .request-game-button {
+            font-size: 0.875rem;
+            padding: 0.375rem 0.75rem;
+          }
+          
+          .request-game-button svg {
+            width: 14px;
+            height: 14px;
           }
         }
 

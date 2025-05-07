@@ -8,6 +8,7 @@ import RegistrationScreen from "../components/onboarding/RegistrationScreen";
 import BirthdayScreen from "../components/onboarding/BirthdayScreen";
 import ConfirmationScreen from "../components/onboarding/ConfirmationScreen";
 
+
 const JoinUsPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userInfo, setUserInfo] = useState({

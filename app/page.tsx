@@ -13,6 +13,7 @@ import GameCarousel from "./components/GameCarousel";
 import TournamentSection from "./components/TournamentSection";
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
 import ScrollImage from "./components/ScrollImage";
+import HowItWorks from "./components/HowItWorksSection";
 import Image from "next/image";
 
 if (typeof window !== "undefined") {
@@ -465,11 +466,13 @@ const HomePage = () => {
       >
         <Navbar />
 
-        <div className="mt-6 md:mt-[100px] w-full px-4 md:px-16 py-8 md:py-12">
-          <div className="max-w-7xl mx-auto">
+        <div className="mt-6 md:mt-[100px] px-3 w-full md:px-16 py-8 md:py-12">
+          <div className="max-w-8xl mx-auto">
             <div className="flex flex-col-reverse md:flex-row items-center justify-between md:gap-20 md:-mt-20">
+              {/* Left side - Text and buttons */}
               <div className="w-full md:-mt-48 md:w-4/5 lg:w-full text-center md:text-left md:pr-0">
-                <h1 className="hero-heading text-[2.6rem] md:text-[3.4rem] font-bold text-white leading-tight tracking-tight">
+                {/* Larger heading text */}
+                <h1 className="hero-heading text-[3rem] md:text-[4rem] lg:text-[4.5rem] font-bold text-white leading-tight tracking-tight">
                   <span className="block">TURN YOUR GAMING SKILLS</span>
                   <span className="block">
                     INTO{" "}
@@ -484,54 +487,61 @@ const HomePage = () => {
                     </span>
                   </span>
                 </h1>
-                <h2 className="hero-subheading text-2xl md:text-3xl text-white mt-6 mb-8 tracking-wide">
+
+                {/* Larger subheading */}
+                <h2 className="hero-subheading text-3xl md:text-5xl lg:text-6xl text-white mt-8 mb-10 tracking-wide">
                   <span className="font-bold">Stake.</span>{" "}
                   <span className="font-bold">Play.</span>{" "}
                   <span className="font-bold text-[#02F199]">Win.</span>
                 </h2>
-                <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center sm:items-stretch">
-                  <JoinWaitlistButton className="px-8 py-3" />
+
+                {/* Larger buttons */}
+                <div className="hero-cta flex flex-col sm:flex-row gap-5 justify-center md:justify-start items-center sm:items-stretch">
+                  <JoinWaitlistButton className="px-10 py-4 text-lg" />
                   <a
                     href="about-rivals"
-                    className="px-4 text-md py-3 border border-white/30 text-white/60 font-normal rounded-full hover:border-[#02F199] hover:text-[#02F199] transition-all"
+                    className="px-6 text-lg py-4 border border-white/30 text-white/60 font-normal rounded-full hover:border-[#02F199] hover:text-[#02F199] transition-all"
                   >
                     Learn More
                   </a>
                 </div>
               </div>
 
+              {/* Right side - Image container with increased size */}
               <div
                 ref={transitionContainerRef}
-                className="hero-image-container w-full md:w-2/5 lg:w-2/4 relative hidden md:flex justify-center md:justify-end"
+                className="hero-image-container w-full md:w-2/5 lg:w-1/2 relative hidden md:flex justify-center md:justify-end"
                 style={{ transform: "translateY(-32px)" }}
               >
-                <div className="w-full h-[550px] md:h-[600px] relative overflow-hidden">
+                <div className="w-full h-[600px] md:h-[650px] lg:h-[700px] relative overflow-hidden">
+                  {/* iPhone device with larger dimensions */}
                   <div
                     className="device-iphone absolute inset-0 flex items-center justify-center z-10 transform-gpu"
                     style={typeSafeStyles.iPhone}
                   >
-                    <div className="relative w-[200px] h-[400px] md:w-[250px] md:h-[500px]">
+                    <div className="relative w-[240px] h-[480px] md:w-[300px] md:h-[600px]">
                       <Image
                         src="/static/media/Iphone.png"
                         alt="iPhone 15 Pro"
                         fill
-                        sizes="200px"
+                        sizes="(max-width: 768px) 240px, 300px"
                         priority
                         className="object-contain drop-shadow-xl"
                       />
                     </div>
                   </div>
 
+                  {/* MacBook device with larger dimensions */}
                   <div
                     className="device-macbook absolute inset-0 flex items-center justify-center z-0 transform-gpu"
                     style={typeSafeStyles.macBook}
                   >
-                    <div className="relative w-[600px] h-[450px]">
+                    <div className="relative w-[800px] h-[600px] md:w-[900px] md:h-[675px] lg:w-[1000px] lg:h-[750px]">
                       <Image
                         src="/static/media/DesktopHomeMockup.png"
                         alt="MacBook Pro"
                         fill
-                        sizes="600px"
+                        sizes="(max-width: 768px) 800px, (max-width: 1024px) 900px, 1000px"
                         priority
                         className="object-contain drop-shadow-xl"
                       />
@@ -561,7 +571,8 @@ const HomePage = () => {
                 <FeatureCards />
               </div>
               <div className="pt-6 md:pt-[70px]">
-                <ScrollImage
+                <HowItWorks />
+                {/* <ScrollImage
                   images={[
                     "/static/media/HowItWorks1.png",
                     "/static/media/HowItWorks2.png",
@@ -569,7 +580,7 @@ const HomePage = () => {
                     "/static/media/HowItWorks4.png",
                   ]}
                   onSequenceComplete={() => {}}
-                />
+                /> */}
               </div>
               <div className="pt-6">
                 <TournamentSection />
