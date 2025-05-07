@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
@@ -12,29 +13,283 @@ import GameCarousel from "./components/GameCarousel";
 import TournamentSection from "./components/TournamentSection";
 import JoinWaitlistButton from "./components/JoinWaitlistButton";
 import ScrollImage from "./components/ScrollImage";
-import DeviceTransition from "./components/DeviceTransition";
+import Image from "next/image";
 
-// Register ScrollTrigger plugin safely
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const deviceTransitionRef = useRef<HTMLDivElement>(null);
+  const transitionContainerRef = useRef<HTMLDivElement>(null);
+  const mainContentRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHeroImageLoaded, setIsHeroImageLoaded] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
   const [deviceAnimationComplete, setDeviceAnimationComplete] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
-  // Force scroll to top on initial load
+  const [transitionProgress, setTransitionProgress] = useState(0);
+  const touchStartYRef = useRef<number | null>(null);
+  const lastTransitionProgressRef = useRef<number>(0);
+  const animationFrameIdRef = useRef<number | null>(null);
+  const targetProgressRef = useRef<number>(0);
+  const velocityRef = useRef<number>(0);
+
+  const animateTransition = () => {
+    const ease = 0.2;
+    const currentProgress = lastTransitionProgressRef.current;
+    const targetProgress = targetProgressRef.current;
+
+    const delta = targetProgress - currentProgress;
+
+    const completionFactor =
+      1 - Math.max(0, Math.min(1, (currentProgress - 0.8) * 5));
+    velocityRef.current = velocityRef.current * 0.6 + delta * 0.4;
+
+    const appliedVelocity = velocityRef.current * completionFactor;
+
+    const newProgress = currentProgress + appliedVelocity * ease;
+
+    if (currentProgress >= 0.99 && targetProgress >= currentProgress) {
+      lastTransitionProgressRef.current = 1.0;
+      velocityRef.current = 0;
+    } else {
+      lastTransitionProgressRef.current = Math.max(0, Math.min(1, newProgress));
+    }
+
+    setTransitionProgress(lastTransitionProgressRef.current);
+
+    if (lastTransitionProgressRef.current >= 0.99 && !deviceAnimationComplete) {
+      // Immediately hide the scroll indicator before completing the animation
+      setShowScrollIndicator(false);
+
+      setDeviceAnimationComplete(true);
+
+      const event = new CustomEvent("animationComplete", {
+        bubbles: true,
+        detail: { timestamp: Date.now() },
+      });
+      transitionContainerRef.current?.dispatchEvent(event);
+
+      // Force immediate content visibility
+      if (mainContentRef.current) {
+        mainContentRef.current.style.opacity = "1";
+      }
+
+      // Unlock scrolling immediately
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+
+      // Small delay before attempting to scroll
+      setTimeout(() => {
+        window.scrollTo({ top: 1, behavior: "auto" });
+      }, 10);
+
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
+      }
+    } else if (deviceAnimationComplete) {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
+      }
+    } else {
+      animationFrameIdRef.current = requestAnimationFrame(animateTransition);
+    }
+  };
+
+  const handleWheel = (e: WheelEvent) => {
+    e.preventDefault();
+
+    if (deviceAnimationComplete) return;
+
+    const baseSpeedFactor = 0.04;
+    const speedMultiplier = window.innerWidth <= 768 ? 1.5 : 1;
+    const speedFactor = baseSpeedFactor * speedMultiplier;
+
+    const scrollAmount = e.deltaY;
+    const direction = Math.sign(scrollAmount);
+
+    const atEnd = lastTransitionProgressRef.current >= 0.99;
+    if (atEnd && direction > 0) {
+      // Immediately hide scroll indicator on approaching end
+      setShowScrollIndicator(false);
+
+      targetProgressRef.current = 1;
+      velocityRef.current = 0;
+
+      if (!deviceAnimationComplete) {
+        setDeviceAnimationComplete(true);
+
+        // Force immediate content visibility
+        if (mainContentRef.current) {
+          mainContentRef.current.style.opacity = "1";
+        }
+
+        document.body.style.overflow = "";
+        document.body.style.height = "";
+      }
+      return;
+    }
+
+    const magnitude = Math.min(Math.abs(scrollAmount), 120);
+    const adjustedDelta = (direction * magnitude) / 40;
+
+    targetProgressRef.current = Math.min(
+      1,
+      Math.max(0, targetProgressRef.current + adjustedDelta * speedFactor)
+    );
+
+    if (!animationFrameIdRef.current && !deviceAnimationComplete) {
+      animationFrameIdRef.current = requestAnimationFrame(animateTransition);
+    }
+  };
+
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault();
+    if (touchStartYRef.current === null) return;
+
+    const touchY = e.touches[0].clientY;
+    const touchDelta = touchStartYRef.current - touchY;
+
+    touchStartYRef.current = touchY;
+
+    const isMobile = window.innerWidth <= 768;
+    const touchMultiplier = isMobile ? 0.003 : 0.002;
+
+    const direction = Math.sign(touchDelta);
+    const magnitude = Math.min(Math.abs(touchDelta), 40);
+    const adjustedDelta =
+      direction * (Math.log(magnitude + 1) / Math.log(5)) * 1.2;
+
+    targetProgressRef.current = Math.min(
+      1,
+      Math.max(0, targetProgressRef.current + adjustedDelta * touchMultiplier)
+    );
+
+    if (!animationFrameIdRef.current && !deviceAnimationComplete) {
+      animationFrameIdRef.current = requestAnimationFrame(animateTransition);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartYRef.current === null) return;
+
+    const momentum = {
+      direction: Math.sign(
+        targetProgressRef.current - lastTransitionProgressRef.current
+      ),
+      magnitude:
+        Math.abs(
+          targetProgressRef.current - lastTransitionProgressRef.current
+        ) * 20,
+    };
+
+    touchStartYRef.current = null;
+
+    if (!deviceAnimationComplete) {
+      if (targetProgressRef.current > 0.8) {
+        // Hide scroll indicator when nearing completion point
+        setShowScrollIndicator(false);
+        targetProgressRef.current = 1;
+      } else if (momentum.magnitude > 0.01) {
+        const momentumBoost = Math.min(0.2, momentum.magnitude);
+        targetProgressRef.current = Math.min(
+          1,
+          Math.max(
+            0,
+            targetProgressRef.current + momentum.direction * momentumBoost
+          )
+        );
+      }
+    }
+
+    if (!animationFrameIdRef.current && !deviceAnimationComplete) {
+      animationFrameIdRef.current = requestAnimationFrame(animateTransition);
+    }
+  };
+
+  useEffect(() => {
+    if (!deviceAnimationComplete && contentVisible) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+
+      if (transitionContainerRef.current) {
+        transitionContainerRef.current.style.transform = "translateZ(0)";
+        (transitionContainerRef.current.style as any).backfaceVisibility =
+          "hidden";
+      }
+
+      window.addEventListener("wheel", handleWheel, { passive: false });
+      window.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
+      window.addEventListener("touchmove", handleTouchMove, { passive: false });
+      window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+      const preloadImages = () => {
+        const imageUrls = [
+          "/static/media/Iphone.png",
+          "/static/media/DesktopHomeMockup.png",
+        ];
+
+        imageUrls.forEach((url) => {
+          const img = new window.Image();
+          img.src = url;
+        });
+      };
+
+      preloadImages();
+
+      if (!animationFrameIdRef.current) {
+        animationFrameIdRef.current = requestAnimationFrame(animateTransition);
+      }
+
+      // Shorter timeout for force unlock - 5 seconds instead of 8
+      const forceUnlockTimeout = setTimeout(() => {
+        if (!deviceAnimationComplete) {
+          setShowScrollIndicator(false);
+          setDeviceAnimationComplete(true);
+
+          // Force immediate content visibility
+          if (mainContentRef.current) {
+            mainContentRef.current.style.opacity = "1";
+          }
+
+          document.body.style.overflow = "";
+          document.body.style.height = "";
+        }
+      }, 5000);
+
+      return () => {
+        clearTimeout(forceUnlockTimeout);
+        document.body.style.overflow = "";
+        document.body.style.height = "";
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("touchend", handleTouchEnd);
+
+        if (animationFrameIdRef.current) {
+          cancelAnimationFrame(animationFrameIdRef.current);
+          animationFrameIdRef.current = null;
+        }
+      };
+    }
+    return () => {};
+  }, [deviceAnimationComplete, contentVisible]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Apply a temporary body style to prevent scroll during load
     document.body.style.overflow = "hidden";
 
-    // Remove the style after a short delay
     const timer = setTimeout(() => {
       document.body.style.overflow = "";
     }, 500);
@@ -45,7 +300,6 @@ const HomePage = () => {
     };
   }, []);
 
-  // Initial setup - set loading after small delay
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
@@ -55,7 +309,6 @@ const HomePage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Ensure content visibility after hero image is loaded
   useEffect(() => {
     if (isHeroImageLoaded) {
       const timer = setTimeout(() => {
@@ -65,33 +318,9 @@ const HomePage = () => {
 
       return () => clearTimeout(timer);
     }
+    return () => {};
   }, [isHeroImageLoaded]);
 
-  // Listen for the device animation complete event
-  useEffect(() => {
-    const transitionElement = deviceTransitionRef.current;
-
-    if (!transitionElement) return;
-
-    const handleAnimationComplete = () => {
-      setDeviceAnimationComplete(true);
-      // Optionally trigger any actions needed after animation completes
-    };
-
-    transitionElement.addEventListener(
-      "animationComplete",
-      handleAnimationComplete
-    );
-
-    return () => {
-      transitionElement.removeEventListener(
-        "animationComplete",
-        handleAnimationComplete
-      );
-    };
-  }, [isLoaded]);
-
-  // Initialize animations after page is loaded
   useEffect(() => {
     if (
       !isLoaded ||
@@ -101,17 +330,14 @@ const HomePage = () => {
     )
       return;
 
-    // Create a timeline for better control and cleanup
     const tl = gsap.timeline({
       defaults: {
         ease: "power3.out",
-        force3D: true, // Enable hardware acceleration for all animations
+        force3D: true,
       },
     });
 
-    // Create a context to keep animations scoped to component
     const ctx = gsap.context(() => {
-      // Add animations to the timeline instead of creating separate tweens
       tl.from(".hero-heading", {
         opacity: 0,
         y: 30,
@@ -125,7 +351,7 @@ const HomePage = () => {
             duration: 1,
           },
           "-=0.7"
-        ) // Overlap with previous animation
+        )
         .from(
           ".hero-cta",
           {
@@ -144,15 +370,26 @@ const HomePage = () => {
           },
           "-=0.9"
         );
+
+      gsap.set(".device-iphone", {
+        transformOrigin: "center center",
+        transformPerspective: 1200,
+        backfaceVisibility: "hidden",
+        transformStyle: "preserve-3d",
+      });
+
+      gsap.set(".device-macbook", {
+        transformOrigin: "center center",
+        transformPerspective: 1200,
+        backfaceVisibility: "hidden",
+        transformStyle: "preserve-3d",
+      });
     }, containerRef);
 
-    // Cleanup function
     return () => {
-      // Kill timeline and clear context
       tl.kill();
       ctx.revert();
 
-      // Only kill ScrollTrigger instances that belong to this component
       ScrollTrigger.getAll().forEach((trigger) => {
         if (
           containerRef.current &&
@@ -164,16 +401,44 @@ const HomePage = () => {
     };
   }, [isLoaded, isHeroImageLoaded]);
 
+  const typeSafeStyles = {
+    iPhone: {
+      opacity: Math.min(1, Math.max(0, 1 - transitionProgress * 1.8)),
+      transform: `
+        perspective(1200px)
+        ${
+          transitionProgress > 0
+            ? `rotateY(${Math.min(180, transitionProgress * 180)}deg)`
+            : ""
+        }
+        scale(${1 - transitionProgress * 0.2})
+        translateZ(0)
+      `,
+      transition: "opacity 0.15s cubic-bezier(0.25, 0.1, 0.25, 1)",
+      willChange: "transform, opacity",
+    } as React.CSSProperties,
+
+    macBook: {
+      opacity: Math.min(1, Math.max(0, (transitionProgress - 0.4) * 2.5)),
+      transform: `
+        perspective(1200px)
+        rotateY(${Math.max(0, (transitionProgress - 0.5) * -20)}deg)
+        scale(${0.9 + transitionProgress * 0.15})
+        translateZ(0)
+      `,
+      transition: "opacity 0.15s cubic-bezier(0.25, 0.1, 0.25, 1)",
+      willChange: "transform, opacity",
+    } as React.CSSProperties,
+  };
+
   return (
     <div className="min-h-screen flex flex-col text-white">
-      {/* Page loading overlay */}
       {!contentVisible && (
         <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
           <div className="w-16 h-16 border-t-4 border-[#02F199] border-solid rounded-full animate-spin"></div>
         </div>
       )}
 
-      {/* Add grid background */}
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
@@ -200,13 +465,11 @@ const HomePage = () => {
       >
         <Navbar />
 
-        {/* Hero Section with new heading */}
-        <div className="mt-6 md:mt-[100px] w-full px-4 md:px-8 py-8 md:py-12">
+        <div className="mt-6 md:mt-[100px] w-full px-4 md:px-16 py-8 md:py-12">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col-reverse md:flex-row items-center justify-between md:gap-20 md:-mt-20">
-              {/* Hero Text - now below in mobile, but still left in desktop */}
-              <div className="w-full md:-mt-48 md:w-3/5 lg:w-3/4 text-center md:text-left md:pr-0">
-                <h1 className="hero-heading text-[2.6rem] md:text-5xl font-bold text-white leading-tight tracking-tight">
+              <div className="w-full md:-mt-48 md:w-4/5 lg:w-full text-center md:text-left md:pr-0">
+                <h1 className="hero-heading text-[2.6rem] md:text-[3.4rem] font-bold text-white leading-tight tracking-tight">
                   <span className="block">TURN YOUR GAMING SKILLS</span>
                   <span className="block">
                     INTO{" "}
@@ -237,53 +500,83 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* Hero Image - now above in mobile, but still right in desktop */}
               <div
-                className="hidden md:flex hero-image-container w-full md:w-2/5 lg:w-2/4 relative justify-center md:justify-end"
+                ref={transitionContainerRef}
+                className="hero-image-container w-full md:w-2/5 lg:w-2/4 relative hidden md:flex justify-center md:justify-end"
                 style={{ transform: "translateY(-32px)" }}
               >
-                <div
-                  className="w-full h-[550px] md:h-[600px]"
-                  ref={deviceTransitionRef}
-                >
-                  <DeviceTransition />
+                <div className="w-full h-[550px] md:h-[600px] relative overflow-hidden">
+                  <div
+                    className="device-iphone absolute inset-0 flex items-center justify-center z-10 transform-gpu"
+                    style={typeSafeStyles.iPhone}
+                  >
+                    <div className="relative w-[200px] h-[400px] md:w-[250px] md:h-[500px]">
+                      <Image
+                        src="/static/media/Iphone.png"
+                        alt="iPhone 15 Pro"
+                        fill
+                        sizes="200px"
+                        priority
+                        className="object-contain drop-shadow-xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="device-macbook absolute inset-0 flex items-center justify-center z-0 transform-gpu"
+                    style={typeSafeStyles.macBook}
+                  >
+                    <div className="relative w-[600px] h-[450px]">
+                      <Image
+                        src="/static/media/DesktopHomeMockup.png"
+                        alt="MacBook Pro"
+                        fill
+                        sizes="600px"
+                        priority
+                        className="object-contain drop-shadow-xl"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Child components - only render when main content is visible */}
-        {contentVisible && (
-          <>
-            <div className="pt-[60px]">
-              <ScrollHero />
-            </div>
-            <div className="pt-2">
-              <GameCarousel />
-            </div>
-            <div className="pt-6">
-              <FeatureCards />
-            </div>
-            <div className="pt-6 md:pt-[70px]">
-              <ScrollImage
-                images={[
-                  "/static/media/HowItWorks1.png",
-                  "/static/media/HowItWorks2.png",
-                  "/static/media/HowItWorks3.png",
-                  "/static/media/HowItWorks4.png",
-                ]}
-                onSequenceComplete={() => {
-                  // Optionally scroll to the next section when sequence completes
-                  // Or trigger some animation
-                }}
-              />
-            </div>
-            <div className="pt-6">
-              <TournamentSection />
-            </div>
-          </>
-        )}
+        <div
+          ref={mainContentRef}
+          className={`transition-opacity duration-300 ${
+            deviceAnimationComplete ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {contentVisible && (
+            <>
+              <div className="pt-[60px]">
+                <ScrollHero />
+              </div>
+              <div className="pt-2">
+                <GameCarousel />
+              </div>
+              <div className="pt-6">
+                <FeatureCards />
+              </div>
+              <div className="pt-6 md:pt-[70px]">
+                <ScrollImage
+                  images={[
+                    "/static/media/HowItWorks1.png",
+                    "/static/media/HowItWorks2.png",
+                    "/static/media/HowItWorks3.png",
+                    "/static/media/HowItWorks4.png",
+                  ]}
+                  onSequenceComplete={() => {}}
+                />
+              </div>
+              <div className="pt-6">
+                <TournamentSection />
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {contentVisible && <Footer />}
