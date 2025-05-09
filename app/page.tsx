@@ -469,7 +469,6 @@ const HomePage = () => {
         <div className="mt-6 md:mt-[100px] px-3 w-full md:px-16 py-8 md:py-12">
           <div className="max-w-8xl mx-auto">
             <div className="flex flex-col-reverse md:flex-row items-center justify-between md:gap-20 md:-mt-20">
-              {/* Left side - Text and buttons */}
               <div className="w-full md:-mt-48 md:w-4/5 lg:w-full text-center md:text-left md:pr-0">
                 {/* Larger heading text */}
                 <h1 className="hero-heading text-[3rem] md:text-[4rem] lg:text-[4.5rem] font-bold text-white leading-tight tracking-tight">
