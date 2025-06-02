@@ -7,7 +7,8 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "node scripts/migrate-supabase-to-firebase.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -17,6 +18,8 @@
     "@types/gsap": "^1.20.2",
     "@types/p5": "^1.7.6",
     "@vercel/analytics": "^1.4.1",
+    "firebase": "^11.8.1",
+    "firebase-admin": "^13.4.0",
     "framer-motion": "^12.6.3",
     "gsap": "^3.12.7",
     "next": "15.0.3",

@@ -1,64 +1,66 @@
-import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import { adminDb } from "../../../firebase-admin";
+import { DocumentSnapshot } from "firebase-admin/firestore";
 
-const supabase = createClient(
-  process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
-    "https://macguoyqxeijpszqwvbm.supabase.co",
-  process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hY2d1b3lxeGVpanBzenF3dmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxODQyODYsImV4cCI6MjA1ODc2MDI4Nn0.jtNSW59CnPNgNMWvhG6drk7ft2YilUATeMyfAI6YKgs"
-);
+// Define interface for waitlist document data
+interface WaitlistData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  referral_code: string;
+  referred_by: string | null;
+  position_boost: number;
+  preferred_console: string | null;
+  birthday: string | null;
+  created_at: FirebaseFirestore.Timestamp;
+}
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    const { data: userData, error: userError } = await supabase
-      .from("waitlist")
-      .select("id, referral_code, position_boost")
-      .eq("email", email)
-      .single();
+    // Find user by email
+    const userQuery = await adminDb
+      .collection("waitlist")
+      .where("email", "==", email)
+      .limit(1)
+      .get();
 
-    if (userError && userError.code !== "PGRST116") {
-      console.error("Error fetching user data:", userError);
-      throw userError;
-    }
-
-    if (userData) {
-      const { count: referralCount, error: countError } = await supabase
-        .from("waitlist")
-        .select("id", { count: "exact", head: true })
-        .eq("referred_by", userData.referral_code);
-
-      if (countError) {
-        console.error("Error counting referrals:", countError);
-        throw countError;
-      }
-
-      const safeReferralCount = referralCount ?? 0;
-
-      const positionBoost = Math.floor(safeReferralCount / 5) * 100;
-
+    if (!userQuery.empty) {
+      const userDoc = userQuery.docs[0];
+      const userData = { 
+        id: userDoc.id, 
+        ...userDoc.data() as WaitlistData 
+      };
+      
+      // Count referrals
+      const referralsQuery = await adminDb
+        .collection("waitlist")
+        .where("referred_by", "==", userData.referral_code)
+        .count()
+        .get();
+      
+      const referralCount = referralsQuery.data().count || 0;
+      
+      // Calculate position boost
+      const positionBoost = Math.floor(referralCount / 5) * 100;
+      
+      // Update position boost if needed
       if (positionBoost !== userData.position_boost) {
-        const { error: updateError } = await supabase
-          .from("waitlist")
-          .update({ position_boost: positionBoost })
-          .eq("id", userData.id);
-
-        if (updateError) {
-          console.error("Error updating position boost:", updateError);
-        }
+        await userDoc.ref.update({ position_boost: positionBoost });
       }
-
-      const basePosition = await getBasePosition(userData.id);
+      
+      // Calculate position based on creation timestamp
+      const basePosition = await getBasePosition(userDoc);
       const finalPosition = Math.max(1, basePosition - positionBoost);
-
+      
       return NextResponse.json(
         {
           exists: true,
           position: finalPosition,
           referralCode: userData.referral_code,
-          referrals: safeReferralCount,
-          referralsNeeded: 5 - (safeReferralCount % 5),
+          referrals: referralCount,
+          referralsNeeded: 5 - (referralCount % 5),
         },
         { status: 200 }
       );
@@ -74,16 +76,23 @@ export async function POST(req: Request) {
   }
 }
 
-async function getBasePosition(userId: number) {
-  const { count, error } = await supabase
-    .from("waitlist")
-    .select("id", { count: "exact", head: true })
-    .lt("id", userId);
-
-  if (error) {
-    console.error("Error getting base position:", error);
-    throw error;
+async function getBasePosition(userDoc: DocumentSnapshot) {
+  // In Firestore, we need to use timestamp for ordering
+  const data = userDoc.data() as WaitlistData | undefined;
+  const createdAt = data?.created_at;
+  
+  if (!createdAt) {
+    // If no timestamp is available, fall back to a default position
+    const countQuery = await adminDb.collection("waitlist").count().get();
+    return countQuery.data().count || 1;
   }
-
-  return (count ?? 0) + 1;
+  
+  // Count documents created before this one
+  const earlierDocsQuery = await adminDb
+    .collection("waitlist")
+    .where("created_at", "<", createdAt)
+    .count()
+    .get();
+  
+  return (earlierDocsQuery.data().count || 0) + 1;
 }
