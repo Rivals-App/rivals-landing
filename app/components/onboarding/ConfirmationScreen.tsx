@@ -90,7 +90,7 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
             draggable={false}
             width={80}
             height={80}
-            src="/static/svgs/Asset-2.svg"
+            src="/static/media/Logo1.png"
             alt="logo"
             className="form-logo"
           />
