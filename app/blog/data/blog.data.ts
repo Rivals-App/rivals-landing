@@ -222,6 +222,98 @@ export const blogPosts: BlogPost[] = [
     tags: ["Legal", "Monetization", "RIVALS"],
     readTime: "10 MIN",
   },
+  {
+    id: "3",
+    slug: "rivals-to-showcase-groundbreaking-esports-platform-at-sxsw-london-2025",
+    title: "Rivals to Showcase Groundbreaking Esports Platform at SXSW London 2025",
+    excerpt:
+      "Join Rivals at SXSW London 2025 as we present our innovative competitive gaming platform to a global audience.",
+    date: "June 2, 2025",
+    author: "Manraj Sandhu",
+    image: "/static/media/sxsw-london.jpg", // You'll need to add this image to your static media folder
+    content: `
+        <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals to Showcase Groundbreaking Esports Platform at SXSW London 2025</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            <a href="https://rivals.com" style="color: #02F199; text-decoration: underline;">Rivals</a>, the innovative esports and gaming startup, is excited to announce its participation in the highly anticipated 
+            <a href="https://sxsw.com/london/" style="color: #02F199; text-decoration: underline;">SXSW London 2025</a>, 
+            Europe's first-ever edition of the iconic South by Southwest festival. Taking place in the vibrant heart of 
+            <a href="https://www.visitlondon.com/things-to-do/london-areas/east-london/shoreditch" style="color: #02F199; text-decoration: underline;">Shoreditch</a>, 
+            SXSW London promises an extraordinary convergence of creativity, technology, music, and culture.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            On Thursday, 5th June, Rivals will be featured at the prestigious 
+            <a href="https://sxsw.com/london/startup-village/" style="color: #02F199; text-decoration: underline;">Startup Village</a>, 
+            hosted at Shoreditch Electric, Coronet Street, London N1 6HD. This area is a buzzing hotspot at SXSW, bringing together visionary startups, 
+            cutting-edge technologies, and influential investors from around the world.
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Join Rivals at SXSW Startup Village</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Attendees at SXSW London are warmly invited to visit the Rivals stand and personally meet Founder and CEO, Manraj Sandhu. 
+            Manraj will be available throughout the day to discuss Rivals' ambitious vision, showcase live demonstrations of the platform, 
+            and explore opportunities for collaboration, investment, and partnerships.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals has rapidly emerged as a disruptive force within the 
+            <a href="https://en.wikipedia.org/wiki/Esports_ecosystem" style="color: #02F199; text-decoration: underline;">esports ecosystem</a>, 
+            empowering gamers to wager on their own skill and performance across a variety of popular games, including 
+            <a href="https://www.dota2.com/" style="color: #02F199; text-decoration: underline;">Dota 2</a> 
+            and other esports favourites. By leveraging advanced matchmaking, real-time score validation, dynamic leaderboards, 
+            and an innovative ranking system, Rivals delivers an unparalleled competitive gaming experience.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-style: italic;">
+            "SXSW London provides the perfect platform for us to connect with potential partners, investors, and gaming enthusiasts," says Manraj Sandhu. 
+            "We're thrilled to introduce Rivals to this influential global audience, and I personally look forward to meeting visitors at our stand."
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Experience Innovation at Europe's SXSW Premiere</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            <a href="https://sxsw.com/london/about/" style="color: #02F199; text-decoration: underline;">SXSW London</a>, 
+            renowned for showcasing emerging technologies and fostering cross-sector innovation, aligns seamlessly with Rivals' 
+            core mission: redefining competitive gaming experiences. With keynotes, panels, and interactive events scheduled 
+            throughout the week, SXSW London will attract top-tier talent and global attention, amplifying opportunities for startups like Rivals.
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Visit Rivals at SXSW London Startup Village:</h2>
+          
+          <p style="margin-bottom: 0.5em;">
+            <strong>Location:</strong> <a href="https://goo.gl/maps/ABC123" style="color: #02F199; text-decoration: underline;">Shoreditch Electric, Coronet Street, London N1 6HD</a>
+          </p>
+          <p style="margin-bottom: 1.5em;">
+            <strong>Date:</strong> Thursday, 5th June 2025
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            Don't miss the opportunity to be part of the conversation at SXSW London—experience firsthand how Rivals is setting new benchmarks in 
+            <a href="https://en.wikipedia.org/wiki/Esports" style="color: #02F199; text-decoration: underline;">competitive esports</a>.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            For more details on SXSW London and to secure your attendance, visit the official 
+            <a href="https://sxsw.com/london/attend/" style="color: #02F199; text-decoration: underline;">SXSW London website</a>.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            Stay connected with Rivals through our 
+            <a href="https://rivals.com" style="color: #02F199; text-decoration: underline;">website</a> 
+            and social media channels to follow live updates from SXSW London and beyond.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-weight: bold; font-size: 20px; text-align: center;">
+            We look forward to welcoming you at our stand and exploring the future of esports together at SXSW London 2025!
+          </p>
+        </div>
+      `,
+    tags: ["Events", "Esports", "RIVALS", "SXSW"],
+    readTime: "3 MIN",
+  },
 ];
 
 export default blogPosts;
