@@ -236,16 +236,16 @@ export const blogPosts: BlogPost[] = [
           <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals to Showcase Groundbreaking Esports Platform at SXSW London 2025</h2>
           
           <p style="margin-bottom: 1.5em;">
-            <a href="https://rivals.com" style="color: #02F199; text-decoration: underline;">Rivals</a>, the innovative esports and gaming startup, is excited to announce its participation in the highly anticipated 
-            <a href="https://sxsw.com/london/" style="color: #02F199; text-decoration: underline;">SXSW London 2025</a>, 
+            <a href="https://rivalsapp.com" style="color: #02F199; text-decoration: underline;">Rivals</a>, the innovative esports and gaming startup, is excited to announce its participation in the highly anticipated 
+            <a href="https://www.sxswlondon.com" style="color: #02F199; text-decoration: underline;">SXSW London 2025</a>, 
             Europe's first-ever edition of the iconic South by Southwest festival. Taking place in the vibrant heart of 
-            <a href="https://www.visitlondon.com/things-to-do/london-areas/east-london/shoreditch" style="color: #02F199; text-decoration: underline;">Shoreditch</a>, 
+            <a href="https://www.shoreditchelectric.com" style="color: #02F199; text-decoration: underline;">Shoreditch</a>, 
             SXSW London promises an extraordinary convergence of creativity, technology, music, and culture.
           </p>
           
           <p style="margin-bottom: 1.5em;">
             On Thursday, 5th June, Rivals will be featured at the prestigious 
-            <a href="https://sxsw.com/london/startup-village/" style="color: #02F199; text-decoration: underline;">Startup Village</a>, 
+            <a href="https://www.sxswlondon.com/startup-village" style="color: #02F199; text-decoration: underline;">Startup Village</a>, 
             hosted at Shoreditch Electric, Coronet Street, London N1 6HD. This area is a buzzing hotspot at SXSW, bringing together visionary startups, 
             cutting-edge technologies, and influential investors from around the world.
           </p>
@@ -260,7 +260,7 @@ export const blogPosts: BlogPost[] = [
           
           <p style="margin-bottom: 1.5em;">
             Rivals has rapidly emerged as a disruptive force within the 
-            <a href="https://en.wikipedia.org/wiki/Esports_ecosystem" style="color: #02F199; text-decoration: underline;">esports ecosystem</a>, 
+            esports ecosystem, 
             empowering gamers to wager on their own skill and performance across a variety of popular games, including 
             <a href="https://www.dota2.com/" style="color: #02F199; text-decoration: underline;">Dota 2</a> 
             and other esports favourites. By leveraging advanced matchmaking, real-time score validation, dynamic leaderboards, 
@@ -275,7 +275,7 @@ export const blogPosts: BlogPost[] = [
           <h2 style="margin-bottom: 0.8em; font-size: 30px;">Experience Innovation at Europe's SXSW Premiere</h2>
           
           <p style="margin-bottom: 1.5em;">
-            <a href="https://sxsw.com/london/about/" style="color: #02F199; text-decoration: underline;">SXSW London</a>, 
+            <a href="https://www.sxswlondon.com" style="color: #02F199; text-decoration: underline;">SXSW London</a>, 
             renowned for showcasing emerging technologies and fostering cross-sector innovation, aligns seamlessly with Rivals' 
             core mission: redefining competitive gaming experiences. With keynotes, panels, and interactive events scheduled 
             throughout the week, SXSW London will attract top-tier talent and global attention, amplifying opportunities for startups like Rivals.
@@ -284,7 +284,7 @@ export const blogPosts: BlogPost[] = [
           <h2 style="margin-bottom: 0.8em; font-size: 30px;">Visit Rivals at SXSW London Startup Village:</h2>
           
           <p style="margin-bottom: 0.5em;">
-            <strong>Location:</strong> <a href="https://goo.gl/maps/ABC123" style="color: #02F199; text-decoration: underline;">Shoreditch Electric, Coronet Street, London N1 6HD</a>
+            <strong>Location:</strong> <a href="https://www.shoreditchelectric.com" style="color: #02F199; text-decoration: underline;">Shoreditch Electric, Coronet Street, London N1 6HD</a>
           </p>
           <p style="margin-bottom: 1.5em;">
             <strong>Date:</strong> Thursday, 5th June 2025
@@ -292,17 +292,17 @@ export const blogPosts: BlogPost[] = [
           
           <p style="margin-bottom: 1.5em;">
             Don't miss the opportunity to be part of the conversation at SXSW London—experience firsthand how Rivals is setting new benchmarks in 
-            <a href="https://en.wikipedia.org/wiki/Esports" style="color: #02F199; text-decoration: underline;">competitive esports</a>.
+            competitive esports.
           </p>
           
           <p style="margin-bottom: 1.5em;">
             For more details on SXSW London and to secure your attendance, visit the official 
-            <a href="https://sxsw.com/london/attend/" style="color: #02F199; text-decoration: underline;">SXSW London website</a>.
+            <a href="https://www.sxswlondon.com" style="color: #02F199; text-decoration: underline;">SXSW London website</a>.
           </p>
           
           <p style="margin-bottom: 1.5em;">
             Stay connected with Rivals through our 
-            <a href="https://rivals.com" style="color: #02F199; text-decoration: underline;">website</a> 
+            <a href="https://rivalsapp.com" style="color: #02F199; text-decoration: underline;">website</a> 
             and social media channels to follow live updates from SXSW London and beyond.
           </p>
           
