@@ -236,7 +236,7 @@ const ScrollHero: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="absolute right-0 border-r-4 border-white top-[45%] -translate-y-1/2 hidden md:block">
+        <div className="absolute right-0 border-r-4 border-white top-[45%] -translate-y-1/2 hidden xl:block">
           <Image
             src="/static/media/Hero.png"
             alt="Rivals Gaming"
@@ -245,7 +245,7 @@ const ScrollHero: React.FC = () => {
             priority
             draggable={false}
             loading="eager"
-            className="object-contain" /* Added to ensure image fits properly */
+            className="object-contain"
           />
         </div>
       </header>

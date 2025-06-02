@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   // Close mobile menu on screen resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1024) {
         setIsMobileMenuOpen(false);
       }
     };
@@ -133,7 +133,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             </div>
 
             {/* Desktop Navigation and Action Button */}
-            <div className="hidden md:flex items-center space-x-6 pr-4">
+            <div className="hidden lg:flex items-center space-x-6 pr-4">
               <button
                 onClick={(e) => handleNavigation("home", e)}
                 className={`text-lg font-medium hover:text-[#02F199] bg-transparent border-none focus:outline-none ${
@@ -208,7 +208,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden flex items-center mr-4">
+            <div className="lg:hidden flex items-center mr-4">
               <button
                 onClick={toggleMobileMenu}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-[#02F199]/20 focus:outline-none"
@@ -258,7 +258,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
       {isMobileMenuOpen && (
         <div
           ref={mobileMenuRef}
-          className="md:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl"
+          className="lg:hidden absolute top-full left-0 right-0 mx-auto w-[82%] max-w-xl bg-[#121212]/50 backdrop-blur-md shadow-xl rounded-b-xl"
         >
           <div className="px-4 py-4 space-y-2">
             <button
