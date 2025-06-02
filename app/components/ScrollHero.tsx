@@ -121,7 +121,7 @@ const ScrollHero: React.FC = () => {
           invalidateOnRefresh: true, // Better handling of window resizing
         });
 
-        // Create chroma entry animation with optimized performance
+        // Create chroma entry animation with optimized performancee
         gsap.fromTo(
           document.documentElement,
           {
