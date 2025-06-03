@@ -3,10 +3,22 @@ import { NextResponse } from "next/server";
 
 const supabase = createClient(
   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
-    "https://macguoyqxeijpszqwvbm.supabase.co",
+    "https://cgmmlkzaovsuzkpluksh.supabase.co",
   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hY2d1b3lxeGVpanBzenF3dmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxODQyODYsImV4cCI6MjA1ODc2MDI4Nn0.jtNSW59CnPNgNMWvhG6drk7ft2YilUATeMyfAI6YKgs"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnbW1sa3phb3ZzdXprcGx1a3NoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzODQyMjksImV4cCI6MjA1Njk2MDIyOX0.MAvRFXCcs03rGyJOGEQA9NhmnGuYquyXd3Q5_w0JLDA"
 );
+
+// Add OPTIONS handler for CORS preflight requests
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
+}
 
 function generateReferralCode(email: string): string {
   const baseCode = email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "");
@@ -23,22 +35,41 @@ function generateReferralCode(email: string): string {
 }
 
 export async function POST(req: Request) {
-  const response = NextResponse.next();
-  response.headers.set(
-    "Access-Control-Allow-Origin",
-    "https://rivals-ochre.vercel.app"
-  );
-  response.headers.set("Access-Control-Allow-Methods", "POST");
-  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-  response.headers.set("X-Content-Type-Options", "nosniff");
+  // Get the origin from the request
+  const origin = req.headers.get("origin");
+
+  // List of allowed origins
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://rivals-ochre.vercel.app",
+    "https://rivalsapp.com",
+  ];
+
+  // Create a new response instead of modifying NextResponse.next()
+  const headers = new Headers();
+
+  // Set CORS headers based on the request origin
+  if (origin && allowedOrigins.includes(origin)) {
+    headers.set("Access-Control-Allow-Origin", origin);
+  } else {
+    // For development, can be more permissive
+    headers.set("Access-Control-Allow-Origin", "*");
+  }
+
+  headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  headers.set("X-Content-Type-Options", "nosniff");
 
   const { firstName, lastName, email, referredBy, preferredConsole, birthday } =
     await req.json();
 
   if (!firstName || !lastName || !email) {
-    return NextResponse.json(
-      { error: "First name, last name, and email are required." },
-      { status: 400 }
+    return new NextResponse(
+      JSON.stringify({ error: "First name, last name, and email are required." }),
+      {
+        status: 400,
+        headers,
+      }
     );
   }
 
@@ -54,9 +85,12 @@ export async function POST(req: Request) {
         .single();
 
       if (referrerError || !referrerExists) {
-        return NextResponse.json(
-          { error: "Invalid referral code." },
-          { status: 400 }
+        return new NextResponse(
+          JSON.stringify({ error: "Invalid referral code." }),
+          {
+            status: 400,
+            headers,
+          }
         );
       }
     }
@@ -164,8 +198,8 @@ export async function POST(req: Request) {
       console.error("Error getting position:", positionError);
     }
 
-    return NextResponse.json(
-      {
+    return new NextResponse(
+      JSON.stringify({
         success: true,
         data: {
           ...data,
@@ -174,18 +208,30 @@ export async function POST(req: Request) {
           referrals: 0,
           referralsNeeded: 5,
         },
-      },
-      { status: 201 }
+      }),
+      {
+        status: 201,
+        headers,
+      }
     );
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error saving to Supabase:", error.message);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return new NextResponse(
+        JSON.stringify({ error: error.message }),
+        {
+          status: 500,
+          headers,
+        }
+      );
     } else {
       console.error("Unexpected error:", error);
-      return NextResponse.json(
-        { error: "An unknown error occurred." },
-        { status: 500 }
+      return new NextResponse(
+        JSON.stringify({ error: "An unknown error occurred." }),
+        {
+          status: 500,
+          headers,
+        }
       );
     }
   }
