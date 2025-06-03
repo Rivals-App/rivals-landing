@@ -104,12 +104,12 @@ const ArcadePage: React.FC = () => {
         </div>
 
         {/* Game Showcase Section */}
-        <div className="game-showcase w-full mb-16 md:mb-24">
+        <div className="game-showcase w-full mb-16 md:mb-24 px-4 md:px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
             Featured <span className="text-[#02F199]">Games</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {/* Tic Tac Toe */}
             <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
               <div className="relative h-48 overflow-hidden">
@@ -170,8 +170,8 @@ const ArcadePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Rock Paper Scissors */}
-            <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
+            {/* Rock Paper Scissors - Add sm:col-span-2 lg:col-span-1 for tablet view */}
+            <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 sm:col-span-2 lg:col-span-1">
               <div className="relative h-48 overflow-hidden">
                 <Image
                   draggable={false}
@@ -205,27 +205,27 @@ const ArcadePage: React.FC = () => {
           </div>
         </div>
 
-        {/* How It Works Section */}
-        <div className="how-to-compete w-full max-w-6xl mx-auto mb-16 md:mb-24">
+        {/* How It Works Section - Fix alignment for tablet */}
+        <div className="how-to-compete w-full max-w-6xl mx-auto mb-16 md:mb-24 px-4 md:px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
             How to <span className="text-[#02F199]">Compete</span>
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Change to 2 columns on tablets, 4 on larger screens */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {/* Step 1 */}
             <div className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-4 pb-6">
               <div className="w-16 h-16 mb-4 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
                 1
               </div>
               <h3 className="text-xl font-semibold mb-2">Choose a game</h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-300 mb-4">
                 Select from our library of skill-based arcade games
               </p>
 
-              {/* Step 1 Image Container */}
-              <div className="w-full h-40 md:h-48 flex items-center justify-center">
-                {/* Image with border */}
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
+              {/* Adjusted image container height */}
+              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
+                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
                   <Image
                     draggable={false}
                     src="/static/media/HowItWorks1.png"
@@ -244,14 +244,12 @@ const ArcadePage: React.FC = () => {
                 2
               </div>
               <h3 className="text-xl font-semibold mb-2">Stake XP or money</h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-300 mb-4">
                 Set your stake amount for the match
               </p>
 
-              {/* Step 2 Image Container */}
-              <div className="w-full h-40 md:h-48 flex items-center justify-center">
-                {/* Image with border */}
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
+              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
+                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
                   <Image
                     draggable={false}
                     src="/static/media/HowItWorks2.png"
@@ -270,14 +268,12 @@ const ArcadePage: React.FC = () => {
                 3
               </div>
               <h3 className="text-xl font-semibold mb-2">Match with a rival</h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-300 mb-4">
                 Get matched with players at your skill level
               </p>
 
-              {/* Step 3 Image Container */}
-              <div className="w-full h-40 md:h-48 flex items-center justify-center">
-                {/* Image with border */}
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
+              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
+                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
                   <Image
                     draggable={false}
                     src="/static/media/HowItWorks3.png"
@@ -296,14 +292,12 @@ const ArcadePage: React.FC = () => {
                 4
               </div>
               <h3 className="text-xl font-semibold mb-2">Win and withdraw</h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-300 mb-4">
                 Victory means instant rewards to your account
               </p>
 
-              {/* Step 4 Image Container */}
-              <div className="w-full h-40 md:h-48 flex items-center justify-center">
-                {/* Image with border */}
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[90%] h-auto">
+              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
+                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
                   <Image
                     draggable={false}
                     src="/static/media/HowItWorks4.png"
@@ -318,8 +312,8 @@ const ArcadePage: React.FC = () => {
           </div>
         </div>
 
-        {/* CTA Banner */}
-        <div className="cta-banner w-full max-w-6xl mx-auto mb-16">
+        {/* CTA Banner - Add padding to prevent cutoff */}
+        <div className="cta-banner w-full max-w-6xl mx-auto mb-16 px-4 md:px-6">
           <div className="bg-gradient-to-r from-[#121212]/10 to-[#121212]/80 border border-white/10 backdrop-blur-md rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between">
             <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0 text-center md:text-left">
               Ready to play for more than just fun?
