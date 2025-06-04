@@ -228,11 +228,11 @@ const ScrollHero: React.FC = () => {
         <div className="relative w-full mx-auto px-0"> {/* Remove any padding here */}
           <div className="flex flex-col items-start">
             <div className="w-full mb-6 md:mb-0 z-10 pl-10 md:pl-12 lg:pl-[10rem] mt-[-40vh] md:mt-[-5vh]">
-              <h1 className="text-6xl md:text-[6.8rem] -left-10 font-extrabold leading-tight">
+              <h2 className="text-6xl md:text-[6.8rem] -left-10 font-extrabold leading-tight">
                 WIN MONEY
                 <br />
                 AGAINST
-              </h1>
+              </h2>
             </div>
           </div>
         </div>

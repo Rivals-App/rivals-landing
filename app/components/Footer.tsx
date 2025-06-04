@@ -3,6 +3,8 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import JoinWaitlistButton from "./JoinWaitlistButton";
+import Script from "next/script";
+import { WithContext, FAQPage } from "schema-dts";
 
 const Footer = () => {
   const router = useRouter();
@@ -47,6 +49,46 @@ const Footer = () => {
     }
   };
 
+  // Add this FAQ schema inside the Footer component before the return statement
+  const faqSchema: WithContext<FAQPage> = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Rivals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rivals is a skill-based gaming platform where players can compete against each other and win real money rewards based on their performance and skills."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I earn money on Rivals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can earn money on Rivals by participating in 1v1 matches, team competitions, or tournaments. Place a wager on yourself or your team and win real rewards based on your gaming performance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What games are available on Rivals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rivals offers a variety of competitive games, including popular esports titles, arcade games, and skill-based casual games across different platforms."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Rivals match players?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rivals uses a sophisticated skill-based matchmaking system to ensure you're paired with players of similar skill level for fair and competitive gameplay."
+        }
+      }
+    ]
+  };
+
   return (
     <footer className="bg-[#1D1D1D]/90 backdrop-blur-lg border-t border-t-[#02F199]/20 text-white py-12 rounded-t-3xl">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -86,8 +128,25 @@ const Footer = () => {
                   <path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.2c-.96 0-1.75-.78-1.75-1.75s.79-1.75 1.75-1.75 1.75.79 1.75 1.75-.79 1.75-1.75 1.75zm13.5 11.2h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v5.6z" />
                 </svg>
               </a>
+
+              {/* Instagram Icon - Add this new icon */}
               <a
-                href="#"
+                href="https://www.instagram.com/rivals.app/"
+                aria-label="Instagram"
+                className="text-gray-400 hover:text-[#02F199] transition-colors duration-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+
+              <a
+                href="https://x.com/Rivals_App"
                 aria-label="Twitter"
                 className="text-gray-400 hover:text-[#02F199] transition-colors duration-200"
               >
@@ -249,6 +308,15 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Add this Script component right after the opening <footer> tag */}
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c'),
+        }}
+      />
     </footer>
   );
 };

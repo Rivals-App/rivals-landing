@@ -4,7 +4,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
-import { gsap } from "gsap";
+import { gsap } from "gsap/dist/gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FeatureCards from "./components/FeatureCards";
 import Footer from "./components/Footer";

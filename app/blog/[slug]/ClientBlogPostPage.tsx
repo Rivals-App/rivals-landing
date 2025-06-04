@@ -44,7 +44,7 @@ export default function ClientBlogPostPage({
           <Navbar />
           <div className="flex-grow flex flex-col items-center justify-center">
             <div className="max-w-xl mx-auto text-center px-4">
-              <h1 className="text-3xl font-bold mb-4">Post Not Found</h1>
+              <h2 className="text-3xl font-bold mb-4">Post Not Found</h2>
               <p className="text-gray-300 mb-8">
                 The blog post you're looking for doesn't exist or has been
                 removed.
