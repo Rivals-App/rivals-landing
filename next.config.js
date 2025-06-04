@@ -31,6 +31,28 @@ const nextConfig = {
     ];
   },
   poweredByHeader: false,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+    minimumCacheTTL: 60,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+  compress: true,
+  productionBrowserSourceMaps: false,
 };
 
-module.exports = nextConfig;
+// Add bundle analyzer in analyze mode
+const withBundleAnalyzer = process.env.ANALYZE === 'true' 
+  ? require('@next/bundle-analyzer')({ enabled: true })
+  : (config) => config;
+
+module.exports = withBundleAnalyzer(nextConfig);

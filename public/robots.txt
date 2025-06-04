@@ -1,6 +1,8 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /private/
 
 # Host
 Host: https://www.rivalsapp.com
