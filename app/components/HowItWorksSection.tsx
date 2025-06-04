@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import Script from "next/script";
 import { WithContext, Product } from "schema-dts";
+import OptimizedImage from "./OptimizedImage";
 
 interface StepItem {
   number: number;
@@ -95,7 +95,7 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
             {steps.map((step) => (
               <div 
                 key={step.number}
-                className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 sm:p-8 transition-all duration-300 hover:shadow-[0_0_20px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 border border-white/10"
+                className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 sm:p-8 h-full min-h-[450px] transition-all duration-300 hover:shadow-[0_0_20px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 border border-white/10"
               >
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl sm:text-2xl">
                   {step.number}
@@ -103,22 +103,21 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
                 <h3 className="text-xl sm:text-2xl lg:text-2xl font-semibold mb-3">
                   {step.title}
                 </h3>
-                <p className="text-gray-300 text-base sm:text-lg mb-8 lg:mb-10">
+                <p className="text-gray-300 text-base sm:text-lg mb-6">
                   {step.description}
                 </p>
 
-                {/* Step Image Container - Larger with better scaling */}
-                <div className="w-full h-48 sm:h-56 md:h-64 flex items-center justify-center">
-                  {/* Image with border - Increased width for larger screens */}
-                  <div className="relative border-2 border-white/30 rounded-lg overflow-hidden  h-auto">
-                    <Image
-                      draggable={false}
+                {/* Step Image Container - Fixed height with proper spacing */}
+                <div className="mt-auto w-full flex items-center justify-center pt-4">
+                  {/* Image with border - Controlled dimensions */}
+                  <div className="relative border-2 border-white/30 rounded-lg overflow-hidden w-[80%] max-w-[220px]">
+                    <OptimizedImage
                       src={step.imageSrc}
                       alt={step.imageAlt}
-                      width={250}
-                      height={250}
-                      className="w-full h-full object-contain "
-                      sizes="(max-width: 640px) 250px, (max-width: 768px) 300px, 350px"
+                      width={220}
+                      height={180}
+                      className="w-full object-contain"
+                      quality={90}
                     />
                   </div>
                 </div>

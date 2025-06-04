@@ -103,227 +103,241 @@ const ArcadePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Game Showcase Section */}
-        <div className="game-showcase w-full mb-16 md:mb-24 px-4 md:px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
-            Featured <span className="text-[#02F199]">Games</span>
-          </h2>
+        {/* Force a contained layout with clearly separated sections */}
+        <div className="flex flex-col w-full relative isolation-auto">
+          {/* Game Showcase Section */}
+          <section className="game-showcase w-full px-4 md:px-6 pb-12 md:pb-24 relative z-10 overflow-hidden mb-20 sm:mb-16 md:mb-32">
+            <div className="container mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
+                Featured <span className="text-[#02F199]">Games</span>
+              </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {/* Tic Tac Toe */}
-            <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  draggable={false}
-                  src="/static/media/tictactoe.png"
-                  alt="Tic Tac Toe"
-                  width={400}
-                  height={192}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
-                <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                  <Link href="https://getrivals.com" target="_blank">
-                    <button className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
-                      Try Demo
-                    </button>
-                  </Link>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto relative">
+                {/* Tic Tac Toe - Fixed mobile layout */}
+                <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 relative z-10">
+                  <div className="relative h-40 md:h-48 overflow-hidden z-10">
+                    <Image
+                      draggable={false}
+                      src="/static/media/tictactoe.png"
+                      alt="Tic Tac Toe"
+                      width={400}
+                      height={192}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
+                    <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
+                      <Link href="https://getrivals.com" target="_blank">
+                        <button className="px-6 py-2 md:px-8 md:py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
+                          Try Demo
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="p-5 md:p-6">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                      Tic Tac Toe
+                    </h3>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Classic game, competitive edge. Outsmart your opponent in a
+                      race for fast XP or real cash.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">
-                  Tic Tac Toe
-                </h3>
-                <p className="text-gray-300">
-                  Classic game, competitive edge. Outsmart your opponent in a
-                  race for fast XP or real cash.
-                </p>
-              </div>
-            </div>
 
-            {/* Word Grid */}
-            <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30">
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  draggable={false}
-                  src="/static/media/wordgrid.png"
-                  alt="Word Grid"
-                  width={400}
-                  height={192}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
-                <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                  <Link href="https://getrivals.com" target="_blank">
-                    <button className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
-                      Try Demo
-                    </button>
-                  </Link>
+                {/* Word Grid - Similar fixes */}
+                <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 relative z-10">
+                  <div className="relative h-40 md:h-48 overflow-hidden">
+                    <Image
+                      draggable={false}
+                      src="/static/media/wordgrid.png"
+                      alt="Word Grid"
+                      width={400}
+                      height={192}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
+                    <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
+                      <Link href="https://getrivals.com" target="_blank">
+                        <button className="px-6 py-2 md:px-8 md:py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
+                          Try Demo
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="p-5 md:p-6">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                      Word Grid
+                    </h3>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Think fast. Guess the word in the fewest tries. The sharper
+                      mind wins the pot.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">Word Grid</h3>
-                <p className="text-gray-300">
-                  Think fast. Guess the word in the fewest tries. The sharper
-                  mind wins the pot.
-                </p>
-              </div>
-            </div>
 
-            {/* Rock Paper Scissors - Add sm:col-span-2 lg:col-span-1 for tablet view */}
-            <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 sm:col-span-2 lg:col-span-1">
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  draggable={false}
-                  src="/static/media/rockpaperscissors.png"
-                  alt="Rock Paper Scissors"
-                  width={400}
-                  height={192}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                  <div className="p-4"></div>
-                </div>
-                <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                  <Link href="https://getrivals.com" target="_blank">
-                    <button className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
-                      Try Demo
-                    </button>
-                  </Link>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">
-                  Rock Paper Scissors
-                </h3>
-                <p className="text-gray-300">
-                  Quickest match on Rivals. Pure reaction, pure rivalry. 3
-                  rounds. Best of luck.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* How It Works Section - Fix alignment for tablet */}
-        <div className="how-to-compete w-full max-w-6xl mx-auto mb-16 md:mb-24 px-4 md:px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
-            How to <span className="text-[#02F199]">Compete</span>
-          </h2>
-
-          {/* Change to 2 columns on tablets, 4 on larger screens */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {/* Step 1 */}
-            <div className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-4 pb-6">
-              <div className="w-16 h-16 mb-4 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
-                1
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Choose a game</h3>
-              <p className="text-gray-300 mb-4">
-                Select from our library of skill-based arcade games
-              </p>
-
-              {/* Adjusted image container height */}
-              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
-                  <Image
-                    draggable={false}
-                    src="/static/media/HowItWorks1.png"
-                    alt="Choose a game"
-                    width={130}
-                    height={130}
-                    className="w-full h-full object-contain"
-                  />
+                {/* Rock Paper Scissors - Fixed for tablet/mobile */}
+                <div className="bg-[#121212]/30 border border-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-[0_0_15px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 sm:col-span-2 lg:col-span-1 relative z-10">
+                  <div className="relative h-40 md:h-48 overflow-hidden">
+                    <Image
+                      draggable={false}
+                      src="/static/media/rockpaperscissors.png"
+                      alt="Rock Paper Scissors"
+                      width={400}
+                      height={192}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
+                    <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
+                      <Link href="https://getrivals.com" target="_blank">
+                        <button className="px-6 py-2 md:px-8 md:py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
+                          Try Demo
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="p-5 md:p-6">
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                      Rock Paper Scissors
+                    </h3>
+                    <p className="text-sm md:text-base text-gray-300">
+                      Quickest match on Rivals. Pure reaction, pure rivalry. 3
+                      rounds. Best of luck.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* Step 2 */}
-            <div className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-4 pb-6">
-              <div className="w-16 h-16 mb-4 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
-                2
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Stake XP or money</h3>
-              <p className="text-gray-300 mb-4">
-                Set your stake amount for the match
-              </p>
+          {/* Clear separator to prevent overlap */}
+          <div className="w-full h-0"></div>
 
-              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
-                  <Image
-                    draggable={false}
-                    src="/static/media/HowItWorks2.png"
-                    alt="Stake XP or money"
-                    width={130}
-                    height={130}
-                    className="w-full h-full object-contain"
-                  />
+          {/* How It Works Section - Completely isolated layout */}
+          <section className="how-to-compete w-full px-4 md:px-6 pt-8 md:pt-24 mb-24 md:mb-32 relative z-10 overflow-visible mt-0">
+            <div className="container mx-auto max-w-6xl relative">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-28 md:mb-24">
+                How to <span className="text-[#02F199]">Compete</span>
+              </h2>
+
+              {/* Mobile-first approach with display block on small screens */}
+              <div className="w-full flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-12 md:gap-14">
+                {/* Step 1 */}
+                <div className="w-full flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 pb-8 mb-16 sm:mb-0 relative">
+                  <div className="w-16 h-16 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
+                    1
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">Choose a game</h3>
+                  <p className="text-gray-300 mb-8">
+                    Select from our library of skill-based arcade games
+                  </p>
+
+                  {/* Explicitly sized image container with fixed height */}
+                  <div className="w-full flex-grow flex items-end justify-center pb-4 h-[200px] sm:h-[160px]">
+                    <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto mt-8 sm:mt-4">
+                      <Image
+                        draggable={false}
+                        src="/static/media/HowItWorks1.png"
+                        alt="Choose a game"
+                        width={130}
+                        height={130}
+                        className="w-full h-full object-contain"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="w-full flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 pb-8 mb-16 sm:mb-0 relative">
+                  <div className="w-16 h-16 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
+                    2
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">Stake XP or money</h3>
+                  <p className="text-gray-300 mb-8">
+                    Set your stake amount for the match
+                  </p>
+
+                  <div className="w-full flex-grow flex items-end justify-center pb-4 h-[200px] sm:h-[160px]">
+                    <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto mt-8 sm:mt-4">
+                      <Image
+                        draggable={false}
+                        src="/static/media/HowItWorks2.png"
+                        alt="Stake XP or money"
+                        width={130}
+                        height={130}
+                        className="w-full h-full object-contain"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="w-full flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 pb-8 mb-16 sm:mb-0 relative">
+                  <div className="w-16 h-16 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
+                    3
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">Match with a rival</h3>
+                  <p className="text-gray-300 mb-8">
+                    Get matched with players at your skill level
+                  </p>
+
+                  <div className="w-full flex-grow flex items-end justify-center pb-4 h-[200px] sm:h-[160px]">
+                    <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto mt-8 sm:mt-4">
+                      <Image
+                        draggable={false}
+                        src="/static/media/HowItWorks3.png"
+                        alt="Match with a rival"
+                        width={130}
+                        height={130}
+                        className="w-full h-full object-contain"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 4 */}
+                <div className="w-full flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 pb-8 mb-16 sm:mb-0 relative">
+                  <div className="w-16 h-16 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
+                    4
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">Win and withdraw</h3>
+                  <p className="text-gray-300 mb-8">
+                    Victory means instant rewards to your account
+                  </p>
+
+                  <div className="w-full flex-grow flex items-end justify-center pb-4 h-[200px] sm:h-[160px]">
+                    <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto mt-8 sm:mt-4">
+                      <Image
+                        draggable={false}
+                        src="/static/media/HowItWorks4.png"
+                        alt="Win and withdraw"
+                        width={130}
+                        height={130}
+                        className="w-full h-full object-contain"
+                        priority
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* Step 3 */}
-            <div className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-4 pb-6">
-              <div className="w-16 h-16 mb-4 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
-                3
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Match with a rival</h3>
-              <p className="text-gray-300 mb-4">
-                Get matched with players at your skill level
-              </p>
-
-              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
-                  <Image
-                    draggable={false}
-                    src="/static/media/HowItWorks3.png"
-                    alt="Match with a rival"
-                    width={130}
-                    height={130}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </div>
+          {/* CTA Banner - Add padding to prevent cutoff */}
+          <section className="cta-banner w-full max-w-6xl mx-auto mb-16 px-4 md:px-6 relative z-10">
+            <div className="bg-gradient-to-r from-[#121212]/10 to-[#121212]/80 border border-white/10 backdrop-blur-md rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between">
+              <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0 text-center md:text-left">
+                Ready to play for more than just fun?
+              </h3>
+              <Link href="https://getrivals.com" target="_blank">
+                <button className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
+                  Try Demo
+                </button>
+              </Link>
             </div>
-
-            {/* Step 4 */}
-            <div className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-4 pb-6">
-              <div className="w-16 h-16 mb-4 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl">
-                4
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Win and withdraw</h3>
-              <p className="text-gray-300 mb-4">
-                Victory means instant rewards to your account
-              </p>
-
-              <div className="w-full h-32 sm:h-36 flex items-center justify-center">
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.1)] max-w-[80%] h-auto">
-                  <Image
-                    draggable={false}
-                    src="/static/media/HowItWorks4.png"
-                    alt="Win and withdraw"
-                    width={130}
-                    height={130}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Banner - Add padding to prevent cutoff */}
-        <div className="cta-banner w-full max-w-6xl mx-auto mb-16 px-4 md:px-6">
-          <div className="bg-gradient-to-r from-[#121212]/10 to-[#121212]/80 border border-white/10 backdrop-blur-md rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between">
-            <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0 text-center md:text-left">
-              Ready to play for more than just fun?
-            </h3>
-            <Link href="https://getrivals.com" target="_blank">
-              <button className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
-                Try Demo
-              </button>
-            </Link>
-          </div>
+          </section>
         </div>
       </div>
       <Footer />
