@@ -87,14 +87,15 @@
           "value": "1; mode=block"
         }
       ]
-    }
-  ],
-  "routes": [
+    },
     {
-      "src": "/service-worker.js",
-      "headers": {
-        "cache-control": "public, max-age=0, must-revalidate"
-      }
+      "source": "/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     }
   ]
 }
