@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Script from "next/script";
+import { WithContext, Product } from "schema-dts";
 
 interface StepItem {
   number: number;
@@ -52,53 +54,80 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
   headingHighlight = "RIVALS EXPERIENCE",
   steps = DEFAULT_STEPS,
 }) => {
+  // Define product schema for the platform
+  const productSchema: WithContext<Product> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Rivals Gaming Platform",
+    "description": "Competitive skill-based gaming platform where players can win real money rewards",
+    "brand": {
+      "@type": "Brand",
+      "name": "Rivals"
+    },
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
-    <section className="how-it-works-section w-full py-12 md:py-16 lg:py-24">
-      <div className="max-w-[90%] 2xl:max-w-[1600px] mx-auto px-4">
-        {/* Heading - Using ScrollImage style */}
-        <div className="mb-10 md:mb-16 lg:mb-20 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4">
-            {heading} <span className="text-[#02F199]">{headingHighlight}</span>
-          </h2>
-        </div>
+    <>
+      <Script
+        id="product-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema).replace(/</g, '\\u003c'),
+        }}
+      />
+      <section className="how-it-works-section w-full py-12 md:py-16 lg:py-24">
+        <div className="max-w-[90%] 2xl:max-w-[1600px] mx-auto px-4">
+          {/* Heading - Using ScrollImage style */}
+          <div className="mb-10 md:mb-16 lg:mb-20 text-center">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4">
+              {heading} <span className="text-[#02F199]">{headingHighlight}</span>
+            </h2>
+          </div>
 
-        {/* Steps Grid - Using Arcade page style */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 mx-auto">
-          {steps.map((step) => (
-            <div 
-              key={step.number}
-              className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 sm:p-8 transition-all duration-300 hover:shadow-[0_0_20px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 border border-white/10"
-            >
-              <div className="w-16 h-16 sm:w-20 sm:h-20 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl sm:text-2xl">
-                {step.number}
-              </div>
-              <h3 className="text-xl sm:text-2xl lg:text-2xl font-semibold mb-3">
-                {step.title}
-              </h3>
-              <p className="text-gray-300 text-base sm:text-lg mb-8 lg:mb-10">
-                {step.description}
-              </p>
+          {/* Steps Grid - Using Arcade page style */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 mx-auto">
+            {steps.map((step) => (
+              <div 
+                key={step.number}
+                className="flex flex-col items-center text-center bg-[#121212]/30 rounded-xl p-6 sm:p-8 transition-all duration-300 hover:shadow-[0_0_20px_rgba(2,241,153,0.3)] hover:border-[#02F199]/30 border border-white/10"
+              >
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mb-6 bg-[#02F199] rounded-full flex items-center justify-center text-black font-bold text-xl sm:text-2xl">
+                  {step.number}
+                </div>
+                <h3 className="text-xl sm:text-2xl lg:text-2xl font-semibold mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-gray-300 text-base sm:text-lg mb-8 lg:mb-10">
+                  {step.description}
+                </p>
 
-              {/* Step Image Container - Larger with better scaling */}
-              <div className="w-full h-48 sm:h-56 md:h-64 flex items-center justify-center">
-                {/* Image with border - Increased width for larger screens */}
-                <div className="relative border-2 border-white/30 rounded-lg overflow-hidden  h-auto">
-                  <Image
-                    draggable={false}
-                    src={step.imageSrc}
-                    alt={step.imageAlt}
-                    width={250}
-                    height={250}
-                    className="w-full h-full object-contain "
-                    sizes="(max-width: 640px) 250px, (max-width: 768px) 300px, 350px"
-                  />
+                {/* Step Image Container - Larger with better scaling */}
+                <div className="w-full h-48 sm:h-56 md:h-64 flex items-center justify-center">
+                  {/* Image with border - Increased width for larger screens */}
+                  <div className="relative border-2 border-white/30 rounded-lg overflow-hidden  h-auto">
+                    <Image
+                      draggable={false}
+                      src={step.imageSrc}
+                      alt={step.imageAlt}
+                      width={250}
+                      height={250}
+                      className="w-full h-full object-contain "
+                      sizes="(max-width: 640px) 250px, (max-width: 768px) 300px, 350px"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

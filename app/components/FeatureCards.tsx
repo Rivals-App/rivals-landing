@@ -1,6 +1,7 @@
 // FeatureCards.tsx
 "use client";
 import React, { useRef } from "react";
+import OptimizedImage from './OptimizedImage';
 
 interface FeatureCard {
   id: string;
@@ -80,12 +81,14 @@ const FeatureCards: React.FC = () => {
               {/* HOLO/SPARKLE OVERLAY LAYER */}
               <div className="card-effects absolute inset-0 pointer-events-none"></div>
 
-              {/* ► Use <img> instead of CSS background-image */}
+              {/* Replace <img> with OptimizedImage component */}
               <div className="absolute inset-0 z-10">
-                <img
+                <OptimizedImage
                   src={card.image}
-                  alt=""
+                  alt={`${card.title} feature illustration`}
                   className="w-full h-full object-cover object-center pointer-events-none"
+                  width={800}
+                  height={500}
                 />
               </div>
 
