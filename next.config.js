@@ -8,7 +8,7 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self' https://rivals-ochre.vercel.app https://*.supabase.co; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://*.supabase.co; connect-src 'self' https://*.supabase.co;",
+              "default-src 'self' https://rivalsapp.com https://rivals-ochre.vercel.app https://*.supabase.co; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://*.supabase.co; connect-src 'self' https://rivalsapp.com https://*.supabase.co;",
           },
           {
             key: "X-Frame-Options",

@@ -40,9 +40,9 @@ export async function POST(req: Request) {
 
   // List of allowed origins
   const allowedOrigins = [
+    "https://rivalsapp.com",
     "http://localhost:3000",
     "https://rivals-ochre.vercel.app",
-    "https://rivalsapp.com",
   ];
 
   // Create a new response instead of modifying NextResponse.next()
