@@ -2,10 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 const supabase = createClient(
-  // process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
-    "https://macguoyqxeijpszqwvbm.supabase.co",
-  // process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hY2d1b3lxeGVpanBzenF3dmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxODQyODYsImV4cCI6MjA1ODc2MDI4Nn0.jtNSW59CnPNgNMWvhG6drk7ft2YilUATeMyfAI6YKgs"
+   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
+    "",
+   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    ""
 );
 
 export async function POST(req: Request) {
