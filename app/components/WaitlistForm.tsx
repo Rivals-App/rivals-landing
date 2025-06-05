@@ -15,7 +15,7 @@ const WaitlistForm = () => {
   const [copied, setCopied] = useState(false);
   const [waitlistPosition, setWaitlistPosition] = useState<number | null>(null);
   const [referrals, setReferrals] = useState(0);
-  const [referralsNeeded, setReferralsNeeded] = useState(5);
+  const [referralsNeeded] = useState(5);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

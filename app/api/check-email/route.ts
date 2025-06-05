@@ -51,18 +51,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-// Helper function used elsewhere
-async function getBasePosition(userId: number) {
-  const { count, error } = await supabase
-    .from("waitlist")
-    .select("id", { count: "exact", head: true })
-    .lt("id", userId);
-
-  if (error) {
-    console.error("Error getting base position:", error);
-    throw error;
-  }
-
-  return (count ?? 0) + 1;
-}
