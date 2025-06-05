@@ -2,10 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 const supabase = createClient(
-   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
-    "",
-   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    ""
+  //  process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
+    "https://cgmmlkzaovsuzkpluksh.supabase.co",
+  //  process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnbW1sa3phb3ZzdXprcGx1a3NoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzODQyMjksImV4cCI6MjA1Njk2MDIyOX0.MAvRFXCcs03rGyJOGEQA9NhmnGuYquyXd3Q5_w0JLDA"
 );
 
 // Add OPTIONS handler for CORS preflight requests
