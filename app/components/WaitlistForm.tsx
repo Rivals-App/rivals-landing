@@ -32,6 +32,7 @@ const WaitlistForm = () => {
     setErrorMessage("");
 
     try {
+      console.log("Checking email in WaitlistForm:", email);
       // Check if email exists
       const checkRes = await fetch("/api/check-email", {
         method: "POST",
@@ -41,20 +42,29 @@ const WaitlistForm = () => {
         body: JSON.stringify({ email }),
       });
 
+      console.log("Check email response status:", checkRes.status);
       const checkData = await checkRes.json();
+      console.log("Check email response data:", checkData);
 
-      if (checkData.exists) {
-        setWaitlistPosition(checkData.position);
-        setReferrals(checkData.referrals);
-        setReferralsNeeded(checkData.referralsNeeded);
-        const referralUrl = `${window.location.origin}${window.location.pathname}?ref=${checkData.referralCode}`;
-        setReferralLink(referralUrl);
-        setSuccessMessage("Welcome back!");
+      // Specifically check for 409 Conflict (duplicate email)
+      if (checkRes.status === 409) {
+        console.error("Email already exists:", checkData);
+        setErrorMessage(checkData.error || "This email is already registered.");
+        setLoading(false);
         return;
       }
 
-      // If email doesn't exist, proceed with registration
+      // For any other non-200 response
+      if (!checkRes.ok) {
+        console.error("Other API error:", checkRes.status, checkData);
+        setErrorMessage(checkData.error || "An error occurred");
+        setLoading(false);
+        return;
+      }
+
+      // If email check passed, proceed with registration
       const referredBy = localStorage.getItem("referralCode");
+      console.log("Registering email:", email);
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: {
@@ -68,7 +78,9 @@ const WaitlistForm = () => {
         }),
       });
 
+      console.log("Registration response status:", res.status);
       const data = await res.json();
+      console.log("Registration response data:", data);
 
       if (res.ok) {
         const referralUrl = `${window.location.origin}${window.location.pathname}?ref=${data.data.referralCode}`;

@@ -74,14 +74,19 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Check if email already exists in the waitlist
-    const { data: existingUser } = await supabase
+    // First check if the email already exists using a count query
+    const { count, error: countError } = await supabase
       .from("waitlist")
-      .select("id")
-      .eq("email", email)
-      .single();
-
-    if (existingUser) {
+      .select("*", { count: "exact", head: true })
+      .eq("email", email);
+    
+    if (countError) {
+      console.error("Error checking for existing email:", countError);
+      throw countError;
+    }
+    
+    // If count is greater than 0, the email already exists
+    if (count && count > 0) {
       return new NextResponse(
         JSON.stringify({ error: "This email is already registered. Please use a different email address." }),
         {
@@ -247,7 +252,10 @@ export async function POST(req: Request) {
       console.error("Error saving to Supabase:", error.message);
       
       // Check if it's a unique constraint violation (duplicate email)
-      if (error.message.includes('duplicate key') && error.message.includes('email')) {
+      if (error.message && (
+          (error.message.includes('duplicate key') && error.message.includes('email')) ||
+          (error.message.includes('unique constraint') && error.message.includes('email'))
+        )) {
         return new NextResponse(
           JSON.stringify({ error: "This email is already registered. Please use a different email address." }),
           {

@@ -10,88 +10,41 @@ const supabase = createClient(
 
 export async function POST(req: Request) {
   try {
+    console.log("Check email API called");
     const { email } = await req.json();
+    console.log("Checking email:", email);
 
-    // First check if email already exists
-    const { data: existingEmail, error: checkError } = await supabase
+    // Use a simpler query that just checks if the email exists
+    const { count, error } = await supabase
       .from("waitlist")
-      .select("email")
-      .eq("email", email)
-      .single();
+      .select("*", { count: "exact", head: true })
+      .eq("email", email);
+    
+    if (error) {
+      console.error("Error checking for email:", error);
+      throw error;
+    }
+    
+    console.log("Email exists count:", count);
 
-    // If we found the email, return a clear message that it's already registered
-    if (existingEmail) {
+    // If email exists (count > 0), return 409 Conflict
+    if (count && count > 0) {
+      console.log("Email exists, returning 409");
       return NextResponse.json(
         { 
           exists: true,
+          error: "This email is already registered on our waitlist. Please use a different email address.",
           message: "This email is already registered on our waitlist." 
         }, 
-        { status: 200 }
+        { status: 409 }
       );
     }
 
-    // If there was an error but it's not a "not found" error, handle it
-    if (checkError && checkError.code !== "PGRST116") {
-      console.error("Error checking email:", checkError);
-      throw checkError;
-    }
-
-    // Rest of your existing code...
-    const { data: userData, error: userError } = await supabase
-      .from("waitlist")
-      .select("id, referral_code, position_boost")
-      .eq("email", email)
-      .single();
-
-    if (userError && userError.code !== "PGRST116") {
-      console.error("Error fetching user data:", userError);
-      throw userError;
-    }
-
-    if (userData) {
-      const { count: referralCount, error: countError } = await supabase
-        .from("waitlist")
-        .select("id", { count: "exact", head: true })
-        .eq("referred_by", userData.referral_code);
-
-      if (countError) {
-        console.error("Error counting referrals:", countError);
-        throw countError;
-      }
-
-      const safeReferralCount = referralCount ?? 0;
-
-      const positionBoost = Math.floor(safeReferralCount / 5) * 100;
-
-      if (positionBoost !== userData.position_boost) {
-        const { error: updateError } = await supabase
-          .from("waitlist")
-          .update({ position_boost: positionBoost })
-          .eq("id", userData.id);
-
-        if (updateError) {
-          console.error("Error updating position boost:", updateError);
-        }
-      }
-
-      const basePosition = await getBasePosition(userData.id);
-      const finalPosition = Math.max(1, basePosition - positionBoost);
-
-      return NextResponse.json(
-        {
-          exists: true,
-          position: finalPosition,
-          referralCode: userData.referral_code,
-          referrals: safeReferralCount,
-          referralsNeeded: 5 - (safeReferralCount % 5),
-        },
-        { status: 200 }
-      );
-    }
-
+    // If email doesn't exist, return 200 OK
+    console.log("Email doesn't exist, returning 200");
     return NextResponse.json({ exists: false }, { status: 200 });
   } catch (error) {
-    console.error("Error checking email:", error);
+    console.error("Error in check-email API:", error);
     return NextResponse.json(
       { error: "Error checking email" },
       { status: 500 }
@@ -99,6 +52,7 @@ export async function POST(req: Request) {
   }
 }
 
+// Helper function used elsewhere
 async function getBasePosition(userId: number) {
   const { count, error } = await supabase
     .from("waitlist")

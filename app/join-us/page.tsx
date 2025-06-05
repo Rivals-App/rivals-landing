@@ -131,7 +131,8 @@ const JoinUsPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // First check if email already exists
+      // STEP 1: Check if email already exists
+      console.log("Checking if email exists:", userInfo.email);
       const checkResponse = await fetch("/api/check-email", {
         method: "POST",
         headers: {
@@ -140,22 +141,29 @@ const JoinUsPage: React.FC = () => {
         body: JSON.stringify({ email: userInfo.email }),
       });
 
+      console.log("Check email response status:", checkResponse.status);
       const checkData = await checkResponse.json();
+      console.log("Check email response data:", checkData);
 
-      if (checkData.exists) {
-        // User already exists, update the userInfo with their data
+      // IMMEDIATELY HANDLE DUPLICATE EMAIL (409 Conflict)
+      if (checkResponse.status === 409) {
+        console.error("Email already exists:", checkResponse.status, checkData);
         setUserInfo((prev) => ({
           ...prev,
-          registrationSuccess: true,
-          position: checkData.position,
-          referrals: checkData.referrals,
-          referralsNeeded: checkData.referralsNeeded,
+          error: checkData.error || "This email is already registered."
         }));
-        goToNextStep(); // Go to confirmation screen
-        return;
+        setIsLoading(false);
+        return; // STOP HERE - DO NOT PROCEED
       }
 
-      // User doesn't exist, register them
+      // For any other non-200 response
+      if (!checkResponse.ok) {
+        console.error("Other API error:", checkResponse.status, checkData);
+        throw new Error(checkData.error || "An error occurred");
+      }
+
+      // If email doesn't exist, proceed with registration
+      console.log("Email check passed, registering user");
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: {
@@ -171,7 +179,9 @@ const JoinUsPage: React.FC = () => {
         }),
       });
 
+      console.log("Registration response status:", response.status);
       const data = await response.json();
+      console.log("Registration response data:", data);
 
       if (!response.ok) {
         throw new Error(data.error || "Registration failed");
@@ -187,6 +197,7 @@ const JoinUsPage: React.FC = () => {
         referralCode: data.data.referral_code,
       }));
 
+      console.log("Registration successful, proceeding to next step");
       goToNextStep(); // Go to confirmation screen
     } catch (error) {
       console.error("Registration error:", error);
