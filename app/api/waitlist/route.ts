@@ -75,7 +75,7 @@ export async function POST(req: Request) {
 
   try {
     // Check if email already exists in the waitlist
-    const { data: existingUser, error: existingUserError } = await supabase
+    const { data: existingUser } = await supabase
       .from("waitlist")
       .select("id")
       .eq("email", email)
