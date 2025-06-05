@@ -2,16 +2,41 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 const supabase = createClient(
-  // process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
-    "https://macguoyqxeijpszqwvbm.supabase.co",
+   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
+    "",
   // process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hY2d1b3lxeGVpanBzenF3dmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxODQyODYsImV4cCI6MjA1ODc2MDI4Nn0.jtNSW59CnPNgNMWvhG6drk7ft2YilUATeMyfAI6YKgs"
+    ""
 );
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
+    // First check if email already exists
+    const { data: existingEmail, error: checkError } = await supabase
+      .from("waitlist")
+      .select("email")
+      .eq("email", email)
+      .single();
+
+    // If we found the email, return a clear message that it's already registered
+    if (existingEmail) {
+      return NextResponse.json(
+        { 
+          exists: true,
+          message: "This email is already registered on our waitlist." 
+        }, 
+        { status: 200 }
+      );
+    }
+
+    // If there was an error but it's not a "not found" error, handle it
+    if (checkError && checkError.code !== "PGRST116") {
+      console.error("Error checking email:", checkError);
+      throw checkError;
+    }
+
+    // Rest of your existing code...
     const { data: userData, error: userError } = await supabase
       .from("waitlist")
       .select("id, referral_code, position_boost")

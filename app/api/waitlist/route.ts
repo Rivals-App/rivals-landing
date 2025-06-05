@@ -2,10 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 const supabase = createClient(
-  // process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
-    "https://cgmmlkzaovsuzkpluksh.supabase.co",
-  // process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnbW1sa3phb3ZzdXprcGx1a3NoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzODQyMjksImV4cCI6MjA1Njk2MDIyOX0.MAvRFXCcs03rGyJOGEQA9NhmnGuYquyXd3Q5_w0JLDA"
+   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_URL ||
+    "",
+   process.env.POSTGRES_NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    ""
 );
 
 // Add OPTIONS handler for CORS preflight requests
@@ -74,6 +74,23 @@ export async function POST(req: Request) {
   }
 
   try {
+    // Check if email already exists in the waitlist
+    const { data: existingUser, error: existingUserError } = await supabase
+      .from("waitlist")
+      .select("id")
+      .eq("email", email)
+      .single();
+
+    if (existingUser) {
+      return new NextResponse(
+        JSON.stringify({ error: "This email is already registered. Please use a different email address." }),
+        {
+          status: 409, // Conflict status code
+          headers,
+        }
+      );
+    }
+    
     const referralCode = generateReferralCode(email);
 
     // Check if referral code is valid if provided
@@ -146,6 +163,17 @@ export async function POST(req: Request) {
       .single();
 
     if (error) {
+      // Handle database constraint errors - additional check for duplicate emails
+      if (error.code === '23505' && error.message.includes('email')) {
+        return new NextResponse(
+          JSON.stringify({ error: "This email is already registered. Please use a different email address." }),
+          {
+            status: 409, // Conflict status code
+            headers,
+          }
+        );
+      }
+      
       console.error("Error inserting into waitlist:", error);
       throw error;
     }
@@ -217,6 +245,18 @@ export async function POST(req: Request) {
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error saving to Supabase:", error.message);
+      
+      // Check if it's a unique constraint violation (duplicate email)
+      if (error.message.includes('duplicate key') && error.message.includes('email')) {
+        return new NextResponse(
+          JSON.stringify({ error: "This email is already registered. Please use a different email address." }),
+          {
+            status: 409, // Conflict status code
+            headers,
+          }
+        );
+      }
+      
       return new NextResponse(
         JSON.stringify({ error: error.message }),
         {
