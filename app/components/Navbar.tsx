@@ -192,7 +192,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 Contact Us
               </button>
 
-              <Link
+              {/* <Link
                 href="https://getrivals.com"
                 target="_blank"
                 className={`text-lg font-medium hover:text-[#02F199] ${
@@ -202,7 +202,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 }`}
               >
                 Try Our Demo
-              </Link>
+              </Link> */}
 
               <JoinWaitlistButton className="inline-flex items-center px-5 py-2 text-md tracking-tight" />
             </div>
@@ -317,13 +317,13 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               Contact Us
             </button>
 
-            <Link
+            {/* <Link
               href="https://getrivals.com"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-[#02F199] hover:bg-[#02F199]/10"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Try Our Demo
-            </Link>
+            </Link> */}
 
             <div className="px-3 py-2 mt-4">
               <JoinWaitlistButton />

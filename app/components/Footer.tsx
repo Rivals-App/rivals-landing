@@ -260,7 +260,7 @@ const Footer = () => {
                     Contact Us
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a
                     href="https://getrivals.com"
                     target="_blank"
@@ -269,7 +269,7 @@ const Footer = () => {
                   >
                     Try Our Demo
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
