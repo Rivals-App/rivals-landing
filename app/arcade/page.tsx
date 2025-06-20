@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { gsap, Power3 } from "gsap";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Link from "next/link";
 import Image from "next/image";
 
 const ArcadePage: React.FC = () => {
@@ -95,11 +94,11 @@ const ArcadePage: React.FC = () => {
               Jump into quick-fire skill games. Whether it's Tic Tac Toe or
               Wordle-style battles, every match is a chance to win.
             </p>
-            <Link href="https://getrivals.com" target="_blank">
+            {/* <Link href="https://getrivals.com" target="_blank">
               <button className="px-8 py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
                 Try Demo
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
 
@@ -126,11 +125,11 @@ const ArcadePage: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
                     <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                      <Link href="https://getrivals.com" target="_blank">
+                      {/* <Link href="https://getrivals.com" target="_blank">
                         <button className="px-6 py-2 md:px-8 md:py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
                           Try Demo
                         </button>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                   <div className="p-5 md:p-6">
@@ -157,11 +156,11 @@ const ArcadePage: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
                     <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                      <Link href="https://getrivals.com" target="_blank">
+                      {/* <Link href="https://getrivals.com" target="_blank">
                         <button className="px-6 py-2 md:px-8 md:py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
                           Try Demo
                         </button>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                   <div className="p-5 md:p-6">
@@ -188,11 +187,11 @@ const ArcadePage: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end"></div>
                     <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                      <Link href="https://getrivals.com" target="_blank">
+                      {/* <Link href="https://getrivals.com" target="_blank">
                         <button className="px-6 py-2 md:px-8 md:py-3 bg-[#02F199] text-[#0c412e] font-semibold rounded-full hover:scale-105 transition-all duration-200 hero-button inline-block">
                           Try Demo
                         </button>
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                   <div className="p-5 md:p-6">
@@ -326,7 +325,7 @@ const ArcadePage: React.FC = () => {
           </section>
 
           {/* CTA Banner - Add padding to prevent cutoff */}
-          <section className="cta-banner w-full max-w-6xl mx-auto mb-16 px-4 md:px-6 relative z-10">
+          {/* <section className="cta-banner w-full max-w-6xl mx-auto mb-16 px-4 md:px-6 relative z-10">
             <div className="bg-gradient-to-r from-[#121212]/10 to-[#121212]/80 border border-white/10 backdrop-blur-md rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between">
               <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0 text-center md:text-left">
                 Ready to play for more than just fun?
@@ -337,7 +336,7 @@ const ArcadePage: React.FC = () => {
                 </button>
               </Link>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
       <Footer />
