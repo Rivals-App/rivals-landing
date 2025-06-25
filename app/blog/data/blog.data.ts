@@ -12,7 +12,7 @@ export interface BlogPost {
   readTime: string;
 }
 
-// Blog posts data
+// Blog posts data - arranged chronologically
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
@@ -224,13 +224,122 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: "3",
+    slug: "rivals-wins-google-hq-pitch-day-kickstart-global-founders-under-24-summit",
+    title: "Rivals wins Google HQ Pitch Day, securing overall victory at Kickstart Global's Founders Under 24 Summit",
+    excerpt:
+      "Thirteen-day sprint turns concept into a live skill-gaming platform, earning first place in both the 'Emerging Technology' track and the overall competition.",
+    date: "March 22, 2025",
+    author: "Manraj Sandhu",
+    image: "/static/media/KickstartPitch.jpg",
+    content: `
+        <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals wins Google HQ Pitch Day, securing overall victory at Kickstart Global's Founders Under 24 Summit</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals has been named the overall winner of Kickstart Global's Founders Under 24 Summit, hosted at Google's London headquarters. The event, backed by Google Cloud and Fund iQ, brought together 42 venture-backed and university-founded start-ups. Judges, drawn from sector-specialist venture capital firms, operator mentors, and Google's own start-up team, awarded Rivals the highest aggregate score for product-market fit, technical execution, and compliance readiness.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-style: italic;">
+            "Delivering a functional MVP in less than a fortnight shows the calibre of talent behind Rivals and the urgency of the problem they are solving," one judge remarked after the final round.
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">A thirteen-day build, a live demo in the room</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Barely two weeks before the Summit, Rivals existed only as a detailed business plan and pitch deck. Guided by advisors at Founden.xyz, Founder & CEO Manraj Sandhu formed a dedicated product squad, compressing a typical sprint cycle into a 13-day marathon to deliver a working minimum-viable product.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            On stage, the team demonstrated real-time staking and instant-settlement leaderboards by handing pre-configured phones to the audience—inviting them to compete in a live round of Noughts and Crosses. Each move appeared on a rooftop-latency leaderboard projected behind the presenters, underscoring the platform's ability to process micro-transactions in milliseconds.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            To amplify foot-traffic at the demo booth, the team produced branded apparel and miniature billboards, translating physical curiosity into on-device engagement, an approach that resonated with the event's Gen-Z-heavy audience while remaining firmly within Rivals' compliance framework.
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Why it matters</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Winning at Google HQ validates Rivals' position as the trusted spine of skill-based gaming:
+          </p>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;"><strong>Speed to market</strong> – MVP shipped in 13 days, demonstrating engineering velocity.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Culture fit</strong> – Interactive, community-first activation aligns with Rivals' mission to make every match a market.</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">About Rivals</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals Gaming is the skill-gaming platform that transforms every match into a market. By combining real-time wagering, automated compliance, and instant settlement, the product delivers a secure, transparent environment where gamers can stake, compete, and earn. Explore the experience at <a href="https://rivalsapp.com" style="color: #02F199; text-decoration: underline;">rivalsapp.com</a>.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-weight: bold; font-size: 20px; text-align: center;">
+            This victory at Google HQ marks a significant milestone in Rivals' journey to revolutionize competitive gaming and skill-based monetization.
+          </p>
+        </div>
+      `,
+    tags: ["Events", "Awards", "RIVALS", "Startup", "Google"],
+    readTime: "4 MIN",
+  },
+  {
+    id: "4",
+    slug: "rivals-secures-tigerlaunch-2026-after-winning-kickstart-global-princeton-showcase",
+    title: "Rivals secures its place at TigerLaunch 2026 after winning Kickstart Global's Princeton showcase",
+    excerpt:
+      "A community-centred pitch propels Rivals to the next stage of the world's largest student-run start-up competition.",
+    date: "April 2025",
+    author: "Raj Sandhu",
+    image: "/static/media/Tigerstart.jpg",
+    content: `
+        <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals secures its place at TigerLaunch 2026 after winning Kickstart Global's Princeton showcase</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Kickstart Global's latest Founders Under 24 showcase, delivered in partnership with Princeton University's Entrepreneurship Club, has awarded Rivals the top spot and an automatic berth at TigerLaunch 2026. The outcome maintains Rivals' unbeaten run on the student-innovation circuit and underscores the strategic value of its rapidly expanding community.
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Community first, product always</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            For this round, Founder & CEO Raj Sandhu reframed the narrative: rather than leading with instant-settlement infrastructure, he highlighted the passion of the gaming communities that fuel Rivals—and the Kickstart network that convened the finalists. The message resonated:
+          </p>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;"><strong>Peer validation</strong> – Fellow founders such as Tanya Korotaeva, Andriy Kirilenko, Alramina Shvartsman, Daniel Wong (Gradstay), and Anjali Goyal (Treeva) cited Rivals as a "stand-out example of community-led traction".</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Why TigerLaunch matters</h2>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;"><strong>Global visibility</strong> – TigerLaunch attracts over 1,500 applications annually, with final rounds televised across Ivy League networks.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Investor access</strong> – Last year's cohort raised a combined US $120 m within six months of the finals.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Network effects</strong> – Princeton's Entrepreneurship Club activates an alumni base that includes founders of Databricks, MongoDB, and Duolingo.</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">About Rivals Gaming</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals Gaming transforms every match into a market. The platform pairs real-time wagering with automated compliance and instantaneous settlement, creating a secure, transparent arena where gamers can stake, compete, and earn. Explore the experience at <a href="https://rivalsapp.com" style="color: #02F199; text-decoration: underline;">rivalsapp.com</a>.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-weight: bold; font-size: 20px; text-align: center;">
+            This victory at Princeton showcases Rivals' community-driven approach and positions the platform for even greater success at TigerLaunch 2026.
+          </p>
+        </div>
+      `,
+    tags: ["Events", "Awards", "RIVALS", "Startup", "Princeton", "TigerLaunch"],
+    readTime: "3 MIN",
+  },
+  {
+    id: "5",
     slug: "rivals-to-showcase-groundbreaking-esports-platform-at-sxsw-london-2025",
     title: "Rivals to Showcase Groundbreaking Esports Platform at SXSW London 2025",
     excerpt:
       "Join Rivals at SXSW London 2025 as we present our innovative competitive gaming platform to a global audience.",
     date: "June 2, 2025",
     author: "Manraj Sandhu",
-    image: "/static/media/sxsw-london.jpg", // You'll need to add this image to your static media folder
+    image: "/static/media/sxsw-london.jpg",
     content: `
         <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
           <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals to Showcase Groundbreaking Esports Platform at SXSW London 2025</h2>
@@ -313,6 +422,112 @@ export const blogPosts: BlogPost[] = [
       `,
     tags: ["Events", "Esports", "RIVALS", "SXSW"],
     readTime: "3 MIN",
+  },
+  {
+    id: "6",
+    slug: "rivals-sxsw-london-2025-recap-live-product-demo-startup-village-pitch",
+    title: "Rivals' SXSW London 2025 recap: live product demo, Startup Village pitch, and insight-driven dialogue with the creator economy",
+    excerpt:
+      "South by Southwest made its European debut in Shoreditch, and Rivals Gaming was selected to exhibit and pitch inside the festival’s Startup Village. ",
+    date: "June 5, 2025",
+    author: "Manraj Sandhu",
+    image: "/static/media/sxsw-london.jpg",
+    content: `
+        <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals' SXSW London 2025 recap: live product demo, Startup Village pitch, and insight-driven dialogue with the creator economy</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            <strong>Event date:</strong> 5 June 2025 | <strong>Location:</strong> Shoreditch Electric Light Station, London
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            South by Southwest made its European debut in Shoreditch, and Rivals Gaming was selected to exhibit and pitch inside the festival's Startup Village.
+          </p>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">What we delivered on-site</h2>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;"><strong>Founder sessions</strong> – CEO Manraj Sandhu held open discussions on compliance architecture, Asia-Pacific go-to-market plans, and collaboration pathways for brands seeking skill-gaming activations.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Startup Village pitch</strong> – The on-stage presentation outlined how Rivals turns every match into a market, anchoring the story in community-led traction rather than speculative tokens or play-to-earn mechanics.</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Programme highlights we attended</h2>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;"><strong>Keynote—Dan Clancy, CEO of Twitch</strong><br>
+            "Gaming is inherently a social-based activity," Clancy remarked—an observation that echoes Rivals' thesis that competitive play and community rewards are two sides of the same coin.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Fireside—Sir Demis Hassabis, Google DeepMind</strong><br>
+            Exploration of machine-learning applications in esports analytics.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Panel—Supercell, After Party Studios (Callux & Ben Doyle)</strong><br>
+            Creator-economy monetisation strategies and their relevance to skill-gaming platforms.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Venture-capital round-table</strong> featuring Northzone, Lightspeed, Balderton, CapitalG, and Giant Ventures, offering candid views on the current funding climate for gaming infrastructure startups.</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Immediate outcomes</h2>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;">Meaningful introductions to venture funds actively investing in infrastructure-layer gaming.</li>
+            <li style="margin-bottom: 0.5em;">Inbound enquiries from brand-side marketers exploring workplace and live-event arcade activations.</li>
+            <li style="margin-bottom: 0.5em;">Qualitative validation that Rivals' compliance-first approach resonates with both regulators and mainstream sponsors.</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">About Rivals Gaming</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals Gaming transforms every match into a market. The platform integrates real-time wagering, automated compliance, and instant settlement to create a secure, transparent arena where gamers can stake, compete, and earn. Explore the experience at <a href="https://rivalsapp.com" style="color: #02F199; text-decoration: underline;">rivalsapp.com</a>.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-weight: bold; font-size: 20px; text-align: center;">
+            SXSW London 2025 proved to be a pivotal moment for Rivals, showcasing our platform to a global audience and forging valuable connections in the gaming and investment communities.
+          </p>
+        </div>
+      `,
+    tags: ["Events", "SXSW", "RIVALS", "London", "Startup"],
+    readTime: "4 MIN",
+  },
+  {
+    id: "7",
+    slug: "rivals-arcade-partners-tata-consultancy-services-good-growth",
+    title: "Rivals Arcade partners with Tata Consultancy Services Good Growth to deliver data-driven gaming activations",
+    excerpt:
+      "A new collaboration blends skill-gaming with enterprise-grade analytics to deepen community and team engagement.",
+    date: "June 20, 2025",
+    author: "Rivals Team",
+    image: "/static/media/tatarivals.jpg",
+    content: `
+        <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals Arcade partners with Tata Consultancy Services Good Growth to deliver data-driven gaming activations</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            <strong>Announcement date:</strong> 20 June 2025
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            A new collaboration blends skill-gaming with enterprise-grade analytics to deepen community and team engagement.
+          </p>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals Arcade has entered into a strategic partnership with Tata Consultancy Services (TCS) and its Good Growth practice. Over the coming months, TCS will integrate its network of innovators and subject-matter experts into a series of Rivals-powered events, uniting gaming-led experiences with real-time performance data.
+          </p>
+          
+          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
+            <li style="margin-bottom: 0.5em;"><strong>Data depth</strong> – Good Growth's analytics framework complements Rivals' real-time leaderboards, enabling stakeholders to quantify engagement in seconds.</li>
+            <li style="margin-bottom: 0.5em;"><strong>Culture alignment</strong> – Both organisations champion innovation that combines user delight with measurable business outcomes.</li>
+          </ul>
+          
+          <h2 style="margin-bottom: 0.8em; font-size: 30px;">About Rivals Arcade</h2>
+          
+          <p style="margin-bottom: 1.5em;">
+            Rivals Arcade is the enterprise extension of Rivals Gaming, providing plug-and-play gaming experiences for corporate events, workplaces, and live activations.
+          </p>
+          
+          <p style="margin-bottom: 1.5em; font-weight: bold; font-size: 20px; text-align: center;">
+            This partnership with TCS Good Growth represents a significant step forward in Rivals Arcade's mission to bring data-driven gaming experiences to enterprise environments.
+          </p>
+        </div>
+      `,
+    tags: ["Partnership", "Enterprise", "RIVALS", "TCS", "Analytics"],
+    readTime: "2 MIN",
   },
 ];
 
