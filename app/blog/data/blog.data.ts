@@ -485,50 +485,7 @@ export const blogPosts: BlogPost[] = [
     tags: ["Events", "SXSW", "RIVALS", "London", "Startup"],
     readTime: "4 MIN",
   },
-  {
-    id: "7",
-    slug: "rivals-arcade-partners-tata-consultancy-services-good-growth",
-    title: "Rivals Arcade partners with Tata Consultancy Services Good Growth to deliver data-driven gaming activations",
-    excerpt:
-      "A new collaboration blends skill-gaming with enterprise-grade analytics to deepen community and team engagement.",
-    date: "June 20, 2025",
-    author: "Rivals Team",
-    image: "/static/media/tatarivals.jpg",
-    content: `
-        <div class="blog-post-content" style="font-family: sans-serif; line-height: 1.6; color: #FFFFFF;">
-          <h2 style="margin-bottom: 0.8em; font-size: 30px;">Rivals Arcade partners with Tata Consultancy Services Good Growth to deliver data-driven gaming activations</h2>
-          
-          <p style="margin-bottom: 1.5em;">
-            <strong>Announcement date:</strong> 20 June 2025
-          </p>
-          
-          <p style="margin-bottom: 1.5em;">
-            A new collaboration blends skill-gaming with enterprise-grade analytics to deepen community and team engagement.
-          </p>
-          
-          <p style="margin-bottom: 1.5em;">
-            Rivals Arcade has entered into a strategic partnership with Tata Consultancy Services (TCS) and its Good Growth practice. Over the coming months, TCS will integrate its network of innovators and subject-matter experts into a series of Rivals-powered events, uniting gaming-led experiences with real-time performance data.
-          </p>
-          
-          <ul style="margin-bottom: 1.5em; padding-left: 1.5em; list-style-type: disc;">
-            <li style="margin-bottom: 0.5em;"><strong>Data depth</strong> – Good Growth's analytics framework complements Rivals' real-time leaderboards, enabling stakeholders to quantify engagement in seconds.</li>
-            <li style="margin-bottom: 0.5em;"><strong>Culture alignment</strong> – Both organisations champion innovation that combines user delight with measurable business outcomes.</li>
-          </ul>
-          
-          <h2 style="margin-bottom: 0.8em; font-size: 30px;">About Rivals Arcade</h2>
-          
-          <p style="margin-bottom: 1.5em;">
-            Rivals Arcade is the enterprise extension of Rivals Gaming, providing plug-and-play gaming experiences for corporate events, workplaces, and live activations.
-          </p>
-          
-          <p style="margin-bottom: 1.5em; font-weight: bold; font-size: 20px; text-align: center;">
-            This partnership with TCS Good Growth represents a significant step forward in Rivals Arcade's mission to bring data-driven gaming experiences to enterprise environments.
-          </p>
-        </div>
-      `,
-    tags: ["Partnership", "Enterprise", "RIVALS", "TCS", "Analytics"],
-    readTime: "2 MIN",
-  },
+  
 ];
 
 export default blogPosts;
